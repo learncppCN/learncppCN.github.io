@@ -1,0 +1,1367 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+    
+    
+      
+        <title>18.3 重写 final 标识符，并且协变返回类型 - LearnCPP 中文教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a3f8f96a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#183-final" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnCPP 中文教程" class="md-header__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnCPP 中文教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              18.3 重写 final 标识符，并且协变返回类型
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnCPP 中文教程" class="md-nav__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    LearnCPP 中文教程
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BF%BB%E8%AF%91%E6%97%A5%E8%AE%B0/" class="md-nav__link">
+        翻译日记
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        00 Introduction getting started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="00 Introduction getting started" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          00 Introduction getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/" class="md-nav__link">
+        第零章 介绍/起步
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/0.1-Introduction-to-these-tutorials/" class="md-nav__link">
+        0.1 教程介绍
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        08 basic object oriented programming
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="08 basic object oriented programming" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          08 basic object oriented programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/" class="md-nav__link">
+        第八章 面向对象编程基础
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.1-welcome-to-object-oriented-programming/" class="md-nav__link">
+        8.1 欢迎来到面向对象的世界
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.2-classes-and-class-member/" class="md-nav__link">
+        8.2 类和类成员 (Classes and class member)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        14 exceptions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="14 exceptions" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          14 exceptions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/" class="md-nav__link">
+        14 异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.1-the-need-for-exceptions/" class="md-nav__link">
+        14.1 为什么需要异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.2-basic-exception-handloing/" class="md-nav__link">
+        14.2 基本异常处理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.3-exceptions-functions-and-stack-unwinding/" class="md-nav__link">
+        14.3 异常，函数，栈展开
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.4-uncaught-exceptions-catch-all-handlers-and-exception-specifiers/" class="md-nav__link">
+        14.4 未捕获异常，捕获全部异常和异常说明符
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.5-exceptions-classes-and-inheritance/" class="md-nav__link">
+        14.5 异常，类和继承
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.6-rethrowing-exceptions/" class="md-nav__link">
+        14.6 异常的再抛出
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.7-function-try-blocks/" class="md-nav__link">
+        14.7 函数级的 try 代码块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.8-exception-dangers-and-downsides/" class="md-nav__link">
+        14.8 异常的危险和缺点
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+      
+      <label class="md-nav__link" for="nav-6">
+        15 move semantics and smart pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="15 move semantics and smart pointers" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          15 move semantics and smart pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/" class="md-nav__link">
+        15 移动语义和智能指针
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.1-intro-to-smart-pointers-and-move-semantics/" class="md-nav__link">
+        15.1 智能指针和移动语义的介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.2-r-value-reference/" class="md-nav__link">
+        15.2 右值引用
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.3-move-constructors-and-move-assignment/" class="md-nav__link">
+        15.3 移动构造和移动赋值
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.4-std%3A%3Amove/" class="md-nav__link">
+        15.4 std::move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.5-std%3A%3Aunique_ptr/" class="md-nav__link">
+        15.5 std::unique_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.6-std%3A%3Ashared_ptr/" class="md-nav__link">
+        15.6 std::shared_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.7-std%3A%3Aweak_ptr/" class="md-nav__link">
+        15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.x-chapter15-comprehensive-review/" class="md-nav__link">
+        15.x 十五章理解和复习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+      
+      <label class="md-nav__link" for="nav-7">
+        18 virtual functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="18 virtual functions" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          18 virtual functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        第十八章 虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.1-pointers-and-references-to-the-base-class-of-derived-objects/" class="md-nav__link">
+        18.1 基类指针和引用指向派生类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.2-virtual-functions-and-polymorphism/" class="md-nav__link">
+        18.2 — 虚函数和多态
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          18.3 重写 final 标识符，并且协变返回类型
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        18.3 重写 final 标识符，并且协变返回类型
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ovveride" class="md-nav__link">
+    ovveride 说明符
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final" class="md-nav__link">
+    final 说明符
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#covariant" class="md-nav__link">
+    Covariant 返回类型
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-nav__link">
+        18.4 虚构造函数，虚赋值，重写虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.5-early-binding-and-late-binding/" class="md-nav__link">
+        18.5 预绑定和后期绑定
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.6-the-virtual-table/" class="md-nav__link">
+        18.6 虚表
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.7-virtual-base-classes/" class="md-nav__link">
+        18.7 虚基类 (Virtual base classes)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.8-object-slicing/" class="md-nav__link">
+        18.8 对象切割
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.9-dynamic-casting/" class="md-nav__link">
+        18.9 动态类型转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.x%20chapter-18-comprehensice-quiz/" class="md-nav__link">
+        18.x 十二章理解和练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+      
+      <label class="md-nav__link" for="nav-8">
+        19 templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="19 templates" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          19 templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/" class="md-nav__link">
+        十九章 模板
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.1-function-templates/" class="md-nav__link">
+        19.1 函数模板 Function templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.2-function-template-instances/" class="md-nav__link">
+        19.2 类模板实例
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.3-template-classes/" class="md-nav__link">
+        19.3 模板类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.4-template-non-type-parameters/" class="md-nav__link">
+        19.4 模板非类型参数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.5-function-template-specialization/" class="md-nav__link">
+        19.5 函数模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.6-class-template-specialization/" class="md-nav__link">
+        19.6 类模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.7-partial-template-specialization/" class="md-nav__link">
+        19.7 模板局部特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.8-partial-template-specialization-for-pointers/" class="md-nav__link">
+        19.8 局部模板特化指针的
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.x%20chapter-19-comprehensice-quiz/" class="md-nav__link">
+        19.x - 19章节练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" >
+      
+      <label class="md-nav__link" for="nav-9">
+        23 input and output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="23 input and output" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          23 input and output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.1-input-and-output-streams/" class="md-nav__link">
+        18.1 输入输出流
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.2-input-with-istream/" class="md-nav__link">
+        18.2 使用 istream 输入
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.3-output-with-ostream-and-ios/" class="md-nav__link">
+        18.3 使用 ostrea 和 ios 进行输出
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#ovveride" class="md-nav__link">
+    ovveride 说明符
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#final" class="md-nav__link">
+    final 说明符
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#covariant" class="md-nav__link">
+    Covariant 返回类型
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="183-final">18.3 重写 final 标识符，并且协变返回类型<a class="headerlink" href="#183-final" title="Permanent link">&para;</a></h1>
+<!-- 12.2a — The override and final specifiers, and covariant return types -->
+
+<blockquote>
+<p>By Alex on November 6<sup>th</sup>, 2016 | last modified by nascardriver on December 12<sup>th</sup>, 2020</p>
+<p>翻译 by 赵文杰 2020-12-20 | 最后修改于 2020-12-20</p>
+</blockquote>
+<!-- To address some common challenges with inheritance, C++11 added two special identifiers to C++: override and final. Note that these identifiers are not considered keywords -- they are normal identifiers that have special meaning in certain contexts. -->
+
+<p>为了解决一些使用继承过程常见的问题，C++ 添加了两种特殊的标识符：<code>ovveride</code> 和 <code>final</code>。注意这些标识符不是关键词 —— 他们是有特殊意义的普通的标识符。</p>
+<!-- Although final isn’t used very much, override is a fantastic addition that you should use regularly. In this lesson, we’ll take a look at both, as well as one exception to the rule that virtual function override return types must match. -->
+
+<p>尽管 <code>final</code> 不是很常用，重写是一个你应该规律使用的神奇的功能。在这节课中，我们也会看一眼这两个问题，以及虚拟函数重写返回类型必须匹配的规则的一个例外。</p>
+<!-- The override specifier -->
+<h2 id="ovveride"><code>ovveride</code> 说明符<a class="headerlink" href="#ovveride" title="Permanent link">&para;</a></h2>
+<!-- As we mentioned in the previous lesson, a derived class virtual function is only considered an override if its signature and return types match exactly. That can lead to inadvertent issues, where a function that was intended to be an override actually isn’t. -->
+
+<p>我们在之前的课程中提到过，一个派生类虚函数如果恰好匹配返回值类型就是重写。这会无意中引起问题，一个打算重写的函数实际上并没有重写。</p>
+<!-- Consider the following example: -->
+
+<p>思考下列例子：</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">A</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName1</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;A&quot;</span><span class="p">;</span> <span class="p">}</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName2</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;A&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName1</span><span class="p">(</span><span class="kt">short</span> <span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;B&quot;</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// note: parameter is a short int</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName2</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;B&quot;</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// note: function is const</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">B</span> <span class="n">b</span><span class="p">{};</span>
+ <span class="n">A</span><span class="o">&amp;</span> <span class="n">rBase</span><span class="p">{</span> <span class="n">b</span> <span class="p">};</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">rBase</span><span class="p">.</span><span class="n">getName1</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">rBase</span><span class="p">.</span><span class="n">getName2</span><span class="p">(</span><span class="mi">2</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- Because rBase is an A reference to a B object, the intention here is to use virtual functions to access B::getName1() and B::getName2(). However, because B::getName1() takes a different parameter (a short int instead of an int), it’s not considered an override of A::getName1(). More insidiously, because B::getName2() is const and A::getName2() isn’t, B::getName2() isn’t considered an override of A::getName2(). -->
+
+<p>因为 <code>rBase</code> 是一个指向 B 对象的 A 类引用，目的是使用虚函数来访问 <code>B::getName1()</code> 和 <code>B::getName2()</code>。然而，因为 <code>B::getName()</code> 携带了一个不同的参数（short int 而不是 int），它不被当做是一个 <code>A::getName1()</code> 的重写。在不知不觉中， <code>B::getName2</code> 是一个 const 函数，而 <code>A::getName2()</code> 不是，<code>B::getName2()</code> 也不会成为 <code>A::getName2()</code> 的重写。</p>
+<p>因此，程序会打印：</p>
+<!-- Consequently, this program prints: -->
+
+<div class="highlight"><pre><span></span><code><span class="n">A</span>
+<span class="n">A</span>
+</code></pre></div>
+<!-- In this particular case, because A and B just print their names, it’s fairly easy to see that we messed up our overrides, and that the wrong virtual function is being called. However, in a more complicated program, where the functions have behaviors or return values that aren’t printed, such issues can be very difficult to debug. -->
+
+<p>在这个例子中，因为 A 和 B 只打印了他们的名字，很容易能看出我们搞乱了这些重写函数，然后错误的虚函数就被调用了。然而，在更加复杂的程序当中，函数有什么行为或者返回值没有被打印，这样的问题可能很难调试、</p>
+<!-- To help address the issue of functions that are meant to be overrides but aren’t, C++11 introduced the override specifier. The override specifier can be applied to any override function by placing the specifier in the same place const would go. If the function does not override a base class function (or is applied to a non-virtual function), the compiler will flag the function as an error. -->
+
+<p>为了帮助解决本来要重写但是实际上并没有的问题，C++11 引入了重写说明符。<code>override</code> 说明符可以被应用到任何重写函数，只要摆在 <code>const</code> 所在的位置就可以。如果这个函数实际上没有重写一个基类的函数（或者被使用到了非虚函数，编译器就会标注这个函数为一个错误）。</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">A</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="n">getName1</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;A&quot;</span><span class="p">;</span> <span class="p">}</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName2</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;A&quot;</span><span class="p">;</span> <span class="p">}</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName3</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;A&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span><span class="n">getName1</span><span class="p">(</span><span class="kt">short</span> <span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;B&quot;</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// compile error, function is not an override</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName2</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;B&quot;</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// compile error, function is not an override</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName3</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;B&quot;</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// okay, function is an override of A::getName3(int)</span>
+
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- The above program produces two compile errors: one for B::getName1(), and one for B::getName2(), because neither override a prior function. B::getName3() does override A::getName3(), so no error is produced for that line. -->
+
+<p>上方的程序产生两个编译错误：一个是 <code>B::getName1()</code> 然后一个是 <code>B::getName()</code>，因为他们都没有重写了之前的函数。<code>B::getName3()</code> 确实重写了 <code>A::getName()</code>，因此没有错误产生。</p>
+<!-- There is no performance penalty for using the override specifier, and it helps avoid inadvertent errors. Consequently, we highly recommend using it for every virtual function override you write to ensure you’ve actually overridden the function you think you have. -->
+
+<p>使用重写说明符没有任何性能损失，帮助我们避免无意中犯错。因此，我们非常建议在每个虚函数的重写中使用 <code>override</code> 来确保你重写了你能像你如期重写函数。</p>
+<!-- Rule -->
+<p>规则:</p>
+<!-- Apply the override specifier to every intended override function you write. -->
+
+<p>给你写的每一个想要重载的函数添加 <code>override</code> 说明符</p>
+<!-- The final specifier -->
+
+<h2 id="final"><code>final</code> 说明符<a class="headerlink" href="#final" title="Permanent link">&para;</a></h2>
+<!-- There may be cases where you don’t want someone to be able to override a virtual function, or inherit from a class. The final specifier can be used to tell the compiler to enforce this. If the user tries to override a function or inherit from a class that has been specified as final, the compiler will give a compile error. -->
+
+<p>有时候你可能不希望你的函数重写了虚函数，或者从一个类继承。<code>final</code> 说明符可以被用来告诉编译器强调这个。如果用户尝试重写一个基类中的函数，并且这个虚函数链已经被标记为 <code>final</code>，编译器会报错。</p>
+<!-- In the case where we want to restrict the user from overriding a function, the final specifier is used in the same place the override specifier is, like so: -->
+
+<p>在这个例子中你想要限制用户重载函数，<code>final</code> 说明符可以替换 <code>ovrride</code> 说明符，像这样：</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">A</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;A&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">B</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="c1">// note use of final specifier on following line -- that makes this function no longer overridable</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="k">override</span> <span class="k">final</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;B&quot;</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// okay, overrides A::getName()</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">C</span> <span class="o">:</span> <span class="k">public</span> <span class="n">B</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;C&quot;</span><span class="p">;</span> <span class="p">}</span> <span class="c1">// compile error: overrides B::getName(), which is final</span>
+<span class="p">};</span>
+</code></pre></div>
+<!-- In the above code, B::getName() overrides A::getName(), which is fine. But B::getName() has the final specifier, which means that any further overrides of that function should be considered an error. And indeed, C::getName() tries to override B::getName() (the override specifier here isn’t relevant, it’s just there for good practice), so the compiler will give a compile error. -->
+
+<p>在上面的代码中，<code>B::getName()</code> 重写了 <code>A::getName()</code>，没什么错误。但是 <code>B:;getName()</code> 有一个 <code>final</code> 说明符，意思是任何尝试重写这个函数都会被认为是一个错误。事实上，<code>C::getName()</code> 尝试重写 <code>B::getName()</code>（<code>override</code> 关键词并不是必要的，只是为了良好的习惯），因此编译器报一个编译错误。</p>
+<!-- In the case where we want to prevent inheriting from a class, the final specifier is applied after the class name: -->
+
+<p>在这个例子中我们想要阻止任何类的继承，类名后可以添加一个 <code>final</code> 说明符来实现：</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">A</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;A&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">B</span> <span class="k">final</span> <span class="o">:</span> <span class="k">public</span> <span class="n">A</span> <span class="c1">// note use of final specifier here</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;B&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">C</span> <span class="o">:</span> <span class="k">public</span> <span class="n">B</span> <span class="c1">// compile error: cannot inherit from final class</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;C&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<!-- In the above example, class B is declared final. Thus, when C tries to inherit from B, the compiler will give a compile error. -->
+
+<p>在上方的例子中，B 类以 <code>final</code> 关键词申明，当 C 尝试从 B 继承的时候，编译器就会报出一个编译错误。</p>
+<!-- Covariant return types -->
+
+<h2 id="covariant">Covariant 返回类型<a class="headerlink" href="#covariant" title="Permanent link">&para;</a></h2>
+<!-- There is one special case in which a derived class virtual function override can have a different return type than the base class and still be considered a matching override. If the return type of a virtual function is a pointer or a reference to a class, override functions can return a pointer or a reference to a derived class. These are called covariant return types. Here is an example: -->
+
+<p>有一种特殊的情况，当一个派生类虚函数重写可以和基类有不同的返回类型，并且仍然能匹配重载。如果一个虚函数的返回值类型是一个类的指针或者引用，重写函数可以返回一个指针或者引用到一个派生类。这叫做 covariant return types。例如：</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="k">class</span> <span class="nc">Base</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="c1">// This version of getThis() returns a pointer to a Base class</span>
+ <span class="k">virtual</span> <span class="n">Base</span><span class="o">*</span> <span class="n">getThis</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;called Base::getThis()</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="k">return</span> <span class="k">this</span><span class="p">;</span> <span class="p">}</span>
+ <span class="kt">void</span> <span class="n">printType</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;returned a Base</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Derived</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="c1">// Normally override functions have to return objects of the same type as the base function</span>
+ <span class="c1">// However, because Derived is derived from Base, it&#39;s okay to return Derived*instead of Base*</span>
+ <span class="n">Derived</span><span class="o">*</span> <span class="n">getThis</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;called Derived::getThis()</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>  <span class="k">return</span> <span class="k">this</span><span class="p">;</span> <span class="p">}</span>
+ <span class="kt">void</span> <span class="n">printType</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;returned a Derived</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Derived</span> <span class="n">d</span><span class="p">{};</span>
+ <span class="n">Base</span><span class="o">*</span><span class="n">b</span><span class="p">{</span> <span class="o">&amp;</span><span class="n">d</span> <span class="p">};</span>
+ <span class="n">d</span><span class="p">.</span><span class="n">getThis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">printType</span><span class="p">();</span> <span class="c1">// calls Derived::getThis(), returns a Derived*, calls Derived::printType</span>
+ <span class="n">b</span><span class="o">-&gt;</span><span class="n">getThis</span><span class="p">()</span><span class="o">-&gt;</span><span class="n">printType</span><span class="p">();</span> <span class="c1">// calls Derived::getThis(), returns a Base*, calls Base::printType</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- This prints: -->
+<p>打印：</p>
+<div class="highlight"><pre><span></span><code><span class="n">called</span> <span class="n">Derived</span><span class="o">::</span><span class="n">getThis</span><span class="p">()</span>
+<span class="n">returned</span> <span class="n">a</span> <span class="n">Derived</span>
+<span class="n">called</span> <span class="n">Derived</span><span class="o">::</span><span class="n">getThis</span><span class="p">()</span>
+<span class="n">returned</span> <span class="n">a</span> <span class="n">Base</span>
+</code></pre></div>
+<!-- Note that some older compilers (e.g. Visual Studio 6) do not support covariant return types. -->
+<p>注意，一些老旧的编译器（如 Visual Studio 6 ）不支持这种可变返回类型。</p>
+<!-- One interesting note about covariant return types: C++ can’t dynamically select types, so you’ll always get the type that matches the base version of the function being called. -->
+
+<p>一个有意思的关于 covariant return types 的事情就是： C++ 不能动态的选择而类型，因此您将始终获得与被调用函数的基类版本相匹配的类型。（so you’ll always get the type that matches the base version of the function being called.）</p>
+<!-- In the above example, we first call d.getThis(). Since d is a Derived, this calls Derived::getThis(), which returns a Derived*. This Derived* is then used to call non-virtual function Derived::printType(). -->
+
+<p>在上方的例子中，我们先调用了 <code>d.getThis()</code>。因为 d 是一个派生类，这调用了 <code>Derived::getThis()</code>，返回了一个 <code>Derived*</code>。这 <code>Derived*</code> 紧接着调用了一个非虚函数 <code>Derived::printType()</code>。</p>
+<!-- Now the interesting case. We then call b->getThis(). Variable b is a Base pointer to a Derived object. Base::getThis() is virtual function, so this calls Derived::getThis(). Although Derived::getThis() returns a Derived*, because base version of the function returns a Base*, the returned Derived*is upcast to a Base*. And thus, Base::printType() is called. -->
+
+<p>现在来看一个有趣的例子。我们接着调用 <code>d-&gt;getThis()</code>。变量 b 是一个基类指针指向 <code>Derived</code> 类的对象。<code>Base::getThis()</code> 是一个虚函数，因此这调用了 <code>Derived::getThis()</code>。尽管 <code>Derived::getThis()</code> 返回了一个 <code>Derived*</code>，因为基类版本的函数返回一个 <code>Base*</code>，返回的 <code>Derived*</code> 会向上转化为一个 <code>Base*</code>。所以，<code>Base::printType()</code> 被调用了。</p>
+<p>（未翻译）In other words, in the above example, you only get a Derived* if you call getThis() with an object that is typed as a Derived object in the first place.</p>
+<!-- 换言之，在上面的示例中，只有从一个调用 `getThis()` 时，才将一个类型化为派生对象的对象获取一个派生*。  -->
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../18.2-virtual-functions-and-polymorphism/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              18.2 — 虚函数和多态
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              18.4 虚构造函数，虚赋值，重写虚函数
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.926459b3.min.js"></script>
+      
+    
+  </body>
+</html>

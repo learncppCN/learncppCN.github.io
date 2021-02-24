@@ -1,0 +1,1457 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+    
+    
+      
+        <title>15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr - LearnCPP 中文教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a3f8f96a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#157-stdshared_ptr-stdweak_ptr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnCPP 中文教程" class="md-header__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnCPP 中文教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnCPP 中文教程" class="md-nav__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    LearnCPP 中文教程
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BF%BB%E8%AF%91%E6%97%A5%E8%AE%B0/" class="md-nav__link">
+        翻译日记
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        00 Introduction getting started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="00 Introduction getting started" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          00 Introduction getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/" class="md-nav__link">
+        第零章 介绍/起步
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/0.1-Introduction-to-these-tutorials/" class="md-nav__link">
+        0.1 教程介绍
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        08 basic object oriented programming
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="08 basic object oriented programming" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          08 basic object oriented programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/" class="md-nav__link">
+        第八章 面向对象编程基础
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.1-welcome-to-object-oriented-programming/" class="md-nav__link">
+        8.1 欢迎来到面向对象的世界
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.2-classes-and-class-member/" class="md-nav__link">
+        8.2 类和类成员 (Classes and class member)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        14 exceptions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="14 exceptions" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          14 exceptions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/" class="md-nav__link">
+        14 异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.1-the-need-for-exceptions/" class="md-nav__link">
+        14.1 为什么需要异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.2-basic-exception-handloing/" class="md-nav__link">
+        14.2 基本异常处理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.3-exceptions-functions-and-stack-unwinding/" class="md-nav__link">
+        14.3 异常，函数，栈展开
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.4-uncaught-exceptions-catch-all-handlers-and-exception-specifiers/" class="md-nav__link">
+        14.4 未捕获异常，捕获全部异常和异常说明符
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.5-exceptions-classes-and-inheritance/" class="md-nav__link">
+        14.5 异常，类和继承
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.6-rethrowing-exceptions/" class="md-nav__link">
+        14.6 异常的再抛出
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.7-function-try-blocks/" class="md-nav__link">
+        14.7 函数级的 try 代码块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.8-exception-dangers-and-downsides/" class="md-nav__link">
+        14.8 异常的危险和缺点
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+      
+      <label class="md-nav__link" for="nav-6">
+        15 move semantics and smart pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="15 move semantics and smart pointers" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          15 move semantics and smart pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        15 移动语义和智能指针
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.1-intro-to-smart-pointers-and-move-semantics/" class="md-nav__link">
+        15.1 智能指针和移动语义的介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.2-r-value-reference/" class="md-nav__link">
+        15.2 右值引用
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.3-move-constructors-and-move-assignment/" class="md-nav__link">
+        15.3 移动构造和移动赋值
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.4-std%3A%3Amove/" class="md-nav__link">
+        15.4 std::move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.5-std%3A%3Aunique_ptr/" class="md-nav__link">
+        15.5 std::unique_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.6-std%3A%3Ashared_ptr/" class="md-nav__link">
+        15.6 std::shared_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    循环依赖
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reductive" class="md-nav__link">
+    一个 reductive 的情况
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdweak_ptr" class="md-nav__link">
+    std::weak_ptr 用来做什么
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdweak_ptr_1" class="md-nav__link">
+    使用 std::weak_ptr
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    结论
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.x-chapter15-comprehensive-review/" class="md-nav__link">
+        15.x 十五章理解和复习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+      
+      <label class="md-nav__link" for="nav-7">
+        18 virtual functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="18 virtual functions" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          18 virtual functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/" class="md-nav__link">
+        第十八章 虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.1-pointers-and-references-to-the-base-class-of-derived-objects/" class="md-nav__link">
+        18.1 基类指针和引用指向派生类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.2-virtual-functions-and-polymorphism/" class="md-nav__link">
+        18.2 — 虚函数和多态
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.3-The-override-and-final-specifiers-and-covariant-return-types/" class="md-nav__link">
+        18.3 重写 final 标识符，并且协变返回类型
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-nav__link">
+        18.4 虚构造函数，虚赋值，重写虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.5-early-binding-and-late-binding/" class="md-nav__link">
+        18.5 预绑定和后期绑定
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.6-the-virtual-table/" class="md-nav__link">
+        18.6 虚表
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.7-virtual-base-classes/" class="md-nav__link">
+        18.7 虚基类 (Virtual base classes)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.8-object-slicing/" class="md-nav__link">
+        18.8 对象切割
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.9-dynamic-casting/" class="md-nav__link">
+        18.9 动态类型转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.x%20chapter-18-comprehensice-quiz/" class="md-nav__link">
+        18.x 十二章理解和练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+      
+      <label class="md-nav__link" for="nav-8">
+        19 templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="19 templates" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          19 templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/" class="md-nav__link">
+        十九章 模板
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.1-function-templates/" class="md-nav__link">
+        19.1 函数模板 Function templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.2-function-template-instances/" class="md-nav__link">
+        19.2 类模板实例
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.3-template-classes/" class="md-nav__link">
+        19.3 模板类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.4-template-non-type-parameters/" class="md-nav__link">
+        19.4 模板非类型参数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.5-function-template-specialization/" class="md-nav__link">
+        19.5 函数模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.6-class-template-specialization/" class="md-nav__link">
+        19.6 类模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.7-partial-template-specialization/" class="md-nav__link">
+        19.7 模板局部特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.8-partial-template-specialization-for-pointers/" class="md-nav__link">
+        19.8 局部模板特化指针的
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.x%20chapter-19-comprehensice-quiz/" class="md-nav__link">
+        19.x - 19章节练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" >
+      
+      <label class="md-nav__link" for="nav-9">
+        23 input and output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="23 input and output" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          23 input and output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.1-input-and-output-streams/" class="md-nav__link">
+        18.1 输入输出流
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.2-input-with-istream/" class="md-nav__link">
+        18.2 使用 istream 输入
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.3-output-with-ostream-and-ios/" class="md-nav__link">
+        18.3 使用 ostrea 和 ios 进行输出
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    循环依赖
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#reductive" class="md-nav__link">
+    一个 reductive 的情况
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdweak_ptr" class="md-nav__link">
+    std::weak_ptr 用来做什么
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdweak_ptr_1" class="md-nav__link">
+    使用 std::weak_ptr
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    结论
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="157-stdshared_ptr-stdweak_ptr">15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr<a class="headerlink" href="#157-stdshared_ptr-stdweak_ptr" title="Permanent link">&para;</a></h1>
+<!-- 15.7 — Circular dependency issues with std::shared_ptr, and std::weak_ptr -->
+
+<blockquote>
+<p>By Alex on March 21<sup>st</sup>, 2017 | last modified by Alex on January 23<sup>rd</sup>, 2020</p>
+<p>翻译by dashjay 2020.07.18</p>
+</blockquote>
+<!-- In the previous lesson, we saw how std::shared_ptr allowed us to have multiple smart pointers co-owning the same resource. However, in certain cases, this can become problematic. Consider the following case, where the shared pointers in two separate objects each point at the other object: -->
+
+<p>在之前的课程中，我们看到了 <code>std::shared_ptr</code> 如何允许我们有多个职能指正共同拥有同样的资源，然而，在具体的情况下，这可能带来很多问题，思考如下例子，这时候两个对象中的智能指针分别指向了其他对象。</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="c1"> // for std::shared_ptr</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Person</span>
+<span class="p">{</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">m_name</span><span class="p">;</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">m_partner</span><span class="p">;</span> <span class="c1">// initially created empty</span>
+
+<span class="k">public</span><span class="o">:</span>
+
+ <span class="n">Person</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">)</span><span class="o">:</span> <span class="n">m_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; created</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="o">~</span><span class="n">Person</span><span class="p">()</span>
+ <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; destroyed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="k">friend</span> <span class="kt">bool</span> <span class="n">partnerUp</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">p1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">p2</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p1</span> <span class="o">||</span> <span class="o">!</span><span class="n">p2</span><span class="p">)</span>
+   <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+  <span class="n">p1</span><span class="o">-&gt;</span><span class="n">m_partner</span> <span class="o">=</span> <span class="n">p2</span><span class="p">;</span>
+  <span class="n">p2</span><span class="o">-&gt;</span><span class="n">m_partner</span> <span class="o">=</span> <span class="n">p1</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">p1</span><span class="o">-&gt;</span><span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; is now partnered with &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p2</span><span class="o">-&gt;</span><span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+ <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="k">auto</span> <span class="n">lucy</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Lucy&quot;</span><span class="p">);</span> <span class="c1">// create a Person named &quot;Lucy&quot;</span>
+ <span class="k">auto</span> <span class="n">ricky</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Ricky&quot;</span><span class="p">);</span> <span class="c1">// create a Person named &quot;Ricky&quot;</span>
+
+ <span class="n">partnerUp</span><span class="p">(</span><span class="n">lucy</span><span class="p">,</span> <span class="n">ricky</span><span class="p">);</span> <span class="c1">// Make &quot;Lucy&quot; point to &quot;Ricky&quot; and vice-versa</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- In the above example, we dynamically allocate two Persons, “Lucy” and “Ricky” using make_shared() (to ensure lucy and ricky are destroyed at the end of main()). Then we partner them up. This sets the std::shared_ptr inside “Lucy” to point at “Ricky”, and the std::shared_ptr inside “Ricky” to point at “Lucy”. Shared pointers are meant to be shared, so it’s fine that both the lucy shared pointer and Rick’s m_partner shared pointer both point at “Lucy” (and vice-versa). -->
+
+<p>在上个面的例子中，我们使用 <code>make_shared()</code> 动态分配了两个 <code>Persons</code>,“Lucy” 和 “Ricky”（来保证他们在<code>main()结束前被销毁</code>）。紧接着，我们让他们成为搭档。这个操作设置 "Lucy" 的 <code>std::shared_ptr</code> 指向 “Ricky”，并且使得 “Ricky” 内的 <code>std::shared_ptr</code>指向 “Lucy”。共享指针被设计用来共享的，因此这样很棒，分别设置两个 Persion 为对方的搭档。</p>
+<!-- However, this program doesn’t execute as expected: -->
+
+<p>然而执行起来，这个程序没有按照期望执行：</p>
+<div class="highlight"><pre><span></span><code>Lucy created
+Ricky created
+Lucy is now partnered with Ricky
+</code></pre></div>
+<!-- And that’s it. No deallocations took place. Uh. oh. What happened? -->
+<p>嗯，使得。没有销毁发生，发生了什么？</p>
+<!-- After partnerUp() is called, there are two shared pointers pointing to “Ricky” (ricky, and Lucy’s m_partner) and two shared pointers pointing to “Lucy” (lucy, and Ricky’s m_partner). -->
+
+<p>在 <code>partnerUp()</code> 被调用后，有两个只能指针指向了 “Ricky”，两个智能指针指向了 “Lucy”。</p>
+<!-- At the end of the function, the ricky shared pointer goes out of scope first. When that happens, ricky checks if there are any other shared pointers that co-own the Person “Ricky”. There are (Lucy’s m_partner). Because of this, it doesn’t deallocate “Ricky” (if it did, then Lucy’s m_partner would end up as a dangling pointer). At this point, we now have one shared pointer to “Ricky” (Lucy’s m_partner) and two shared pointers to “Lucy” (lucy, and Ricky’s m_partner). -->
+
+<p>在函数的结尾，“ricky” 的共享指针先离开作用于。当那发生时，“ricky” 检查是否有任何其他的共享指针共用拥有 “Ricky”。确实有（“lucy‘s m_partner”）。因为这，它没有释放“Ricky”（如果它释放了，那么 “Lucy” 的 m_partner 就会变成悬空指针）。在这种情况下，我们现在有一个只能指针指向 “Ricky”（“Lucy” 的 m_partner）和两个只能指针指向 “Lucy”（变量 lucy 和 “Ricky” 的 m_partner）。</p>
+<!-- Next the lucy shared pointer goes out of scope, and the same thing happens. The shared pointer lucy checks if there are any other shared pointers co-owning the Person “Lucy”. There are (Ricky’s m_partner), so “Lucy” isn’t deallocated. At this point, there is one shared pointer to “Lucy” (Ricky’s m_partner) and one shared pointer to “Ricky” (Lucy’s m_partner). -->
+
+<p>紧接着 lucy 的共享指针离开作用域，并且同样的事情发生了，智能指针 lucy 检查是否有其他智能指正共同拥有 “Lucy”，确实存在（“Ricky” 的 m_partner），因此 “Lucy” 不会被释放。在这种情况下，有一个智能指针指向 “Lucy”（“Ricky” 的 m_partner），和一个智能指针指向 “Ricky”（“Lucy” 的 m_partner）。</p>
+<!-- Then the program ends -- and neither Person “Lucy” or “Ricky” have been deallocated! Essentially, “Lucy” ends up keeping “Ricky” from being destroyed, and “Ricky” ends up keeping “Lucy” from being destroyed. -->
+
+<p>紧接着，程序结束 ———— “Lucy” 或 “Ricky” 都没有被释放！本质上 “Lucy” 最后保证了 “Ricky” 不被销毁，而且 “Ricky” 最后保证了 “Lucy” 不被销毁。</p>
+<p>It turns out that this can happen any time shared pointers form a circular reference.
+这会发生在任何时候，只要智能指针出现循环引用。</p>
+<h2 id="_1">循环依赖<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<!-- Circular references -->
+
+<!-- A Circular reference (also called a cyclical reference or a cycle) is a series of references where each object references the next, and the last object references back to the first, causing a referential loop. The references do not need to be actual C++ references -- they can be pointers, unique IDs, or any other means of identifying specific objects. -->
+
+<p>循环依赖（也叫 cyclical reference)是一系列引用中，每一个对象引用了下一个，而最后一个对象引用了第一个，造成循环。这个引用不需要是确切的 C++ 引用 ———— 它可以是指针，唯一的ID，或者任何特殊对象。</p>
+<!-- In the context of shared pointers, the references will be pointers. -->
+<p>在智能指针（shared pointers）这种情况下，循环引用就会指针引起的。</p>
+<!-- This is exactly what we see in the case above: “Lucy” points at “Ricky”, and “Ricky” points at “Lucy”. With three pointers, you’d get the same thing when A points at B, B points at C, and C points at A. The practical effect of having shared pointers form a cycle is that each object ends up keeping the next object alive -- with the last object keeping the first object alive. Thus, no objects in the series can be deallocated because they all think some other object still needs it! -->
+
+<p>这正好发生在以上的情况下：“Lucy” 指向了 “Ricky”，然后 “Ricky” 指向了 “Lucy”。如果有三个指针，你会得到相似的结果就是 A指向B，B指向C，C指向A。在环中，智能指针的效果依然是保证下一个对象的存活 ———— 最后一个对象保证了第一个对象的存活，因此，没有对象会被释放，因为他们都任为其他对象仍然需要它！</p>
+<h2 id="reductive">一个 reductive 的情况<a class="headerlink" href="#reductive" title="Permanent link">&para;</a></h2>
+<!-- A reductive case -->
+
+<!-- It turns out, this cyclical reference issue can even happen with a single std::shared_ptr -- a std::shared_ptr referencing the object that contains it is still a cycle (just a reductive one). Although it’s fairly unlikely that this would ever happen in practice, we’ll show you for additional comprehension: -->
+
+<p>事实证明，循环引用的问题甚至在只有一个 <code>std::shared_ptr</code> 的情况下成立。 ———— 一个 <code>std::shared_ptr</code> 引用的对象包含了一个循环。尽管这在实际情况下很不常见，我们将会展示给你，为了进一步理解：</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="c1"> // for std::shared_ptr</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Resource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">m_ptr</span><span class="p">;</span> <span class="c1">// initially created empty</span>
+
+ <span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource acquired</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+ <span class="o">~</span><span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource destroyed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="k">auto</span> <span class="n">ptr1</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span><span class="p">();</span>
+
+ <span class="n">ptr1</span><span class="o">-&gt;</span><span class="n">m_ptr</span> <span class="o">=</span> <span class="n">ptr1</span><span class="p">;</span> <span class="c1">// m_ptr is now sharing the Resource that contains it</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- In the above example, when ptr1 goes out of scope, it doesn’t deallocate the Resource because the Resource’s m_ptr is sharing the Resource. Then there’s nobody left to delete the Resource (m_ptr never goes out of scope, so it never gets a chance). Thus, the program prints: -->
+
+<p>在上方的例子中，当 ptr1 离开作用于时，他不会释放 Resource 因为 Rresource 的 m_ptr 正在共享 Resource。紧接着没有谁会被删除 （<code>m_ptr</code> 从未离开作用于，所以它没有机会被删除）。因此，这个程序输出：</p>
+<div class="highlight"><pre><span></span><code>Resource acquired
+</code></pre></div>
+<p>就是这样</p>
+<!-- and that’s it. -->
+
+<h2 id="stdweak_ptr">std::weak_ptr 用来做什么<a class="headerlink" href="#stdweak_ptr" title="Permanent link">&para;</a></h2>
+<!-- So what is std::weak_ptr for anyway? -->
+
+<!-- std::weak_ptr was designed to solve the “cyclical ownership” problem described above. A std::weak_ptr is an observer -- it can observe and access the same object as a std::shared_ptr (or other std::weak_ptrs) but it is not considered an owner. Remember, when a std::shared pointer goes out of scope, it only considers whether other std::shared_ptr are co-owning the object. std::weak_ptr does not count! -->
+
+<p><code>std::weak_ptr</code> 就是用来解决上方描述的循环依赖的问题。一个 “std::waek_ptr” 是一个观察者 ———— 它可以访问和同样的对象就像 <code>std::shared_ptr</code> 那样，但它不被认为是一个拥有者。记住，当一个智能指针离开作用域，它仅仅思考是否有其他的 <code>std::shared_ptr</code> 共同持有这个对象，<code>std::weak_ptr</code> 不算数！</p>
+<p>让我们使用 weak_ptr 来解决之前的 Persion 问题：</p>
+<!-- Let’s solve our Person-al issue using a std::weak_ptr: -->
+
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="c1"> // for std::shared_ptr and std::weak_ptr</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Person</span>
+<span class="p">{</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">m_name</span><span class="p">;</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">weak_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">m_partner</span><span class="p">;</span> <span class="c1">// note: This is now a std::weak_ptr</span>
+
+<span class="k">public</span><span class="o">:</span>
+
+ <span class="n">Person</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">)</span><span class="o">:</span> <span class="n">m_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; created</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="o">~</span><span class="n">Person</span><span class="p">()</span>
+ <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; destroyed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="k">friend</span> <span class="kt">bool</span> <span class="n">partnerUp</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">p1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">p2</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p1</span> <span class="o">||</span> <span class="o">!</span><span class="n">p2</span><span class="p">)</span>
+   <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+  <span class="n">p1</span><span class="o">-&gt;</span><span class="n">m_partner</span> <span class="o">=</span> <span class="n">p2</span><span class="p">;</span>
+  <span class="n">p2</span><span class="o">-&gt;</span><span class="n">m_partner</span> <span class="o">=</span> <span class="n">p1</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">p1</span><span class="o">-&gt;</span><span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; is now partnered with &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p2</span><span class="o">-&gt;</span><span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+ <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="k">auto</span> <span class="n">lucy</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Lucy&quot;</span><span class="p">);</span>
+ <span class="k">auto</span> <span class="n">ricky</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Ricky&quot;</span><span class="p">);</span>
+
+ <span class="n">partnerUp</span><span class="p">(</span><span class="n">lucy</span><span class="p">,</span> <span class="n">ricky</span><span class="p">);</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>这段代码表现正常：</p>
+<!-- This code behaves properly: -->
+
+<div class="highlight"><pre><span></span><code>Lucy created
+Ricky created
+Lucy is now partnered with Ricky
+Ricky destroyed
+Lucy destroyed
+</code></pre></div>
+<!-- Functionally, it works almost identically to the problematic example. However, now when ricky goes out of scope, it sees that there are no other std::shared_ptr pointing at “Ricky” (the std::weak_ptr from “Lucy” doesn’t count). Therefore, it will deallocate “Ricky”. The same occurs for lucy. -->
+
+<p>从功能上来讲，它同有问题的例子工作起来几乎一样。然而，现在当 <code>ricky</code> 离开作用域时，它检查发现没有其他 <code>std::shared_ptr</code> 指向了 “Ricky”（“Lucy” 的<code>std::weak_ptr</code> 不算）。因此，它会释放 “Ricky”。同样的情况发生在 lucy 上。</p>
+<h2 id="stdweak_ptr_1">使用 std::weak_ptr<a class="headerlink" href="#stdweak_ptr_1" title="Permanent link">&para;</a></h2>
+<!-- Using std::weak_ptr -->
+
+<!-- The downside of std::weak_ptr is that std::weak_ptr are not directly usable (they have no operator->). To use a std::weak_ptr, you must first convert it into a std::shared_ptr. Then you can use the std::shared_ptr. To convert a std::weak_ptr into a std::shared_ptr, you can use the lock() member function. Here’s the above example, updated to show this off: -->
+
+<p><code>std::weak_ptr</code> 的缺点是 <code>std::weak_ptr</code> 不能直接被使用（它没有 -&gt; 操作符）。要使用 <code>std::weak_ptr</code> 你必须先转化它成为一个 <code>std::shared_ptr</code>。要完成转化，你可以使用 <code>lock()</code> 成员函数，这是之前的例子经过更新：</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;memory&gt;</span><span class="c1"> // for std::shared_ptr and std::weak_ptr</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Person</span>
+<span class="p">{</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">m_name</span><span class="p">;</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">weak_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">m_partner</span><span class="p">;</span> <span class="c1">// note: This is now a std::weak_ptr</span>
+
+<span class="k">public</span><span class="o">:</span>
+
+ <span class="n">Person</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">name</span><span class="p">)</span> <span class="o">:</span> <span class="n">m_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; created</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+ <span class="p">}</span>
+ <span class="o">~</span><span class="n">Person</span><span class="p">()</span>
+ <span class="p">{</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; destroyed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="k">friend</span> <span class="kt">bool</span> <span class="n">partnerUp</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">p1</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">p2</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">!</span><span class="n">p1</span> <span class="o">||</span> <span class="o">!</span><span class="n">p2</span><span class="p">)</span>
+   <span class="k">return</span> <span class="nb">false</span><span class="p">;</span>
+
+  <span class="n">p1</span><span class="o">-&gt;</span><span class="n">m_partner</span> <span class="o">=</span> <span class="n">p2</span><span class="p">;</span>
+  <span class="n">p2</span><span class="o">-&gt;</span><span class="n">m_partner</span> <span class="o">=</span> <span class="n">p1</span><span class="p">;</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">p1</span><span class="o">-&gt;</span><span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; is now partnered with &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p2</span><span class="o">-&gt;</span><span class="n">m_name</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="nb">true</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">shared_ptr</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span> <span class="n">getPartner</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_partner</span><span class="p">.</span><span class="n">lock</span><span class="p">();</span> <span class="p">}</span> <span class="c1">// use lock() to convert weak_ptr to shared_ptr</span>
+ <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">getName</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_name</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="k">auto</span> <span class="n">lucy</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Lucy&quot;</span><span class="p">);</span>
+ <span class="k">auto</span> <span class="n">ricky</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">make_shared</span><span class="o">&lt;</span><span class="n">Person</span><span class="o">&gt;</span><span class="p">(</span><span class="s">&quot;Ricky&quot;</span><span class="p">);</span>
+
+ <span class="n">partnerUp</span><span class="p">(</span><span class="n">lucy</span><span class="p">,</span> <span class="n">ricky</span><span class="p">);</span>
+
+ <span class="k">auto</span> <span class="n">partner</span> <span class="o">=</span> <span class="n">ricky</span><span class="o">-&gt;</span><span class="n">getPartner</span><span class="p">();</span> <span class="c1">// get shared_ptr to Ricky&#39;s partner</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">ricky</span><span class="o">-&gt;</span><span class="n">getName</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;&#39;s partner is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">partner</span><span class="o">-&gt;</span><span class="n">getName</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>输出：</p>
+<div class="highlight"><pre><span></span><code>Lucy created
+Ricky created
+Lucy is now partnered with Ricky
+Ricky&#39;s partner is: Lucy
+Ricky destroyed
+Lucy destroyed
+</code></pre></div>
+<!-- We don’t have to worry about circular dependencies with std::shared_ptr variable “partner” since it’s just a local variable inside the function. It will eventually go out of scope at the end of the function and the reference count will be decremented by 1. -->
+
+<p>在使用 partner 变量的时候，我们无需关心循环引，因为他就是一个函数内的局部变量。他会最终离开作用域，然后引用数量会减少1.</p>
+<h2 id="_2">结论<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<!-- Conclusion -->
+
+<!-- std::shared_ptr can be used when you need multiple smart pointers that can co-own a resource. The resource will be deallocated when the last std::shared_ptr goes out of scope. std::weak_ptr can be used when you want a smart pointer that can see and use a shared resource, but does not participate in the ownership of that resource. -->
+
+<p>当你需要多个智能指针管理同一个资源时，可以用<code>std::shared_ptr</code> 。资源将会在最后一个 <code>std::shared_ptr</code>离开作用域时销毁。</p>
+<p>当你需要一个只能指针来访问另一个智能指针时，可以用<code>std::weak_ptr</code> ，但是不会得到资源的所有权</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../15.6-std%3A%3Ashared_ptr/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              15.6 std::shared_ptr
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../15.x-chapter15-comprehensive-review/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              15.x 十五章理解和复习
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.926459b3.min.js"></script>
+      
+    
+  </body>
+</html>

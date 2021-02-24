@@ -1,0 +1,1792 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+    
+    
+      
+        <title>18.3 使用 ostrea 和 ios 进行输出 - LearnCPP 中文教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a3f8f96a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#183-ostrea-ios" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnCPP 中文教程" class="md-header__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnCPP 中文教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              18.3 使用 ostrea 和 ios 进行输出
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnCPP 中文教程" class="md-nav__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    LearnCPP 中文教程
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BF%BB%E8%AF%91%E6%97%A5%E8%AE%B0/" class="md-nav__link">
+        翻译日记
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        00 Introduction getting started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="00 Introduction getting started" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          00 Introduction getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/" class="md-nav__link">
+        第零章 介绍/起步
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/0.1-Introduction-to-these-tutorials/" class="md-nav__link">
+        0.1 教程介绍
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        08 basic object oriented programming
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="08 basic object oriented programming" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          08 basic object oriented programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/" class="md-nav__link">
+        第八章 面向对象编程基础
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.1-welcome-to-object-oriented-programming/" class="md-nav__link">
+        8.1 欢迎来到面向对象的世界
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.2-classes-and-class-member/" class="md-nav__link">
+        8.2 类和类成员 (Classes and class member)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        14 exceptions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="14 exceptions" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          14 exceptions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/" class="md-nav__link">
+        14 异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.1-the-need-for-exceptions/" class="md-nav__link">
+        14.1 为什么需要异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.2-basic-exception-handloing/" class="md-nav__link">
+        14.2 基本异常处理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.3-exceptions-functions-and-stack-unwinding/" class="md-nav__link">
+        14.3 异常，函数，栈展开
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.4-uncaught-exceptions-catch-all-handlers-and-exception-specifiers/" class="md-nav__link">
+        14.4 未捕获异常，捕获全部异常和异常说明符
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.5-exceptions-classes-and-inheritance/" class="md-nav__link">
+        14.5 异常，类和继承
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.6-rethrowing-exceptions/" class="md-nav__link">
+        14.6 异常的再抛出
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.7-function-try-blocks/" class="md-nav__link">
+        14.7 函数级的 try 代码块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.8-exception-dangers-and-downsides/" class="md-nav__link">
+        14.8 异常的危险和缺点
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+      
+      <label class="md-nav__link" for="nav-6">
+        15 move semantics and smart pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="15 move semantics and smart pointers" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          15 move semantics and smart pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/" class="md-nav__link">
+        15 移动语义和智能指针
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.1-intro-to-smart-pointers-and-move-semantics/" class="md-nav__link">
+        15.1 智能指针和移动语义的介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.2-r-value-reference/" class="md-nav__link">
+        15.2 右值引用
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.3-move-constructors-and-move-assignment/" class="md-nav__link">
+        15.3 移动构造和移动赋值
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.4-std%3A%3Amove/" class="md-nav__link">
+        15.4 std::move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.5-std%3A%3Aunique_ptr/" class="md-nav__link">
+        15.5 std::unique_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.6-std%3A%3Ashared_ptr/" class="md-nav__link">
+        15.6 std::shared_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.7-std%3A%3Aweak_ptr/" class="md-nav__link">
+        15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.x-chapter15-comprehensive-review/" class="md-nav__link">
+        15.x 十五章理解和复习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+      
+      <label class="md-nav__link" for="nav-7">
+        18 virtual functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="18 virtual functions" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          18 virtual functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/" class="md-nav__link">
+        第十八章 虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.1-pointers-and-references-to-the-base-class-of-derived-objects/" class="md-nav__link">
+        18.1 基类指针和引用指向派生类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.2-virtual-functions-and-polymorphism/" class="md-nav__link">
+        18.2 — 虚函数和多态
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.3-The-override-and-final-specifiers-and-covariant-return-types/" class="md-nav__link">
+        18.3 重写 final 标识符，并且协变返回类型
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-nav__link">
+        18.4 虚构造函数，虚赋值，重写虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.5-early-binding-and-late-binding/" class="md-nav__link">
+        18.5 预绑定和后期绑定
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.6-the-virtual-table/" class="md-nav__link">
+        18.6 虚表
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.7-virtual-base-classes/" class="md-nav__link">
+        18.7 虚基类 (Virtual base classes)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.8-object-slicing/" class="md-nav__link">
+        18.8 对象切割
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.9-dynamic-casting/" class="md-nav__link">
+        18.9 动态类型转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.x%20chapter-18-comprehensice-quiz/" class="md-nav__link">
+        18.x 十二章理解和练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+      
+      <label class="md-nav__link" for="nav-8">
+        19 templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="19 templates" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          19 templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/" class="md-nav__link">
+        十九章 模板
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.1-function-templates/" class="md-nav__link">
+        19.1 函数模板 Function templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.2-function-template-instances/" class="md-nav__link">
+        19.2 类模板实例
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.3-template-classes/" class="md-nav__link">
+        19.3 模板类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.4-template-non-type-parameters/" class="md-nav__link">
+        19.4 模板非类型参数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.5-function-template-specialization/" class="md-nav__link">
+        19.5 函数模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.6-class-template-specialization/" class="md-nav__link">
+        19.6 类模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.7-partial-template-specialization/" class="md-nav__link">
+        19.7 模板局部特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.8-partial-template-specialization-for-pointers/" class="md-nav__link">
+        19.8 局部模板特化指针的
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.x%20chapter-19-comprehensice-quiz/" class="md-nav__link">
+        19.x - 19章节练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" checked>
+      
+      <label class="md-nav__link" for="nav-9">
+        23 input and output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="23 input and output" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          23 input and output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23.1-input-and-output-streams/" class="md-nav__link">
+        18.1 输入输出流
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../23.2-input-with-istream/" class="md-nav__link">
+        18.2 使用 istream 输入
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          18.3 使用 ostrea 和 ios 进行输出
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        18.3 使用 ostrea 和 ios 进行输出
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    输入插入操作符
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    格式化
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    有用的格式化
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    精度，符号，小数点
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    宽度，填充字符，和范围调整
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    输入插入操作符
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    格式化
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    有用的格式化
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    精度，符号，小数点
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    宽度，填充字符，和范围调整
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="183-ostrea-ios">18.3 使用 ostrea 和 ios 进行输出<a class="headerlink" href="#183-ostrea-ios" title="Permanent link">&para;</a></h1>
+<!-- In this section, we will look at various aspects of the iostream output class (ostream). -->
+
+<p>在这个部分，我们会看 ostream 的很多方面。</p>
+<!-- Note: All of the I/O functionality in this lesson lives in the std namespace. That means all I/O objects and functions either have to be prefixed with “std::”, or the “using namespace std;” statement has to be used. -->
+
+<p>注意：本节课所有的 I/O 函数都在 std 命名空间中。那意味着，所有的 I/O 对象和函数都不得不使用前缀 <code>std::</code>，或者使用 <code>using namespace std;</code> ，这个情况必须向大家说明。</p>
+<h2 id="_1">输入插入操作符<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<!-- The insertion operator -->
+
+<!-- The insertion operator (<<) is used to put information into an output stream. C++ has predefined insertion operations for all of the built-in data types, and you've already seen how you can overload the insertion operator for your own classes. -->
+
+<p>插入操作符 （&lt;&lt;） 被用来放置信息到一个输出流中。C++ 为所有的内建类型定义了插入操作，并且你早就学习过如何通过为你自己类进行操作符重载，来实现插入操作符。</p>
+<!-- In the lesson on streams, you saw that both istream and ostream were derived from a class called ios. One of the jobs of ios (and ios_base) is to control the formatting options for output. -->
+
+<p>在这节有关 stream 的课，你可以看到 istrea 和 ostream 都是派生自 ios 类。ios（和ios_base） 的工作之一就是控制输出的格式。</p>
+<h2 id="_2">格式化<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<!-- Formatting -->
+
+<!-- There are two ways to change the formatting options: flags, and manipulators. You can think of flags as boolean variables that can be turned on and off. Manipulators are objects placed in a stream that affect the way things are input and output. -->
+
+<p>有两个方式来改变格式参数：flag 和 manipulators。你可以把 flags 看做布尔变量可以被开关。Manipulators 是放在 stream 影响输入和输出的事情。</p>
+<!-- To switch a flag on, use the setf() function, with the appropriate flag as a parameter. For example, by default, C++ does not print a + sign in front of positive numbers. However, by using the std::ios::showpos flag, we can change this behavior: -->
+
+<p>要切换一个flag，使用 <code>setf()</code> 方法，可以合适的使用 flag 作为一个变量。例如，默认情况下，C++ 不会在正数前打印一个加号。然而，通过使用 std::ios::showpos 的 flag，我们可以改变这个表现：</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">showpos</span><span class="p">);</span> <span class="c1">// turn on the std::ios::showpos flag</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>输出：
++27</p>
+<p>It is possible to turn on multiple ios flags at once using the OR (|) operator:</p>
+<p>可以通过使用 OR (|) 操作符来在一次使用中开启多个操作符：</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">showpos</span> <span class="o">|</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">uppercase</span><span class="p">);</span> <span class="c1">// turn on the std::ios::showpos and std::ios::uppercase flag</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<!-- To turn a flag off, use the unsetf() function: -->
+<p>要关闭 flag，使用 <code>unsetf()</code> 函数：</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">showpos</span><span class="p">);</span> <span class="c1">// turn on the std::ios::showpos flag</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">unsetf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">showpos</span><span class="p">);</span> <span class="c1">// turn off the std::ios::showpos flag</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">28</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>输出：</p>
+<div class="highlight"><pre><span></span><code><span class="o">+</span><span class="mi">27</span>
+<span class="mi">28</span>
+</code></pre></div>
+<!-- There’s one other bit of trickiness when using setf() that needs to be mentioned. Many flags belong to groups, called format groups. A format group is a group of flags that perform similar (sometimes mutually exclusive) formatting options. For example, a format group named “basefield” contains the flags “oct”, “dec”, and “hex”, which controls the base of integral values. By default, the “dec” flag is set. Consequently, if we do this: -->
+
+<p>当使用 <code>setf()</code> 时可以告诉大家一个其他的 bit 的使用技巧，许多 flags 属于一个组，叫做格式化组。一个格式化组是一组 flag 表现相似（有时候互相排斥）的格式化配置。例如，一个配置组叫做 “basefield” 包含几个flag ”oct“，”dec“，”hex“，可以控制整数的输出。默认情况下，”dec“ flag被设置，再这样的情况下，如果我们这样做：</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">hex</span><span class="p">);</span> <span class="c1">// try to turn on hex output</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>会输出：
+27</p>
+<!-- It didn’t work! The reason why is because setf() only turns flags on -- it isn’t smart enough to turn mutually exclusive flags off. Consequently, when we turned std::hex on, std::ios::dec was still on, and std::ios::dec apparently takes precedence. There are two ways to get around this problem. -->
+
+<p>它不工作！这是因为 <code>setf()</code> 只会开启flag —— 它还不足够聪明到能关闭冲突的flags。在这种情况下，当我们开启了 <code>std::ios::hex</code> ， <code>std::ios::dec</code> 也仍然是开启的。并且 <code>std::ios::dec</code> 显然优先。这里有两个方法来解决这个问题：</p>
+<!-- First, we can turn off std::ios::dec so that only std::hex is set: -->
+
+<p>第一，我们可以关闭 <code>std::ios::dec</code>，以便于开启 <code>std::ios::hex</code> 生效：</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">unsetf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">dec</span><span class="p">);</span> <span class="c1">// turn off decimal output</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">hex</span><span class="p">);</span> <span class="c1">// turn on hexadecimal output</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>现在我们得到期望中的输出了：</p>
+<div class="highlight"><pre><span></span><code><span class="mi">1</span><span class="n">b</span>
+</code></pre></div>
+<!-- The second way is to use a different form of setf() that takes two parameters: the first parameter is the flag to set, and the second is the formatting group it belongs to. When using this form of setf(), all of the flags belonging to the group are turned off, and only the flag passed in is turned on. For example: -->
+
+<p>第二种方式就是使用一个不同形式的 <code>setf()</code> 会携带两个参数：第一个参数就是想要设置的 flag，然后第二个参数就是它属于的那个组。当使用这个形式的 <code>setf()</code> 时，所有的同组 flag 将会被关闭，然后只有 传入的 flag 会被打开：</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Turn on std::ios::hex as the only std::ios::basefield flag</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">hex</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">basefield</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<!-- This also produces the expected output: -->
+<p>这个也会如期输出：</p>
+<div class="highlight"><pre><span></span><code><span class="mi">1</span><span class="n">b</span>
+</code></pre></div>
+<!-- Using setf() and unsetf() tends to be awkward, so C++ provides a second way to change the formatting options: manipulators. The nice thing about manipulators is that they are smart enough to turn on and off the appropriate flags. Here is an example of using some manipulators to change the base: -->
+
+<p>使用 <code>setf()</code> 和 <code>unsetf()</code> 其实比较尴尬，因此 C++ 提供了一个第二的方式来改变格式化参数：manipulators。有关 manipulators 好的一方面是他们足够聪明来开启或者关闭和是的flags。这有一个使用 manipulators 改变 base 的例子：</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span> <span class="c1">// print 27 in hex</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">28</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span> <span class="c1">// we&#39;re still in hex</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">dec</span> <span class="o">&lt;&lt;</span> <span class="mi">29</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span> <span class="c1">// back to decimal</span>
+</code></pre></div>
+<p>输出</p>
+<div class="highlight"><pre><span></span><code><span class="mi">1</span><span class="n">b</span>
+<span class="mi">1</span><span class="n">c</span>
+<span class="mi">29</span>
+</code></pre></div>
+<!-- In general, using manipulators is much easier than setting and unsetting flags. Many options are available via both flags and manipulators (such as changing the base), however, other options are only available via flags or via manipulators, so it’s important to know how to use both. -->
+
+<p>大体上讲，使用 manipulators 更容易比起设置和取消 flag 设置。许多配置都是可以通过 配置 flag 和 manipulators 来实现的。（例如改变 base），然而，其他的一些配置只允许通过 flags 或者 只允许通过 manipulators，因此了解如何使用他们二者非常重要。</p>
+<h2 id="_3">有用的格式化<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<!-- Here is a list of some of the more useful flags, manipulators, and member functions. Flags live in the std::ios class, manipulators live in the std namespace, and the member functions live in the std::ostream class. -->
+
+<p>这是一个列表的一些最有用的 flags，manipulators，和一些成员函数。Flags 在 <code>std::ios</code> 类中，manipulators 在 std 命名空间中，然后成员函数在 <code>std::ostream</code> 类。</p>
+<table>
+<thead>
+<tr>
+<th>group</th>
+<th>flag</th>
+<th>meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><code>std::ios::boolalpha</code></td>
+<td>If set, booleans print “true” or “false”. If not set, booleans print 0 or 1</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Manipulator</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::boolalpha</td>
+<td>Booleans print “true” or “false”</td>
+</tr>
+<tr>
+<td>std::noboolalpha</td>
+<td>Booleans print 0 or 1 (default)</td>
+</tr>
+</tbody>
+</table>
+<p>例子：</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="nb">true</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="nb">false</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">boolalpha</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="nb">true</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="nb">false</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">noboolalpha</span> <span class="o">&lt;&lt;</span> <span class="nb">true</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="nb">false</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">boolalpha</span> <span class="o">&lt;&lt;</span> <span class="nb">true</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; &quot;</span> <span class="o">&lt;&lt;</span> <span class="nb">false</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>输出：</p>
+<div class="highlight"><pre><span></span><code><span class="mi">1</span> <span class="mi">0</span>
+<span class="nb">true</span> <span class="nb">false</span>
+<span class="mi">1</span> <span class="mi">0</span>
+<span class="nb">true</span> <span class="nb">false</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Flag</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><code>std::ios::showpos</code></td>
+<td>If set, prefix positive numbers with a +</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Manipulator</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::showpos</td>
+<td>Prefixes positive numbers with a +</td>
+</tr>
+<tr>
+<td>std::noshowpos</td>
+<td>Doesn’t prefix positive numbers with a +</td>
+</tr>
+</tbody>
+</table>
+<p>例子：</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">showpos</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">noshowpos</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">showpos</span> <span class="o">&lt;&lt;</span> <span class="mi">5</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>输出：</p>
+<div class="highlight"><pre><span></span><code><span class="mi">5</span>
+<span class="o">+</span><span class="mi">5</span>
+<span class="mi">5</span>
+<span class="o">+</span><span class="mi">5</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Flag</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td></td>
+<td><code>std::ios::uppercase</code></td>
+<td>If set, uses upper case letters</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Manipulator</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::uppercase</td>
+<td>Uses upper case letters</td>
+</tr>
+<tr>
+<td>std::nouppercase</td>
+<td>Uses lower case letters</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mf">12345678.9</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">uppercase</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mf">12345678.9</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">nouppercase</span> <span class="o">&lt;&lt;</span> <span class="mf">12345678.9</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">uppercase</span> <span class="o">&lt;&lt;</span> <span class="mf">12345678.9</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>输出</p>
+<div class="highlight"><pre><span></span><code><span class="mf">1.23457e+007</span>
+<span class="mf">1.23457E+007</span>
+<span class="mf">1.23457e+007</span>
+<span class="mf">1.23457E+007</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>Group</th>
+<th>Flag</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::ios::basefield</td>
+<td>std::ios::dec</td>
+<td>Prints values in decimal (default)</td>
+</tr>
+<tr>
+<td>std::ios::basefield</td>
+<td>std::ios::hex</td>
+<td>Prints values in hexadecimal</td>
+</tr>
+<tr>
+<td>std::ios::basefield</td>
+<td>std::ios::oct</td>
+<td>Prints values in octal</td>
+</tr>
+<tr>
+<td>std::ios::basefield</td>
+<td>(none)</td>
+<td>Prints values according to leading characters of value</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>Manipulator</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::dec</td>
+<td>Prints values in decimal</td>
+</tr>
+<tr>
+<td>std::hex</td>
+<td>Prints values in hexadecimal</td>
+</tr>
+<tr>
+<td>std::oct</td>
+<td>Prints values in octal</td>
+</tr>
+</tbody>
+</table>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">dec</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">basefield</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">oct</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">basefield</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span><span class="p">.</span><span class="n">setf</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">hex</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ios</span><span class="o">::</span><span class="n">basefield</span><span class="p">);</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">dec</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">oct</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">hex</span> <span class="o">&lt;&lt;</span> <span class="mi">27</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>输出</p>
+<div class="highlight"><pre><span></span><code><span class="mi">27</span>
+<span class="mi">27</span>
+<span class="mi">33</span>
+<span class="mi">1</span><span class="n">b</span>
+<span class="mi">27</span>
+<span class="mi">33</span>
+<span class="mi">1</span><span class="n">b</span>
+</code></pre></div>
+<!-- By now, you should be able to see the relationship between setting formatting via flag and via manipulators. In future examples, we will use manipulators unless they are not available. -->
+
+<p>到目前为止，你应该能够看出设置格式化通过 flag 和通过 manipulators 的区别了。在未来的例子，我们将使用 manipulators 除非不可用。</p>
+<h2 id="_4">精度，符号，小数点<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<!-- Precision, notation, and decimal points -->
+
+<!-- Using manipulators (or flags), it is possible to change the precision and format with which floating point numbers are displayed. There are several formatting options that combine in somewhat complex ways, so we will take a closer look at this. -->
+
+<p>使用 manipulators （或者 flags），可以改变浮点数显示的精度和格式。有一些格式的选项以一种复杂的方式结合，我们接下来会仔细看</p>
+<!-- |Group|  Flag|  Meaning|
+|------|---------|---------|
+|std::ios::floatfield|  std::ios::fixed | Uses decimal notation for floating-point numbers
+|std::ios::floatfield|  std::ios::scientific | Uses scientific notation for floating-point numbers
+|std::ios::floatfield|  (none) | Uses fixed for numbers with few digits, scientific otherwise
+|std::ios::floatfield|  std::ios::showpoint | Always show a decimal point and trailing 0’s for floating-point values -->
+
+<table>
+<thead>
+<tr>
+<th>所在的组</th>
+<th>Flag</th>
+<th>意义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::ios::floatfield</td>
+<td>std::ios::fixed</td>
+<td>对浮点数采用十进制记法</td>
+</tr>
+<tr>
+<td>std::ios::floatfield</td>
+<td>std::ios::scientific</td>
+<td>对浮点数采用科学计数法</td>
+</tr>
+<tr>
+<td>std::ios::floatfield</td>
+<td>(none)</td>
+<td>如果位数很少则使用数字，否则使用科学计数法</td>
+</tr>
+<tr>
+<td>std::ios::floatfield</td>
+<td>std::ios::showpoint</td>
+<td>对于浮点数，始终展示小数点和后方的零</td>
+</tr>
+</tbody>
+</table>
+<!-- |Manipulator|  Meaning|
+|------|---------|
+|std::fixed|  Use decimal notation for values|
+|std::scientific|  Use scientific notation for values|
+|std::showpoint|  Show a decimal point and trailing 0’s for floating-point values|
+|std::noshowpoint | Don’t show a decimal point and trailing 0’s for floating-point |values
+|std::setprecision(int) | Sets the precision of floating-point numbers (defined in iomanip.h)| -->
+
+<table>
+<thead>
+<tr>
+<th>Manipulator</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::fixed</td>
+<td>对数值使用十进制计数法</td>
+</tr>
+<tr>
+<td>std::scientific</td>
+<td>使用科学计数法</td>
+</tr>
+<tr>
+<td>std::showpoint</td>
+<td>显示浮点数的小数点和后方的零</td>
+</tr>
+<tr>
+<td>std::noshowpoint</td>
+<td>不要显示小数点和后方的零</td>
+</tr>
+<tr>
+<td>std::setprecision(int)</td>
+<td>设定浮点数的输出精度 (定义在 iomanip.h 头中)</td>
+</tr>
+</tbody>
+</table>
+<!-- |Member| function | Meaning|
+|------|---------|---------|
+|std::precision() | Returns the current precision of floating-point numbers|
+|std::precision(int) | Sets the precision of floating-point numbers and returns old precision| -->
+
+<table>
+<thead>
+<tr>
+<th>Member</th>
+<th>function</th>
+<th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>std::precision()</td>
+<td>返回当前设置的浮点数的精度</td>
+<td></td>
+</tr>
+<tr>
+<td>std::precision(int)</td>
+<td>设置新的精度并且返回旧的精度</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<!-- If fixed or scientific notation is used, precision determines how many decimal places in the fraction is displayed. Note that if the precision is less than the number of significant digits, the number will be rounded. -->
+
+<p>如果固定地或者科学计数法被使用，精度会决定分数中显示多少小数位。请注意，如果精度有效数字的个数，数字将会被四舍五入。</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">fixed</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">scientific</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>输出</p>
+<div class="highlight"><pre><span></span><code><span class="mf">123.456</span>
+<span class="mf">123.4560</span>
+<span class="mf">123.45600</span>
+<span class="mf">123.456000</span>
+<span class="mf">123.4560000</span>
+
+<span class="mf">1.235e+002</span>
+<span class="mf">1.2346e+002</span>
+<span class="mf">1.23456e+002</span>
+<span class="mf">1.234560e+002</span>
+<span class="mf">1.2345600e+002</span>
+</code></pre></div>
+<!-- If neither fixed nor scientific are being used, precision determines how many significant digits should be displayed. Again, if the precision is less than the number of significant digits, the number will be rounded. -->
+
+<p>如果固定位数（fixed）和科学计数法（scientific）都没有被使用，精度会决定了该数字显示多少位。再说一次，如果精度小于有效数字个数，数字将会被四舍五入。</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>输出</p>
+<div class="highlight"><pre><span></span><code><span class="mi">123</span>
+<span class="mf">123.5</span>
+<span class="mf">123.46</span>
+<span class="mf">123.456</span>
+<span class="mf">123.456</span>
+</code></pre></div>
+<!-- Using the showpoint manipulator or flag, you can make the stream write a decimal point and trailing zeros. -->
+
+<p>使用了 showpoint manipulator 或者 flag，你可以让一个流写入数字和后面的零。</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">showpoint</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">std</span><span class="o">::</span><span class="n">setprecision</span><span class="p">(</span><span class="mi">7</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="mf">123.456</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+</code></pre></div>
+<p>输出</p>
+<div class="highlight"><pre><span></span><code><span class="mf">123.</span>
+<span class="mf">123.5</span>
+<span class="mf">123.46</span>
+<span class="mf">123.456</span>
+<span class="mf">123.4560</span>
+</code></pre></div>
+<!-- Here’s a summary table with some more examples: -->
+<p>这是一些例子</p>
+<table>
+<thead>
+<tr>
+<th>Option</th>
+<th>Precision</th>
+<th>12345.0</th>
+<th>0.12345</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Normal</td>
+<td>3</td>
+<td>1.23e+004</td>
+<td>0.123</td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td>1.235e+004</td>
+<td>0.1235</td>
+</tr>
+<tr>
+<td></td>
+<td>5</td>
+<td>12345</td>
+<td>0.12345</td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td>12345</td>
+<td>0.12345</td>
+</tr>
+<tr>
+<td>Showpoint</td>
+<td>3</td>
+<td>1.23e+004</td>
+<td>0.123</td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td>1.235e+004</td>
+<td>0.1235</td>
+</tr>
+<tr>
+<td></td>
+<td>5</td>
+<td>12345.</td>
+<td>0.12345</td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td>12345.0</td>
+<td>0.123450</td>
+</tr>
+<tr>
+<td>Fixed</td>
+<td>3</td>
+<td>12345.000</td>
+<td>0.123</td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td>12345.0000</td>
+<td>0.1235</td>
+</tr>
+<tr>
+<td></td>
+<td>5</td>
+<td>12345.00000</td>
+<td>0.12345</td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td>12345.000000</td>
+<td>0.123450</td>
+</tr>
+<tr>
+<td>Scientific</td>
+<td>3</td>
+<td>1.235e+004</td>
+<td>1.235e-001</td>
+</tr>
+<tr>
+<td></td>
+<td>4</td>
+<td>1.2345e+004</td>
+<td>1.2345e-001</td>
+</tr>
+<tr>
+<td></td>
+<td>5</td>
+<td>1.23450e+004</td>
+<td>1.23450e-001</td>
+</tr>
+<tr>
+<td></td>
+<td>6</td>
+<td>1.234500e+004</td>
+<td>1.234500e-001</td>
+</tr>
+</tbody>
+</table>
+<!-- Width, fill characters, and justification -->
+<h2 id="_5">宽度，填充字符，和范围调整<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<p>... 未完</p>
+<!-- 
+Typically when you print numbers, the numbers are printed without any regard to the space around them. However, it is possible to left or right justify the printing of numbers. In order to do this, we have to first define a field width, which defines the number of output spaces a value will have. If the actual number printed is smaller than the field width, it will be left or right justified (as specified). If the actual number is larger than the field width, it will not be truncated -- it will overflow the field. -->
+
+<p>通常当你打印数字的时候，这些被打印的数字周围不会有任何的空间。然而，其实打印的数字可以向左或者向右对齐。为了完成这个，我们不得不定义一个字段宽度，定义了一个数字来规定输出空间的量。如果实际打印的数字小于字段宽度，它将左对齐或右对齐（如指定）。如果实际数字大于字段宽度，它将不会被截断——它将使字段溢出。 </p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../23.2-input-with-istream/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              18.2 使用 istream 输入
+            </div>
+          </div>
+        </a>
+      
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.926459b3.min.js"></script>
+      
+    
+  </body>
+</html>

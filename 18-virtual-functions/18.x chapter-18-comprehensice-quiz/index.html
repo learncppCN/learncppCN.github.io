@@ -1,0 +1,1778 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+    
+    
+      
+        <title>18.x 十二章理解和练习 - LearnCPP 中文教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a3f8f96a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#18x" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnCPP 中文教程" class="md-header__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnCPP 中文教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              18.x 十二章理解和练习
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnCPP 中文教程" class="md-nav__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    LearnCPP 中文教程
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BF%BB%E8%AF%91%E6%97%A5%E8%AE%B0/" class="md-nav__link">
+        翻译日记
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        00 Introduction getting started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="00 Introduction getting started" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          00 Introduction getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/" class="md-nav__link">
+        第零章 介绍/起步
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/0.1-Introduction-to-these-tutorials/" class="md-nav__link">
+        0.1 教程介绍
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        08 basic object oriented programming
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="08 basic object oriented programming" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          08 basic object oriented programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/" class="md-nav__link">
+        第八章 面向对象编程基础
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.1-welcome-to-object-oriented-programming/" class="md-nav__link">
+        8.1 欢迎来到面向对象的世界
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.2-classes-and-class-member/" class="md-nav__link">
+        8.2 类和类成员 (Classes and class member)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        14 exceptions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="14 exceptions" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          14 exceptions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/" class="md-nav__link">
+        14 异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.1-the-need-for-exceptions/" class="md-nav__link">
+        14.1 为什么需要异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.2-basic-exception-handloing/" class="md-nav__link">
+        14.2 基本异常处理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.3-exceptions-functions-and-stack-unwinding/" class="md-nav__link">
+        14.3 异常，函数，栈展开
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.4-uncaught-exceptions-catch-all-handlers-and-exception-specifiers/" class="md-nav__link">
+        14.4 未捕获异常，捕获全部异常和异常说明符
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.5-exceptions-classes-and-inheritance/" class="md-nav__link">
+        14.5 异常，类和继承
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.6-rethrowing-exceptions/" class="md-nav__link">
+        14.6 异常的再抛出
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.7-function-try-blocks/" class="md-nav__link">
+        14.7 函数级的 try 代码块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.8-exception-dangers-and-downsides/" class="md-nav__link">
+        14.8 异常的危险和缺点
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+      
+      <label class="md-nav__link" for="nav-6">
+        15 move semantics and smart pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="15 move semantics and smart pointers" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          15 move semantics and smart pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/" class="md-nav__link">
+        15 移动语义和智能指针
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.1-intro-to-smart-pointers-and-move-semantics/" class="md-nav__link">
+        15.1 智能指针和移动语义的介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.2-r-value-reference/" class="md-nav__link">
+        15.2 右值引用
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.3-move-constructors-and-move-assignment/" class="md-nav__link">
+        15.3 移动构造和移动赋值
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.4-std%3A%3Amove/" class="md-nav__link">
+        15.4 std::move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.5-std%3A%3Aunique_ptr/" class="md-nav__link">
+        15.5 std::unique_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.6-std%3A%3Ashared_ptr/" class="md-nav__link">
+        15.6 std::shared_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.7-std%3A%3Aweak_ptr/" class="md-nav__link">
+        15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.x-chapter15-comprehensive-review/" class="md-nav__link">
+        15.x 十五章理解和复习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+      
+      <label class="md-nav__link" for="nav-7">
+        18 virtual functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="18 virtual functions" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          18 virtual functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        第十八章 虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.1-pointers-and-references-to-the-base-class-of-derived-objects/" class="md-nav__link">
+        18.1 基类指针和引用指向派生类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.2-virtual-functions-and-polymorphism/" class="md-nav__link">
+        18.2 — 虚函数和多态
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.3-The-override-and-final-specifiers-and-covariant-return-types/" class="md-nav__link">
+        18.3 重写 final 标识符，并且协变返回类型
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-nav__link">
+        18.4 虚构造函数，虚赋值，重写虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.5-early-binding-and-late-binding/" class="md-nav__link">
+        18.5 预绑定和后期绑定
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.6-the-virtual-table/" class="md-nav__link">
+        18.6 虚表
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.7-virtual-base-classes/" class="md-nav__link">
+        18.7 虚基类 (Virtual base classes)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.8-object-slicing/" class="md-nav__link">
+        18.8 对象切割
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.9-dynamic-casting/" class="md-nav__link">
+        18.9 动态类型转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          18.x 十二章理解和练习
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        18.x 十二章理解和练习
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz-time" class="md-nav__link">
+    Quiz time
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz time">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quiz1" class="md-nav__link">
+    Quiz1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quiz2" class="md-nav__link">
+    Quiz2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+      
+      <label class="md-nav__link" for="nav-8">
+        19 templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="19 templates" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          19 templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/" class="md-nav__link">
+        十九章 模板
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.1-function-templates/" class="md-nav__link">
+        19.1 函数模板 Function templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.2-function-template-instances/" class="md-nav__link">
+        19.2 类模板实例
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.3-template-classes/" class="md-nav__link">
+        19.3 模板类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.4-template-non-type-parameters/" class="md-nav__link">
+        19.4 模板非类型参数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.5-function-template-specialization/" class="md-nav__link">
+        19.5 函数模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.6-class-template-specialization/" class="md-nav__link">
+        19.6 类模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.7-partial-template-specialization/" class="md-nav__link">
+        19.7 模板局部特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.8-partial-template-specialization-for-pointers/" class="md-nav__link">
+        19.8 局部模板特化指针的
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.x%20chapter-19-comprehensice-quiz/" class="md-nav__link">
+        19.x - 19章节练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" >
+      
+      <label class="md-nav__link" for="nav-9">
+        23 input and output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="23 input and output" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          23 input and output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.1-input-and-output-streams/" class="md-nav__link">
+        18.1 输入输出流
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.2-input-with-istream/" class="md-nav__link">
+        18.2 使用 istream 输入
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.3-output-with-ostream-and-ios/" class="md-nav__link">
+        18.3 使用 ostrea 和 ios 进行输出
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    章节总结
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz-time" class="md-nav__link">
+    Quiz time
+  </a>
+  
+    <nav class="md-nav" aria-label="Quiz time">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#quiz1" class="md-nav__link">
+    Quiz1
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quiz2" class="md-nav__link">
+    Quiz2
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="18x">18.x 十二章理解和练习<a class="headerlink" href="#18x" title="Permanent link">&para;</a></h1>
+<p>我们的 <code>C++</code> 旅程在继承和虚函数这块已经结束了。不要担心，亲爱的读者，因为还有大量其他 <code>C++</code> 的领域等待我们前进，探索！</p>
+<h2 id="_1">章节总结<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p><code>C++</code> 允许你设置基类指针和引用到派生对象。这是很有用的，当我们想要写一个函数或者数组，可以和任何类型的从基类派生的对象搭配。（This is useful when we want to write a function or array that can work with any type of object derived from a base class.）</p>
+<p>如果没有虚函数，基类指向派生类的指针和引用将会只能访问基类成员，和函数。</p>
+<!-- A virtual function is a special type of function that resolves to the most-derived version of the function (called an override) that exists between the base and derived class. To be considered an override, the derived class function must have the same signature and return type as the virtual base class function. The one exception is for covariant return types, which allow an override to return a pointer or reference to a derived class if the base class function returns a pointer or reference to the base class. -->
+
+<p>一个虚函数，是一个特殊类型的函数能解析到继承末端版本的函数（叫做重写）存在于基类和派生类之间。想要被认为是一个重写，派生类必须和基类虚函数有同样的签名和返回类型。一个例外就是<code>covariant return types</code>，能够允许一个重写返回一个指派生类的针或引用如果基类函数返回一个基类的指针或引用。</p>
+<!-- A function that is intended to be an override should use the override specifier to ensure that it is actually an override. -->
+
+<p>一个函数函数想要被重写，应该添加重写指示符来确保它确实重写了。</p>
+<!-- The final specifier can be used to prevent overrides of a function or class. -->
+
+<p><code>final</code> 指示符能够被用作阻止从一个该类的函数被重写。</p>
+<!-- If you intend to use virtual functions, you should make your destructor virtual, so the proper destructor is called if a pointer to the base class is deleted. -->
+<p>如果你想要使用一个虚函数，你应该使你的析构函数为一个虚函数，如果你删除一个基类指针，这样做可以使合适的析构函数被调用。</p>
+<!-- You can ignore virtual resolution by using the scope resolution operator to directly specify which classes version of the function you want: e.g. base.Base::getName() -->
+
+<p>你可以忽略一个虚函数解析通过使用 <code>scope resolution opearator</code> 来直接指定那个类的函数你想要调用：例如 <code>base.Base::getName()</code></p>
+<!-- Early binding occurs when the compiler encounters a direct function call. The compiler or linker can resolve these function calls directly. Late binding occurs when a function pointer is called. In these cases, which function will be called can not be resolved until runtime. Virtual functions use late binding and a virtual table to determine which version of the function to call. -->
+
+<p><code>Early binding</code> 早绑定发生在编译时直接检测到函数调用，编译器或者连接器可以直接解析这些函数调用。
+<code>Late binding</code> 发生在当一个函数指针被调用是。在这种情况下，哪个函数将会被调用不可能在运行之前确定。虚函数使用了 <code>late binding</code> 和一个虚表来决定哪个版本的函数将被调用。</p>
+<!-- Using virtual functions has a cost: virtual functions take longer to call, and the necessity of the virtual table increases the size of every object containing a virtual function by one pointer. -->
+<p>使用虚函数有一定的花费，虚函数的调用将花费更多时间，并且虚表会占用一定的空间，在每个包含虚函数的对象中增加了一个指针。</p>
+<!-- A virtual function can be made pure virtual/abstract by adding “= 0” to the end of the virtual function prototype. A class containing a pure virtual function is called an abstract class, and can not be instantiated. A class that inherits pure virtual functions must concretely define them or it will also be considered abstract. Pure virtual functions can have a body, but they are still considered abstract. -->
+<p>一个虚函数可以被定义为纯虚函数（抽象函数）通过添加 <code>=0</code> 在虚函数的定义后方。包含纯虚函数的类被叫做抽象类，这种类不能被实例化。一个类继承于抽象类，那么纯虚函数必须被正确的定义，否则该类也将被认为是抽象类。纯虚函数也可以有一个函数体，但是他们仍然被认为是抽象的。</p>
+<!-- An interface class is one with no member variables and all pure virtual functions. These are often named starting with a capital I. -->
+<p>接口类是一个没有成员变量并且全是纯虚函数的类。这样的类的名称通常以大写的<code>I</code> 开头。</p>
+<!-- A virtual base class is a base class that is only included once, no matter how many times it is inherited by an object. -->
+<p>一个虚基类在一个对象中只能被包含一次，无论被一个类继承了多少次。</p>
+<!-- When a derived class is assigned to a base class object, the base class only receives a copy of the base portion of the derived class. This is called object slicing. -->
+
+<p>当一个派生类被赋值到基类对象时，基类只能接收到派生类中基类部分的拷贝。这被叫做对象切割。</p>
+<!-- Dynamic casting can be used to convert a pointer to a base class object into a pointer to a derived class object. This is called downcasting. A failed conversion will return a null pointer. -->
+
+<p>动态转换可以被用来转换一个指向基类的指针成为一个指向派生类的指针，这被叫做向下转换 (downcasting)。一个失败的转换会返回一个空指针。</p>
+<!-- The easiest way to overload operator<< for inherited classes is to write an overloaded operator<< for the most-base class, and then call a virtual member function to do the printing. -->
+
+<p>派生类最简单的重载 <code>&lt;&lt;</code> 运算符的方式是写一个重载 <code>&lt;&lt;</code> 为最顶部的基类，然后添加一个虚成员函数来打印。</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// 译者添加的代码片段：</span>
+<span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">print</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">in</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Base</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">)</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="n">b</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+<span class="p">}</span>
+<span class="c1">// 继承对象都只需要重写print即可。</span>
+</code></pre></div>
+<h2 id="quiz-time">Quiz time<a class="headerlink" href="#quiz-time" title="Permanent link">&para;</a></h2>
+<h3 id="quiz1">Quiz1<a class="headerlink" href="#quiz1" title="Permanent link">&para;</a></h3>
+<!-- 
+Each of the following programs has some kind of defect. Inspect each program (visually, not by compiling) and determine what is wrong with the program. The output of each program is supposed to be “Derived”.-->
+
+<p>以下的每个程序都有一些缺陷，检查每个程序（用眼睛检查，不要编译）并且诊断出这个程序有什么问题。每个程序的输出都应该是 <code>Derived</code> 。</p>
+<p>译者注：原网站是响应式的隐藏，折叠了答案，本网站无法做到，因此请先完成代码阅读再往下看答案描述，每个题的答案都在代码描述下方。</p>
+<p>1a)</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Base</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_value</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Base</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_value</span><span class="p">{</span><span class="n">value</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Base&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Derived</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Derived</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">Base</span><span class="p">{</span><span class="n">value</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Derived&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Derived</span> <span class="n">d</span><span class="p">{</span><span class="mi">5</span><span class="p">};</span>
+ <span class="n">Base</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">{</span> <span class="n">d</span> <span class="p">};</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">b</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>答案1a
+<code>Base::getName()</code> 不是虚函数， 因此 <code>b.getName()</code> 不会解析并调用 <code>Derived::getName().</code>
+1b)</p>
+</blockquote>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Base</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_value</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Base</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_value</span><span class="p">{</span><span class="n">value</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Base&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Derived</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Derived</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">Base</span><span class="p">{</span><span class="n">value</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Derived&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Derived</span> <span class="n">d</span><span class="p">{</span><span class="mi">5</span><span class="p">};</span>
+ <span class="n">Base</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">{</span> <span class="n">d</span> <span class="p">};</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">b</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>答案1b
+<code>Base::geetName()</code> 并没有定义为const，而 <code>Derived::getName()</code> 是一个const函数，因此 <code>Derived::getName()</code> 不是一个重写(override)</p>
+</blockquote>
+<p>1c)</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Base</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_value</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Base</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_value</span><span class="p">{</span><span class="n">value</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Base&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Derived</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Derived</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">Base</span><span class="p">{</span><span class="n">value</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Derived&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Derived</span> <span class="n">d</span><span class="p">{</span><span class="mi">5</span><span class="p">};</span>
+ <span class="n">Base</span> <span class="n">b</span><span class="p">{</span> <span class="n">d</span> <span class="p">};</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">b</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>答案1c
+<code>d</code> 是值赋值到 <code>b</code>，导致 <code>d</code> 被切割。</p>
+</blockquote>
+<p>1d)</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Base</span> <span class="k">final</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_value</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Base</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_value</span><span class="p">{</span> <span class="n">value</span> <span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Base&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Derived</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Derived</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">Base</span><span class="p">{</span> <span class="n">value</span> <span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="k">override</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Derived&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Derived</span> <span class="n">d</span><span class="p">{</span><span class="mi">5</span><span class="p">};</span>
+ <span class="n">Base</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">{</span> <span class="n">d</span> <span class="p">};</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">b</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>答案1d
+<code>Base</code> 被定义为 <code>final</code>，因此 <code>Derived</code> 不能从它继承。这将会造成编译错误。</p>
+</blockquote>
+<p>1e)</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Base</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_value</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Base</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_value</span><span class="p">{</span><span class="n">value</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Base&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Derived</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Derived</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">Base</span><span class="p">{</span><span class="n">value</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">Derived</span><span class="o">::</span><span class="n">getName</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="s">&quot;Derived&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Derived</span> <span class="n">d</span><span class="p">{</span><span class="mi">5</span><span class="p">};</span>
+ <span class="n">Base</span> <span class="o">&amp;</span><span class="n">b</span><span class="p">{</span> <span class="n">d</span> <span class="p">};</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">b</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>答案1e
+<code>Derived::getName()</code> 是一个纯虚函数（无函数体），并且因此 <code>Derived</code> 是一个抽象类 (abstract class) 因此不能被实例化。</p>
+</blockquote>
+<p>1f)</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Base</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_value</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Base</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_value</span><span class="p">{</span><span class="n">value</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Base&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Derived</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Derived</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">Base</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">getName</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="s">&quot;Derived&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="k">auto</span> <span class="o">*</span><span class="n">d</span><span class="p">{</span> <span class="k">new</span> <span class="n">Derived</span><span class="p">(</span><span class="mi">5</span><span class="p">)</span> <span class="p">};</span>
+ <span class="n">Base</span> <span class="o">*</span><span class="n">b</span><span class="p">{</span> <span class="n">d</span> <span class="p">};</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">b</span><span class="o">-&gt;</span><span class="n">getName</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+ <span class="k">delete</span> <span class="n">b</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<blockquote>
+<p>答案1f
+这个程序实际上的确可以得到正确的输出，但是又不同的的问题。当我们 <code>delete b</code> 是，<code>b</code> 是一个 <code>Base</code> 指针，但是从来没添加一个虚析构函数 (virtual destructor) 到基类。因此，这个程序删除了 <code>Derived</code> 对象中的 <code>Base</code> 部分，并且 <code>Derived</code> 部分留在内存中（泄露）。</p>
+</blockquote>
+<h3 id="quiz2">Quiz2<a class="headerlink" href="#quiz2" title="Permanent link">&para;</a></h3>
+<p>2a) 创建一个叫做形状的抽象类，这个类应该有三个函数：一个纯虚函数 <code>print</code>传入并且返回一个 <code>std::ostream</code>，重载 &lt;&lt;操作符 <code>operator&lt;&lt;</code> 和一个虚析构函数。</p>
+<p>答案</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Shape</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+<span class="c1">// virtual const char* getShapeName() const = 0;</span>
+ <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">print</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+ <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Shape</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="k">return</span> <span class="n">p</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+ <span class="p">}</span>
+ <span class="k">virtual</span> <span class="o">~</span><span class="n">Shape</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>2b) 从 Shape 派生两个类：一个 <code>Triangle</code> 和一个 <code>Circle</code>。<code>Triangle</code> 应该有三个 <code>Point</code> 作为成员。<code>Circle</code> 应该有一个 <code>Point</code> 圆心，和一个整数半径 <code>radius</code>，重载 <code>print()</code> 函数使得以下程序能够运行。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Circle</span> <span class="n">c</span><span class="p">{</span> <span class="n">Point</span><span class="p">{</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span> <span class="p">},</span> <span class="mi">7</span> <span class="p">};</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+    <span class="n">Triangle</span> <span class="n">t</span><span class="p">{</span><span class="n">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="n">Point</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">},</span> <span class="n">Point</span><span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">}};</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">t</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>样例应该打印：</p>
+<div class="highlight"><pre><span></span><code>Circle(Point(1, 2, 3), radius 7)
+Triangle(Point(1, 2, 3), Point(4, 5, 6), Point(7, 8, 9))
+</code></pre></div>
+<p>这是 <code>Point</code> 类：</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Point</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_x</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+ <span class="kt">int</span> <span class="n">m_y</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+ <span class="kt">int</span> <span class="n">m_z</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Point</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">z</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_x</span><span class="p">{</span><span class="n">x</span><span class="p">},</span> <span class="n">m_y</span><span class="p">{</span><span class="n">y</span><span class="p">},</span> <span class="n">m_z</span><span class="p">{</span><span class="n">z</span><span class="p">}</span>
+ <span class="p">{</span>
+
+ <span class="p">}</span>
+
+ <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Point</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Point(&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">m_x</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">m_y</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">m_z</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+ <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<p>答案：</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Point</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_x</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+ <span class="kt">int</span> <span class="n">m_y</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+ <span class="kt">int</span> <span class="n">m_z</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Point</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">z</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_x</span><span class="p">{</span><span class="n">x</span><span class="p">},</span> <span class="n">m_y</span><span class="p">{</span><span class="n">y</span><span class="p">},</span> <span class="n">m_z</span><span class="p">{</span><span class="n">z</span><span class="p">}</span>
+ <span class="p">{</span>
+
+ <span class="p">}</span>
+
+ <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Point</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Point(&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">m_x</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">m_y</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">m_z</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+ <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Shape</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">print</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+ <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Shape</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="k">return</span> <span class="n">p</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+ <span class="p">}</span>
+ <span class="k">virtual</span> <span class="o">~</span><span class="n">Shape</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Triangle</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Shape</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+ <span class="n">Point</span> <span class="n">m_p1</span><span class="p">{};</span>
+ <span class="n">Point</span> <span class="n">m_p2</span><span class="p">{};</span>
+ <span class="n">Point</span> <span class="n">m_p3</span><span class="p">{};</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Triangle</span><span class="p">(</span><span class="k">const</span> <span class="n">Point</span> <span class="o">&amp;</span><span class="n">p1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Point</span> <span class="o">&amp;</span><span class="n">p2</span><span class="p">,</span> <span class="k">const</span> <span class="n">Point</span> <span class="o">&amp;</span><span class="n">p3</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_p1</span><span class="p">{</span><span class="n">p1</span><span class="p">},</span> <span class="n">m_p2</span><span class="p">{</span><span class="n">p2</span><span class="p">},</span> <span class="n">m_p3</span><span class="p">{</span><span class="n">p3</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">print</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+ <span class="p">{</span>
+  <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Triangle(&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_p1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_p2</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_p3</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+ <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Circle</span><span class="o">:</span> <span class="k">public</span> <span class="n">Shape</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+ <span class="n">Point</span> <span class="n">m_center</span><span class="p">;</span>
+ <span class="kt">int</span> <span class="n">m_radius</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Circle</span><span class="p">(</span><span class="k">const</span> <span class="n">Point</span> <span class="o">&amp;</span><span class="n">center</span><span class="p">,</span> <span class="kt">int</span> <span class="n">radius</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_center</span><span class="p">{</span><span class="n">center</span><span class="p">},</span> <span class="n">m_radius</span><span class="p">{</span><span class="n">radius</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">print</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+ <span class="p">{</span>
+  <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Circle(&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_center</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, radius &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_radius</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+ <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Circle</span> <span class="n">c</span><span class="p">{</span><span class="n">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="mi">7</span><span class="p">};</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">c</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+    <span class="n">Triangle</span> <span class="n">t</span><span class="p">{</span><span class="n">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="n">Point</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">},</span> <span class="n">Point</span><span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">}};</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">t</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>2c) 在以上类(<code>Point, Shape, Circle and Triangle</code>)的基础上，完成以下程序：</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Shape</span><span class="o">*&gt;</span> <span class="n">v</span><span class="p">{</span>
+      <span class="k">new</span> <span class="n">Circle</span><span class="p">{</span><span class="n">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="mi">7</span><span class="p">},</span>
+      <span class="k">new</span> <span class="n">Triangle</span><span class="p">{</span><span class="n">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="n">Point</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">},</span> <span class="n">Point</span><span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">}},</span>
+      <span class="k">new</span> <span class="n">Circle</span><span class="p">{</span><span class="n">Point</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">},</span> <span class="mi">3</span><span class="p">}</span>
+    <span class="p">};</span>
+
+    <span class="c1">// 打印 vector 中的每个 `Shape` ，在这里。</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The largest radius is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">getLargestRadius</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span> <span class="c1">// write this function</span>
+
+    <span class="c1">// 删除每个vector中的对象，在这里。</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>提示：你将会需要添加一个 <code>getRadius()</code> 函数到 <code>Circle</code> 类，并且向下转化 <code>Shape*</code> 成为一个 <code>Circle*</code> 来访问它。</p>
+<p>答案：</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;vector&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Point</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_x</span><span class="p">{};</span>
+ <span class="kt">int</span> <span class="n">m_y</span><span class="p">{};</span>
+ <span class="kt">int</span> <span class="n">m_z</span><span class="p">{};</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Point</span><span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">,</span> <span class="kt">int</span> <span class="n">y</span><span class="p">,</span> <span class="kt">int</span> <span class="n">z</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_x</span><span class="p">{</span><span class="n">x</span><span class="p">},</span> <span class="n">m_y</span><span class="p">{</span><span class="n">y</span><span class="p">},</span> <span class="n">m_z</span><span class="p">{</span><span class="n">z</span><span class="p">}</span>
+ <span class="p">{</span>
+
+ <span class="p">}</span>
+
+ <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Point</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Point(&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">m_x</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">m_y</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">p</span><span class="p">.</span><span class="n">m_z</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+ <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Shape</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">print</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">)</span> <span class="k">const</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+
+ <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Shape</span> <span class="o">&amp;</span><span class="n">p</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="k">return</span> <span class="n">p</span><span class="p">.</span><span class="n">print</span><span class="p">(</span><span class="n">out</span><span class="p">);</span>
+ <span class="p">}</span>
+ <span class="k">virtual</span> <span class="o">~</span><span class="n">Shape</span><span class="p">()</span> <span class="o">=</span> <span class="k">default</span><span class="p">;</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Triangle</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Shape</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+ <span class="n">Point</span> <span class="n">m_p1</span><span class="p">{};</span>
+ <span class="n">Point</span> <span class="n">m_p2</span><span class="p">{};</span>
+ <span class="n">Point</span> <span class="n">m_p3</span><span class="p">{};</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Triangle</span><span class="p">(</span><span class="k">const</span> <span class="n">Point</span> <span class="o">&amp;</span><span class="n">p1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Point</span> <span class="o">&amp;</span><span class="n">p2</span><span class="p">,</span> <span class="k">const</span> <span class="n">Point</span> <span class="o">&amp;</span><span class="n">p3</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_p1</span><span class="p">{</span><span class="n">p1</span><span class="p">},</span> <span class="n">m_p2</span><span class="p">{</span><span class="n">p2</span><span class="p">},</span> <span class="n">m_p3</span><span class="p">{</span><span class="n">p3</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">print</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+ <span class="p">{</span>
+  <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Triangle(&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_p1</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_p2</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_p3</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+ <span class="p">}</span>
+<span class="p">};</span>
+
+
+<span class="k">class</span> <span class="nc">Circle</span><span class="o">:</span> <span class="k">public</span> <span class="n">Shape</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+ <span class="n">Point</span> <span class="n">m_center</span><span class="p">{};</span>
+ <span class="kt">int</span> <span class="n">m_radius</span><span class="p">{};</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Circle</span><span class="p">(</span><span class="k">const</span> <span class="n">Point</span> <span class="o">&amp;</span><span class="n">center</span><span class="p">,</span> <span class="kt">int</span> <span class="n">radius</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_center</span><span class="p">{</span><span class="n">center</span><span class="p">},</span> <span class="n">m_radius</span><span class="p">{</span><span class="n">radius</span><span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">print</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">)</span> <span class="k">const</span> <span class="k">override</span>
+ <span class="p">{</span>
+  <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Circle(&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_center</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;, radius &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_radius</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;)&#39;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="kt">int</span> <span class="n">getRadius</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_radius</span><span class="p">;</span>  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// h/t to reader Olivier for this updated solution</span>
+<span class="kt">int</span> <span class="nf">getLargestRadius</span><span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Shape</span><span class="o">*&gt;</span> <span class="o">&amp;</span><span class="n">v</span><span class="p">)</span>
+<span class="p">{</span>
+ <span class="kt">int</span> <span class="n">largestRadius</span> <span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+
+ <span class="c1">// Loop through all the shapes in the vector</span>
+ <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">*</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">v</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="c1">// // Ensure the dynamic cast succeeds by checking for a null pointer result</span>
+      <span class="k">if</span> <span class="p">(</span><span class="k">auto</span> <span class="o">*</span><span class="n">c</span><span class="p">{</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">Circle</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">element</span><span class="p">)</span> <span class="p">})</span>
+  <span class="p">{</span>
+   <span class="k">if</span> <span class="p">(</span><span class="n">c</span><span class="o">-&gt;</span><span class="n">getRadius</span><span class="p">()</span> <span class="o">&gt;</span> <span class="n">largestRadius</span><span class="p">)</span>
+    <span class="n">largestRadius</span> <span class="o">=</span> <span class="n">c</span><span class="o">-&gt;</span><span class="n">getRadius</span><span class="p">();</span>
+  <span class="p">}</span>
+ <span class="p">}</span>
+
+    <span class="k">return</span> <span class="n">largestRadius</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">Shape</span><span class="o">*&gt;</span> <span class="n">v</span><span class="p">{</span>
+      <span class="k">new</span> <span class="n">Circle</span><span class="p">{</span><span class="n">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="mi">7</span><span class="p">},</span>
+      <span class="k">new</span> <span class="n">Triangle</span><span class="p">{</span><span class="n">Point</span><span class="p">{</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">},</span> <span class="n">Point</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">},</span> <span class="n">Point</span><span class="p">{</span><span class="mi">7</span><span class="p">,</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">9</span><span class="p">}},</span>
+      <span class="k">new</span> <span class="n">Circle</span><span class="p">{</span><span class="n">Point</span><span class="p">{</span><span class="mi">4</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">6</span><span class="p">},</span> <span class="mi">3</span><span class="p">}</span>
+    <span class="p">};</span>
+
+ <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">*</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">v</span><span class="p">)</span> <span class="c1">// element will be a Shape*</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">element</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The largest radius is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">getLargestRadius</span><span class="p">(</span><span class="n">v</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">for</span> <span class="p">(</span><span class="k">const</span> <span class="k">auto</span><span class="o">*</span> <span class="nl">element</span> <span class="p">:</span> <span class="n">v</span><span class="p">)</span>
+  <span class="k">delete</span> <span class="n">element</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<ul>
+<li><a href="/13-templates">-&gt; 13.1-Function templates</a></li>
+<li><a href="" title="./12.10-printing-inherited-classes-using">&lt;- 12.10-Printing inherited classes using operator&lt;&lt;</a></li>
+</ul>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../18.9-dynamic-casting/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              18.9 动态类型转换
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../../19-templates/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              十九章 模板
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.926459b3.min.js"></script>
+      
+    
+  </body>
+</html>

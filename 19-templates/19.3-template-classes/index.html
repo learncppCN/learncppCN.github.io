@@ -1,0 +1,1525 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+    
+    
+      
+        <title>19.3 模板类 - LearnCPP 中文教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a3f8f96a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#193" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnCPP 中文教程" class="md-header__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnCPP 中文教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              19.3 模板类
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnCPP 中文教程" class="md-nav__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    LearnCPP 中文教程
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BF%BB%E8%AF%91%E6%97%A5%E8%AE%B0/" class="md-nav__link">
+        翻译日记
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        00 Introduction getting started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="00 Introduction getting started" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          00 Introduction getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/" class="md-nav__link">
+        第零章 介绍/起步
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/0.1-Introduction-to-these-tutorials/" class="md-nav__link">
+        0.1 教程介绍
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        08 basic object oriented programming
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="08 basic object oriented programming" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          08 basic object oriented programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/" class="md-nav__link">
+        第八章 面向对象编程基础
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.1-welcome-to-object-oriented-programming/" class="md-nav__link">
+        8.1 欢迎来到面向对象的世界
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.2-classes-and-class-member/" class="md-nav__link">
+        8.2 类和类成员 (Classes and class member)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        14 exceptions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="14 exceptions" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          14 exceptions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/" class="md-nav__link">
+        14 异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.1-the-need-for-exceptions/" class="md-nav__link">
+        14.1 为什么需要异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.2-basic-exception-handloing/" class="md-nav__link">
+        14.2 基本异常处理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.3-exceptions-functions-and-stack-unwinding/" class="md-nav__link">
+        14.3 异常，函数，栈展开
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.4-uncaught-exceptions-catch-all-handlers-and-exception-specifiers/" class="md-nav__link">
+        14.4 未捕获异常，捕获全部异常和异常说明符
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.5-exceptions-classes-and-inheritance/" class="md-nav__link">
+        14.5 异常，类和继承
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.6-rethrowing-exceptions/" class="md-nav__link">
+        14.6 异常的再抛出
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.7-function-try-blocks/" class="md-nav__link">
+        14.7 函数级的 try 代码块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.8-exception-dangers-and-downsides/" class="md-nav__link">
+        14.8 异常的危险和缺点
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+      
+      <label class="md-nav__link" for="nav-6">
+        15 move semantics and smart pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="15 move semantics and smart pointers" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          15 move semantics and smart pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/" class="md-nav__link">
+        15 移动语义和智能指针
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.1-intro-to-smart-pointers-and-move-semantics/" class="md-nav__link">
+        15.1 智能指针和移动语义的介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.2-r-value-reference/" class="md-nav__link">
+        15.2 右值引用
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.3-move-constructors-and-move-assignment/" class="md-nav__link">
+        15.3 移动构造和移动赋值
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.4-std%3A%3Amove/" class="md-nav__link">
+        15.4 std::move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.5-std%3A%3Aunique_ptr/" class="md-nav__link">
+        15.5 std::unique_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.6-std%3A%3Ashared_ptr/" class="md-nav__link">
+        15.6 std::shared_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.7-std%3A%3Aweak_ptr/" class="md-nav__link">
+        15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.x-chapter15-comprehensive-review/" class="md-nav__link">
+        15.x 十五章理解和复习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+      
+      <label class="md-nav__link" for="nav-7">
+        18 virtual functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="18 virtual functions" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          18 virtual functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/" class="md-nav__link">
+        第十八章 虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.1-pointers-and-references-to-the-base-class-of-derived-objects/" class="md-nav__link">
+        18.1 基类指针和引用指向派生类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.2-virtual-functions-and-polymorphism/" class="md-nav__link">
+        18.2 — 虚函数和多态
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.3-The-override-and-final-specifiers-and-covariant-return-types/" class="md-nav__link">
+        18.3 重写 final 标识符，并且协变返回类型
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-nav__link">
+        18.4 虚构造函数，虚赋值，重写虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.5-early-binding-and-late-binding/" class="md-nav__link">
+        18.5 预绑定和后期绑定
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.6-the-virtual-table/" class="md-nav__link">
+        18.6 虚表
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.7-virtual-base-classes/" class="md-nav__link">
+        18.7 虚基类 (Virtual base classes)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.8-object-slicing/" class="md-nav__link">
+        18.8 对象切割
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.9-dynamic-casting/" class="md-nav__link">
+        18.9 动态类型转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.x%20chapter-18-comprehensice-quiz/" class="md-nav__link">
+        18.x 十二章理解和练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" checked>
+      
+      <label class="md-nav__link" for="nav-8">
+        19 templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="19 templates" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          19 templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        十九章 模板
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.1-function-templates/" class="md-nav__link">
+        19.1 函数模板 Function templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.2-function-template-instances/" class="md-nav__link">
+        19.2 类模板实例
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          19.3 模板类
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        19.3 模板类
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    模板和容器类
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    标准库中的模板类
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    分割模板类
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.4-template-non-type-parameters/" class="md-nav__link">
+        19.4 模板非类型参数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.5-function-template-specialization/" class="md-nav__link">
+        19.5 函数模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.6-class-template-specialization/" class="md-nav__link">
+        19.6 类模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.7-partial-template-specialization/" class="md-nav__link">
+        19.7 模板局部特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.8-partial-template-specialization-for-pointers/" class="md-nav__link">
+        19.8 局部模板特化指针的
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.x%20chapter-19-comprehensice-quiz/" class="md-nav__link">
+        19.x - 19章节练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" >
+      
+      <label class="md-nav__link" for="nav-9">
+        23 input and output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="23 input and output" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          23 input and output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.1-input-and-output-streams/" class="md-nav__link">
+        18.1 输入输出流
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.2-input-with-istream/" class="md-nav__link">
+        18.2 使用 istream 输入
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.3-output-with-ostream-and-ios/" class="md-nav__link">
+        18.3 使用 ostrea 和 ios 进行输出
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    模板和容器类
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    标准库中的模板类
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    分割模板类
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="193">19.3 模板类<a class="headerlink" href="#193" title="Permanent link">&para;</a></h1>
+<!-- 19.3 — Template classes -->
+<blockquote>
+<p>By Alex on June 16<sup>th</sup>, 2008 | last modified by Alex on December 21<sup>st</sup>, 2020</p>
+<p>翻译 By dashjay 2020-12-27 | 最后修改于 2020-12-27</p>
+</blockquote>
+<!-- In the previous two lessons, you learn how 19.1 -- Function templates, which get instantiated into 19.2 -- Function template instances, allow us to generalize functions to work with many different data types. While this is a great start down the road to generalized programming, it doesn’t solve all of our problems. Let’s take a look at an example of one such problem, and see what templates can further do for us. -->
+
+<p>在之前的两节课中，你学习了 <a href="../19.1-function-templates">19.1 -- Function templates</a> 然后实例化成了 <a href="../19.2-function-template-instances">19.2 -- Function template instances</a> ，允许我们生成函数来在不同数据类型下工作。尽管这是一个到广义的编程（generalized programming）的很棒的开始，但是它不能解决我们所有的问题。让我们看一看其他问题的例子，看看模板还可以为我们做什么。</p>
+<!-- Templates and container classes -->
+
+<h2 id="_1">模板和容器类<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<!-- In the lesson on 16.6 -- Container classes, you learned how to use composition to implement classes that contained multiple instances of other classes. As one example of such a container, we took a look at the IntArray class. Here is a simplified example of that class: -->
+
+<p>在 <a href=".">16.6 -- Container classes</a> 中，你学习了如何复合来实现包含多个其他类的实例的的类。作为一个这样的容器，我们看一眼 <code>IntArray</code> 类。这有个简单的例子：</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#ifndef INTARRAY_H</span>
+<span class="cp">#define INTARRAY_H</span>
+
+<span class="cp">#include</span> <span class="cpf">&lt;cassert&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">IntArray</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">m_length</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="o">*</span><span class="n">m_data</span><span class="p">{};</span>
+
+<span class="k">public</span><span class="o">:</span>
+
+    <span class="n">IntArray</span><span class="p">(</span><span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">int</span><span class="p">[</span><span class="n">length</span><span class="p">]{};</span>
+        <span class="n">m_length</span> <span class="o">=</span> <span class="n">length</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="c1">// We don&#39;t want to allow copies of IntArray to be created.</span>
+    <span class="n">IntArray</span><span class="p">(</span><span class="k">const</span> <span class="n">IntArray</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+    <span class="n">IntArray</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">IntArray</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+    <span class="o">~</span><span class="n">IntArray</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">delete</span><span class="p">[]</span> <span class="n">m_data</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">Erase</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">delete</span><span class="p">[]</span> <span class="n">m_data</span><span class="p">;</span>
+        <span class="c1">// We need to make sure we set m_data to 0 here, otherwise it will</span>
+        <span class="c1">// be left pointing at deallocated memory!</span>
+        <span class="n">m_data</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+        <span class="n">m_length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">m_length</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">m_data</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">getLength</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_length</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="cp">#endif</span>
+</code></pre></div>
+<!-- While this class provides an easy way to create arrays of integers, what if we want to create an array of doubles? Using traditional programming methods, we’d have to create an entirely new class! Here’s an example of DoubleArray, an array class used to hold doubles. -->
+
+<p>这个类提供了一个容易的方式来创建一个整型数组，如果你想创建一个 double 类型的数组会发生什么？使用传统的编程方法我们不得不创建一整个新的类！这是一个Double 数组的例子，一个数组用来存储 doubles。</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># ifndef DOUBLEARRAY_H</span>
+<span class="cp"># define DOUBLEARRAY_H</span>
+
+<span class="cp"># include &lt;cassert&gt;</span>
+
+<span class="k">class</span> <span class="nc">DoubleArray</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">m_length</span><span class="p">{};</span>
+    <span class="kt">double</span> <span class="o">*</span><span class="n">m_data</span><span class="p">{};</span>
+
+<span class="k">public</span><span class="o">:</span>
+
+    <span class="n">DoubleArray</span><span class="p">(</span><span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="kt">double</span><span class="p">[</span><span class="n">length</span><span class="p">]{};</span>
+        <span class="n">m_length</span> <span class="o">=</span> <span class="n">length</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">DoubleArray</span><span class="p">(</span><span class="k">const</span> <span class="n">DoubleArray</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+    <span class="n">DoubleArray</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">DoubleArray</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+    <span class="o">~</span><span class="n">DoubleArray</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">delete</span><span class="p">[]</span> <span class="n">m_data</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">Erase</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">delete</span><span class="p">[]</span> <span class="n">m_data</span><span class="p">;</span>
+        <span class="c1">// We need to make sure we set m_data to 0 here, otherwise it will</span>
+        <span class="c1">// be left pointing at deallocated memory!</span>
+        <span class="n">m_data</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+        <span class="n">m_length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">double</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">m_length</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">m_data</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">getLength</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_length</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="cp"># endif</span>
+</code></pre></div>
+<!-- Although the code listings are lengthy, you’ll note the two classes are almost identical! In fact, the only substantive difference is the contained data type (int vs double). As you likely have guessed, this is another area where templates can be put to good use, to free us from having to create classes that are bound to one specific data type. -->
+
+<p>尽管代码冗长，你会注意这两个类几乎是一样的！事实上，实质上不同的只是数据类型（int vs double）。你可能会像，这是另一个模板可以生效的地方吧，为了让我们轻松的创建任何数据类型的数组。</p>
+<!-- Creating template classes works pretty much identically to creating template functions, so we’ll proceed by example. Here’s our array class, templated version: -->
+
+<p>创建模板类和模板函数几乎是相同的，因此我们就放一个例子就好。这是一个我们的类模板的版本：</p>
+<div class="highlight"><pre><span></span><code><span class="n">Array</span><span class="p">.</span><span class="nl">h</span><span class="p">:</span>
+
+<span class="cp"># ifndef ARRAY_H</span>
+<span class="cp"># define ARRAY_H</span>
+
+<span class="cp"># include &lt;cassert&gt;</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Array</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">m_length</span><span class="p">{};</span>
+    <span class="n">T</span> <span class="o">*</span><span class="n">m_data</span><span class="p">{};</span>
+
+<span class="k">public</span><span class="o">:</span>
+
+    <span class="n">Array</span><span class="p">(</span><span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">length</span><span class="p">]{};</span>
+        <span class="n">m_length</span> <span class="o">=</span> <span class="n">length</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">Array</span><span class="p">(</span><span class="k">const</span> <span class="n">Array</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+    <span class="n">Array</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Array</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+    <span class="o">~</span><span class="n">Array</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">delete</span><span class="p">[]</span> <span class="n">m_data</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">Erase</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">delete</span><span class="p">[]</span> <span class="n">m_data</span><span class="p">;</span>
+        <span class="c1">// We need to make sure we set m_data to 0 here, otherwise it will</span>
+        <span class="c1">// be left pointing at deallocated memory!</span>
+        <span class="n">m_data</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+        <span class="n">m_length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">m_length</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">m_data</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="c1">// templated getLength() function defined below</span>
+    <span class="kt">int</span> <span class="n">getLength</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span> 
+<span class="p">};</span>
+
+<span class="c1">// member functions defined outside the class need their own template declaration</span>
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">int</span> <span class="n">Array</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">getLength</span><span class="p">()</span> <span class="k">const</span> <span class="c1">// note class name is Array&lt;T&gt;, not Array</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">m_length</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="cp"># endif</span>
+</code></pre></div>
+<!-- As you can see, this version is almost identical to the IntArray version, except we’ve added the template declaration, and changed the contained data type from int to T. -->
+
+<p>如你所见，这个版本和 <code>IntArray</code> 几乎是相同的，除了我们添加了模板声明，并且改变了数据类型从 <code>int</code> 到 <code>T</code>。</p>
+<!-- Note that we’ve also defined the getLength() function outside of the class declaration. This isn’t necessary, but new programmers typically stumble when trying to do this for the first time due to the syntax, so an example is instructive. Each templated member function defined outside the class declaration needs its own template declaration. Also, note that the name of the templated array class is Array<T>, not Array -- Array would refer to a non-templated version of a class named Array, unless Array is used inside of the class. For example, the copy constructor and copy-assignment operator used Array rather than Array<T>. When the class name is used without template arguments inside of the class, the arguments are the same as the ones of the current instantiation. -->
+
+<p>注意我们也在类外定义了 <code>getLength()</code> 函数。这不是必须的，但是新的程序员经常会在第一次这样做的时候失败，因为复杂的语法，因此这个例子可以给你一些启发。每个模板成员函数定义在类外需要它自己的模板定义。同时注意模板数组类是 <code>Array&lt;T&gt;</code> 而不是 <code>Array</code> —— <code>Array</code> 会引用到没有模板的类版本，除非<code>Array</code> 在类中被使用。例如，拷贝构造函数和拷贝复制操作符就可以使用 <code>Array</code> 而不是 <code>Array&lt;T&gt;</code>。当类名在类中使用而不带模板参数的时候，参数与当前实例化的参数相同。</p>
+<!-- Here’s a short example using the above templated array class: -->
+<p>有一个短的例子使用上面的模板数组类：</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+<span class="cp"># include &quot;Array.h&quot;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Array</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">intArray</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+ <span class="n">Array</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">doubleArray</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+
+ <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">intArray</span><span class="p">.</span><span class="n">getLength</span><span class="p">();</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">intArray</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span><span class="p">;</span>
+  <span class="n">doubleArray</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="n">intArray</span><span class="p">.</span><span class="n">getLength</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">count</span><span class="p">)</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">intArray</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\t&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">doubleArray</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- This example prints the following: -->
+<p>例子打印如下：</p>
+<div class="highlight"><pre><span></span><code><span class="mi">11</span>     <span class="mf">11.5</span>
+<span class="mi">10</span>     <span class="mf">10.5</span>
+<span class="mi">9</span>       <span class="mf">9.5</span>
+<span class="mi">8</span>       <span class="mf">8.5</span>
+<span class="mi">7</span>       <span class="mf">7.5</span>
+<span class="mi">6</span>       <span class="mf">6.5</span>
+<span class="mi">5</span>       <span class="mf">5.5</span>
+<span class="mi">4</span>       <span class="mf">4.5</span>
+<span class="mi">3</span>       <span class="mf">3.5</span>
+<span class="mi">2</span>       <span class="mf">2.5</span>
+<span class="mi">1</span>       <span class="mf">1.5</span>
+<span class="mi">0</span>       <span class="mf">0.5</span>
+</code></pre></div>
+<!-- Template classes are instanced in the same way template functions are -- the compiler stencils out a copy upon demand, with the template parameter replaced by the actual data type the user needs, and then compiles the copy. If you don’t ever use a template class, the compiler won’t even compile it. -->
+
+<p>模板类和模板函数一样以同样的方式实例化——编译器在按需拷贝一份，使用实际用户需要的类型来替换模板类型，并且编译这个拷贝。如果你没有在任何地方使用模板类，编译器不会编译它。</p>
+<!-- Template classes are ideal for implementing container classes, because it is highly desirable to have containers work across a wide variety of data types, and templates allow you to do so without duplicating code. Although the syntax is ugly, and the error messages can be cryptic, template classes are truly one of C++’s best and most useful features. -->
+
+<p>模板类是一种理想的容器类的实现，因为让容器类在不同的数据类型上工作是可取的，并且模板允许你无需拷贝代码的情况下这样做。尽管语法有点丑，并且报错信息有点隐晦，模板类真的是 C++ 最好最有用的特性之一。</p>
+<!-- Template classes in the standard library -->
+<h2 id="_2">标准库中的模板类<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<!-- Now that we’ve covered template classes, you should understand what std::vector<int> means now -- std::vector is actually a template class, and int is the type parameter to the template! The standard library is full of predefined template classes available for your use. We’ll cover these in later chapters. -->
+
+<p>现在我们已经学到了模板类，你需要理解 <code>std::vector&lt;int&gt;</code> 意思是啥 —— <code>std::vector</code> 实际上就是一个模板类，并且 <code>int</code> 是他的模板类型参数！标准库预定义了很多模板类给你用，我们会在稍后的章节中学到这些。</p>
+<!-- Splitting up template classes -->
+
+<h2 id="_3">分割模板类<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<!-- A template is not a class or a function -- it is a stencil used to create classes or functions. As such, it does not work in quite the same way as normal functions or classes. In most cases, this isn’t much of a issue. However, there is one area that commonly causes problems for developers. -->
+
+<p>一个模板不是一个类或者一个函数 —— 是一个 “漏字板” 用来创建类或者函数。因此，他们和普通的函数或者类工作方式类似，这没啥大问题。然而有一个很常见的问题会给开发者带来问题。</p>
+<!-- With non-template classes, the common procedure is to put the class definition in a header file, and the member function definitions in a similarly named code file. In this way, the source for the class is compiled as a separate project file. However, with templates, this does not work. Consider the following: -->
+
+<p>使用废模板类，常见的过程就就是将类定义放在头文件，然后成员函数放在一个名字相似的文件中。以这种方式，类的源代码在分离的项目文件中被编译。然而如果你使用模板，这就不会工作了，看下面的例子：</p>
+<p>Array.h:</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># ifndef ARRAY_H</span>
+<span class="cp"># define ARRAY_H</span>
+
+<span class="cp"># include &lt;cassert&gt;</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Array</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">m_length</span><span class="p">{};</span>
+    <span class="n">T</span><span class="o">*</span> <span class="n">m_data</span><span class="p">{};</span>
+
+<span class="k">public</span><span class="o">:</span>
+
+    <span class="n">Array</span><span class="p">(</span><span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">length</span> <span class="o">&gt;</span> <span class="mi">0</span><span class="p">);</span>
+        <span class="n">m_data</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">length</span><span class="p">]{};</span>
+        <span class="n">m_length</span> <span class="o">=</span> <span class="n">length</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">Array</span><span class="p">(</span><span class="k">const</span> <span class="n">Array</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+    <span class="n">Array</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Array</span><span class="o">&amp;</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+    <span class="o">~</span><span class="n">Array</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">delete</span><span class="p">[]</span> <span class="n">m_data</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="kt">void</span> <span class="n">Erase</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="k">delete</span><span class="p">[]</span> <span class="n">m_data</span><span class="p">;</span>
+
+        <span class="n">m_data</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+        <span class="n">m_length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">assert</span><span class="p">(</span><span class="n">index</span> <span class="o">&gt;=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">index</span> <span class="o">&lt;</span> <span class="n">m_length</span><span class="p">);</span>
+        <span class="k">return</span> <span class="n">m_data</span><span class="p">[</span><span class="n">index</span><span class="p">];</span>
+    <span class="p">}</span>
+
+    <span class="kt">int</span> <span class="n">getLength</span><span class="p">()</span> <span class="k">const</span><span class="p">;</span> 
+<span class="p">};</span>
+
+<span class="cp"># endif</span>
+</code></pre></div>
+<p>Array.cpp:</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &quot;Array.h&quot;</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="kt">int</span> <span class="n">Array</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;::</span><span class="n">getLength</span><span class="p">()</span> <span class="k">const</span> <span class="c1">// note class name is Array&lt;T&gt;, not Array</span>
+<span class="p">{</span>
+  <span class="k">return</span> <span class="n">m_length</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>main.cpp:</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &quot;Array.h&quot;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Array</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">intArray</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+ <span class="n">Array</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span> <span class="n">doubleArray</span><span class="p">(</span><span class="mi">12</span><span class="p">);</span>
+
+ <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">intArray</span><span class="p">.</span><span class="n">getLength</span><span class="p">();</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">intArray</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span><span class="p">;</span>
+  <span class="n">doubleArray</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">=</span> <span class="n">count</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="n">intArray</span><span class="p">.</span><span class="n">getLength</span><span class="p">()</span> <span class="o">-</span> <span class="mi">1</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&gt;=</span> <span class="mi">0</span><span class="p">;</span> <span class="o">--</span><span class="n">count</span><span class="p">)</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">intArray</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\t&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">doubleArray</span><span class="p">[</span><span class="n">count</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- The above program will compile, but cause a linker error: -->
+<p>以上程序能通过编译，但是链接器会报错：</p>
+<div class="highlight"><pre><span></span><code><span class="n">unresolved</span> <span class="n">external</span> <span class="n">symbol</span> <span class="s">&quot;public: int __thiscall Array::getLength(void)&quot;</span> <span class="p">(</span><span class="o">?</span><span class="n">GetLength</span><span class="err">@</span><span class="o">?</span><span class="n">$Array</span><span class="err">@</span><span class="n">H</span><span class="err">@@</span><span class="n">QAEHXZ</span><span class="p">)</span>
+</code></pre></div>
+<!-- In order for the compiler to use a template, it must see both the template definition (not just a declaration) and the template type used to instantiate the template. Also remember that C++ compiles files individually. When the Array.h header is #included in main, the template class definition is copied into main.cpp. When the compiler sees that we need two template instances, Array<int>, and Array<double>, it will instantiate these, and compile them as part of main.cpp. However, when it gets around to compiling Array.cpp separately, it will have forgotten that we need an Array<int> and Array<double>, so that template function is never instantiated. Thus, we get a linker error, because the compiler can’t find a definition for Array<int>::getLength() or Array<double>::getLength(). -->
+
+<p>为了让编译器使用一个模板，必须要同时能看到模板定义（不仅仅是声明）并且模板类被被用来实例化成了模板。同时记住，C++ 单独编译文件。当 <code>Array.h</code> 头文件在 <code>main</code> 中被 <code>#include</code> 之后，模板类的定义就被拷贝到了 <code>main.cpp</code>。当编译器发现我们需要模板实例化 <code>Array&lt;int&gt;, Array&lt;double&gt;</code> 的时候，他会实例化这些，并且编译他们作为 <code>main.cpp</code>。然而，当它绕过单独编译 <code>Array.cpp</code> 的时候，他会忘记我们需要一个 <code>Array&lt;int&gt;</code> 和 <code>Array&lt;double&gt;</code>，因此模板函数从来不会呗实例化。因此我们得到一个连接错误，因为编译器不能发现 <code>Array&lt;int&gt;::getLength()</code> 或者 <code>Array&lt;double&gt;::getLength()</code>的定义。</p>
+<!-- There are quite a few ways to work around this. -->
+
+<p>有很多方法来解决这个问题。</p>
+<!-- The easiest way is to simply put all of your template class code in the header file (in this case, put the contents of Array.cpp into Array.h, below the class). In this way, when you #include the header, all of the template code will be in one place. The upside of this solution is that it is simple. The downside here is that if the template class is used in many places, you will end up with many local copies of the template class, which can increase your compile and link times (your linker should remove the duplicate definitions, so it shouldn’t bloat your executable). This is our preferred solution unless the compile or link times start to become a problem. -->
+
+<p>最简单的方法就是吧模板类的所有代码都放在头文件里（在这个例子中，吧 <code>Array.cpp</code> 中的内容放进 <code>Array.h</code> 中，在类的声明下方）。以这种方式，当你 <code>#include</code> 这个头文件的时候，所有的模板代码就会在同一个地方。这样解决的优点就是非常简单。缺点就是如果模板类在很多地方被使用的话，你就会最终有很多模板类的本地拷贝，会增加你的编译和连接的耗时（你的连接器会移除重复的定义，因此他不会让可执行程序膨胀）。这是我们的建议做法，除非编译器或者连接器消耗的时间成为问题。</p>
+<!-- If you feel that putting the Array.cpp code into the Array.h header makes the header too long/messy, an alternative is to rename Array.cpp to Array.inl (.inl stands for inline), and then include Array.inl from the bottom of the Array.h header. That yields the same result as putting all the code in the header, but helps keep things a little cleaner. -->
+
+<p>如果你觉得把 <code>Array.cpp</code> 的代码放进 <code>Array.h</code> 头部使得你的头文件太长/乱，一个可选的方案就是将 <code>Array.cpp</code> 命名为 <code>Array.inl</code> (.inl 代表内联)，然后紧接着 在 <code>Array.h</code> 头文件的底部 include <code>Array.inl</code>。和把代码放到头文件的结果是一样的，但是相对来说更加干净。</p>
+<!-- Other solutions involve #including .cpp files, but we don’t recommend these because of the non-standard usage of #include. -->
+
+<p>其他的解决方案涉及 #including .cpp 文件，但是我们不建议这样做，因为这不是 <code>#include</code> 的标准用法。</p>
+<!-- Another alternative is to use a three-file approach. The template class definition goes in the header. The template class member functions goes in the code file. Then you add a third file, which contains all of the instantiated classes you need: -->
+
+<p>其他方法是使用三文件方法。模板类定义在 header 头文件中。模板类成员函数编写在代码文件中。然后你添加一个 “第三方” 文件，将这两个你实例化的类按需包含：</p>
+<p>templates.cpp:</p>
+<div class="highlight"><pre><span></span><code><span class="c1">// Ensure the full Array template definition can be seen</span>
+<span class="cp"># include &quot;Array.h&quot;</span>
+<span class="cp"># include &quot;Array.cpp&quot; </span><span class="c1">// we&#39;re breaking best practices here, but only in this one place</span>
+
+<span class="c1">// #include other .h and .cpp template definitions you need here</span>
+
+<span class="k">template</span> <span class="k">class</span> <span class="nc">Array</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// Explicitly instantiate template Array&lt;int&gt;</span>
+<span class="k">template</span> <span class="k">class</span> <span class="nc">Array</span><span class="o">&lt;</span><span class="kt">double</span><span class="o">&gt;</span><span class="p">;</span> <span class="c1">// Explicitly instantiate template Array&lt;double&gt;</span>
+
+<span class="c1">// instantiate other templates here</span>
+</code></pre></div>
+<!-- The “template class” command causes the compiler to explicitly instantiate the template class. In the above case, the compiler will stencil out both Array<int> and Array<double> inside of templates.cpp. Because templates.cpp is inside our project, this will then be compiled. These functions can then be linked to from elsewhere. -->
+
+<p>“template class” 让编译器来显式的实例化模板类。在上方的例子中，编译器会同时生成 <code>Array&lt;int&gt;</code> 和 <code>Array&lt;double&gt;</code> 在 <code>template.cpp</code> 中。因为 <code>templates.cpp</code> 在我们的项目中，这个紧接着就会被编译。然后这些函数可以被从其他地方连接到。</p>
+<!-- This method is more efficient, but requires maintaining the templates.cpp file for each program. -->
+
+<p>这方法更高效，但是需要为每个程序管理 <code>templaes.cpp</code> 文件。</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../19.2-function-template-instances/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              19.2 类模板实例
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../19.4-template-non-type-parameters/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              19.4 模板非类型参数
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.926459b3.min.js"></script>
+      
+    
+  </body>
+</html>

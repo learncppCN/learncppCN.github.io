@@ -1,0 +1,1454 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+    
+    
+      
+        <title>14.2 基本异常处理 - LearnCPP 中文教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a3f8f96a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#142" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnCPP 中文教程" class="md-header__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnCPP 中文教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              14.2 基本异常处理
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnCPP 中文教程" class="md-nav__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    LearnCPP 中文教程
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BF%BB%E8%AF%91%E6%97%A5%E8%AE%B0/" class="md-nav__link">
+        翻译日记
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        00 Introduction getting started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="00 Introduction getting started" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          00 Introduction getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/" class="md-nav__link">
+        第零章 介绍/起步
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/0.1-Introduction-to-these-tutorials/" class="md-nav__link">
+        0.1 教程介绍
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        08 basic object oriented programming
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="08 basic object oriented programming" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          08 basic object oriented programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/" class="md-nav__link">
+        第八章 面向对象编程基础
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.1-welcome-to-object-oriented-programming/" class="md-nav__link">
+        8.1 欢迎来到面向对象的世界
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.2-classes-and-class-member/" class="md-nav__link">
+        8.2 类和类成员 (Classes and class member)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" checked>
+      
+      <label class="md-nav__link" for="nav-5">
+        14 exceptions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="14 exceptions" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          14 exceptions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        14 异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14.1-the-need-for-exceptions/" class="md-nav__link">
+        14.1 为什么需要异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          14.2 基本异常处理
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        14.2 基本异常处理
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    抛出异常
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    寻找异常
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    异常处理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#throwtrycatch" class="md-nav__link">
+    抛出(throw)，try，捕获(catch)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    再复习异常处理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    异常被立即处理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    一个更加真实的例子
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14.3-exceptions-functions-and-stack-unwinding/" class="md-nav__link">
+        14.3 异常，函数，栈展开
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14.4-uncaught-exceptions-catch-all-handlers-and-exception-specifiers/" class="md-nav__link">
+        14.4 未捕获异常，捕获全部异常和异常说明符
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14.5-exceptions-classes-and-inheritance/" class="md-nav__link">
+        14.5 异常，类和继承
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14.6-rethrowing-exceptions/" class="md-nav__link">
+        14.6 异常的再抛出
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14.7-function-try-blocks/" class="md-nav__link">
+        14.7 函数级的 try 代码块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../14.8-exception-dangers-and-downsides/" class="md-nav__link">
+        14.8 异常的危险和缺点
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+      
+      <label class="md-nav__link" for="nav-6">
+        15 move semantics and smart pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="15 move semantics and smart pointers" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          15 move semantics and smart pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/" class="md-nav__link">
+        15 移动语义和智能指针
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.1-intro-to-smart-pointers-and-move-semantics/" class="md-nav__link">
+        15.1 智能指针和移动语义的介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.2-r-value-reference/" class="md-nav__link">
+        15.2 右值引用
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.3-move-constructors-and-move-assignment/" class="md-nav__link">
+        15.3 移动构造和移动赋值
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.4-std%3A%3Amove/" class="md-nav__link">
+        15.4 std::move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.5-std%3A%3Aunique_ptr/" class="md-nav__link">
+        15.5 std::unique_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.6-std%3A%3Ashared_ptr/" class="md-nav__link">
+        15.6 std::shared_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.7-std%3A%3Aweak_ptr/" class="md-nav__link">
+        15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.x-chapter15-comprehensive-review/" class="md-nav__link">
+        15.x 十五章理解和复习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+      
+      <label class="md-nav__link" for="nav-7">
+        18 virtual functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="18 virtual functions" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          18 virtual functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/" class="md-nav__link">
+        第十八章 虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.1-pointers-and-references-to-the-base-class-of-derived-objects/" class="md-nav__link">
+        18.1 基类指针和引用指向派生类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.2-virtual-functions-and-polymorphism/" class="md-nav__link">
+        18.2 — 虚函数和多态
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.3-The-override-and-final-specifiers-and-covariant-return-types/" class="md-nav__link">
+        18.3 重写 final 标识符，并且协变返回类型
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-nav__link">
+        18.4 虚构造函数，虚赋值，重写虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.5-early-binding-and-late-binding/" class="md-nav__link">
+        18.5 预绑定和后期绑定
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.6-the-virtual-table/" class="md-nav__link">
+        18.6 虚表
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.7-virtual-base-classes/" class="md-nav__link">
+        18.7 虚基类 (Virtual base classes)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.8-object-slicing/" class="md-nav__link">
+        18.8 对象切割
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.9-dynamic-casting/" class="md-nav__link">
+        18.9 动态类型转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.x%20chapter-18-comprehensice-quiz/" class="md-nav__link">
+        18.x 十二章理解和练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+      
+      <label class="md-nav__link" for="nav-8">
+        19 templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="19 templates" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          19 templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/" class="md-nav__link">
+        十九章 模板
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.1-function-templates/" class="md-nav__link">
+        19.1 函数模板 Function templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.2-function-template-instances/" class="md-nav__link">
+        19.2 类模板实例
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.3-template-classes/" class="md-nav__link">
+        19.3 模板类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.4-template-non-type-parameters/" class="md-nav__link">
+        19.4 模板非类型参数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.5-function-template-specialization/" class="md-nav__link">
+        19.5 函数模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.6-class-template-specialization/" class="md-nav__link">
+        19.6 类模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.7-partial-template-specialization/" class="md-nav__link">
+        19.7 模板局部特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.8-partial-template-specialization-for-pointers/" class="md-nav__link">
+        19.8 局部模板特化指针的
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.x%20chapter-19-comprehensice-quiz/" class="md-nav__link">
+        19.x - 19章节练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" >
+      
+      <label class="md-nav__link" for="nav-9">
+        23 input and output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="23 input and output" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          23 input and output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.1-input-and-output-streams/" class="md-nav__link">
+        18.1 输入输出流
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.2-input-with-istream/" class="md-nav__link">
+        18.2 使用 istream 输入
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.3-output-with-ostream-and-ios/" class="md-nav__link">
+        18.3 使用 ostrea 和 ios 进行输出
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    抛出异常
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    寻找异常
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    异常处理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#throwtrycatch" class="md-nav__link">
+    抛出(throw)，try，捕获(catch)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    再复习异常处理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    异常被立即处理
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    一个更加真实的例子
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="142">14.2 基本异常处理<a class="headerlink" href="#142" title="Permanent link">&para;</a></h1>
+<!-- 14.2 — Basic exception handling -->
+
+<blockquote>
+<p>By Alex on October 4<sup>th</sup>, 2008 | last modified by Alex on January 23<sup>rd</sup>, 2020</p>
+<p>翻译by dashjay 2020.07.13</p>
+</blockquote>
+<!-- In the previous lesson on the need for exceptions, we talked about how using return codes causes your control flow and error flow to be intermingled, constraining both. Exceptions in C++ are implemented using three keywords that work in conjunction with each other: throw, try, and catch. -->
+
+<p>在之前的课程 <a href="../14.1-the-need-for-exceptions">为什么需要异常</a>中，我们讨论了关于使用返回值状态码为何会使得你的控制流和错误处理被混合，使得两者相互约束。异常在C++中的实现使用了三个关键词，来相互连接：<code>throw</code>, <code>try</code>, <code>catch</code>。</p>
+<h2 id="_1">抛出异常<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<!-- Throwing exceptions -->
+
+<!-- We use signals all the time in real life to note that particular events have occurred. For example, during American football, if a player has committed a foul, the referee will throw a flag on the ground and whistle the play dead. A penalty is then assessed and executed. Once the penalty has been taken care of, play generally resumes as normal. -->
+
+<p>在现实生活中，我们使用信号来记录已经发生的特定的事情。例如在美国足球比赛中，如果一个运动员犯规了，裁判将会拿出一个flag并且吹哨表示游戏暂停。惩罚就是紧接着评估和执行。惩罚被执行后，游戏照旧继续。</p>
+<!-- In C++, a throw statement is used to signal that an exception or error case has occurred (think of throwing a penalty flag). Signaling that an exception has occurred is also commonly called raising an exception. -->
+
+<p>在 <code>C++</code> 中，一个抛出语句被用来发送一个信号表示一个异常或者错误已经发生（可以认为是抛出了一个惩罚的flag）。发出信号表示一个异常已经发生，者通常被叫做抛出一个异常。</p>
+<!-- To use a throw statement, simply use the throw keyword, followed by a value of any data type you wish to use to signal that an error has occurred. Typically, this value will be an error code, a description of the problem, or a custom exception class. -->
+
+<p>为了使用一个异常一句，简单的使用 <code>throw</code> 关键词，紧跟着一个你希望使用的任何类型的值来通知一个错误已经发生，通常这和值将会是一个错误码，一个问题的描述，或者一个自定义异常类。</p>
+<p>这里是一些例子：</p>
+<!-- Here are some examples: -->
+
+<div class="highlight"><pre><span></span><code><span class="k">throw</span> <span class="mi">-1</span><span class="p">;</span> <span class="c1">// throw a literal integer value</span>
+<span class="k">throw</span> <span class="n">ENUM_INVALID_INDEX</span><span class="p">;</span> <span class="c1">// throw an enum value</span>
+<span class="k">throw</span> <span class="s">&quot;Can not take square root of negative number&quot;</span><span class="p">;</span> <span class="c1">// throw a literal C-style (const char*) string</span>
+<span class="k">throw</span> <span class="n">dX</span><span class="p">;</span> <span class="c1">// throw a double variable that was previously defined</span>
+<span class="k">throw</span> <span class="nf">MyException</span><span class="p">(</span><span class="s">&quot;Fatal Error&quot;</span><span class="p">);</span> <span class="c1">// Throw an object of class MyException</span>
+</code></pre></div>
+<!-- Each of these statements acts as a signal that some kind of problem that needs to be handled has occurred. -->
+
+<p>这里的每一个语句都当做一个信号，表示某种类型的需要被解决的问题已经发生了。</p>
+<h2 id="_2">寻找异常<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<!-- Looking for exceptions -->
+
+<!-- Throwing exceptions is only one part of the exception handling process. Let’s go back to our American football analogy: once a referee has thrown a penalty flag, what happens next? The players notice that a penalty has occurred and stop play. The normal flow of the football game is disrupted. -->
+
+<p>抛出异常只是异常处理进程的一部分。让我们回到美国足球的比喻中：一旦裁判抛出一个一个惩罚flag，接下来会发生什么？参赛者们主要到一个惩罚发生，并且停止游戏。一个普通的足球比赛流程中断。</p>
+<!-- In C++, we use the try keyword to define a block of statements (called a try block). The try block acts as an observer, looking for any exceptions that are thrown by any of the statements within the try block. -->
+
+<p>在C++中，我们用 <code>try</code> 关键词来定义一个语句块（被叫做 try 语句块），try 语句块作为一个观察者，寻找任何类型被抛出的异常在 try 语句的block中。</p>
+<p>Here’s an example of a try block:</p>
+<div class="highlight"><pre><span></span><code><span class="k">try</span>
+<span class="p">{</span>
+    <span class="c1">// Statements that may throw exceptions you want to handle go here</span>
+    <span class="c1">// 到那儿，可能抛出你需要处理的异常的语句。</span>
+    <span class="k">throw</span> <span class="mi">-1</span><span class="p">;</span> <span class="c1">// here&#39;s a trivial throw statement</span>
+              <span class="c1">// 一个常识抛出的语句</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- Note that the try block doesn’t define HOW we’re going to handle the exception. It merely tells the program, “Hey, if any of the statements inside this try block throws an exception, grab it!”. -->
+
+<p>注意，try 语句块没有定义如何处理异常。他仅仅告诉程序，“嘿，如果任何语句在这个 try 语句块中抛出，抓住它！”。</p>
+<h2 id="_3">异常处理<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<!-- Handling exceptions -->
+
+<!-- Finally, the end of our American football analogy: After the penalty has been called and play has stopped, the referee assesses the penalty and executes it. In other words, the penalty must be handled before normal play can resume. -->
+
+<p>最后，美国足球的比喻：在惩罚被调用，游戏已经停止，裁判评估惩罚并且执行它。换句话说，惩罚必须被处理在继续游戏之前。</p>
+<!-- Actually handling exceptions is the job of the catch block(s). The catch keyword is used to define a block of code (called a catch block) that handles exceptions for a single data type. -->
+
+<p>事实上，异常处理是 <code>catch</code> 语句块的工作。<code>catch</code> 关键词被用来定义一个语句块（被叫做 catch 语句块）处理单个数据类型的的异常。</p>
+<!-- Here’s an example of a catch block that will catch integer exceptions: -->
+
+<p>这有一个 <code>catch</code> 语句块的例子，它会捕获一个整型异常：</p>
+<div class="highlight"><pre><span></span><code><span class="k">catch</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="c1">// Handle an exception of type int here</span>
+    <span class="c1">// 处理一个整型的异常</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;We caught an int exception with value&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- Try blocks and catch blocks work together -- A try block detects any exceptions that are thrown by statements within the try block, and routes them to the appropriate catch block for handling. A try block must have at least one catch block immediately following it, but may have multiple catch blocks listed in sequence. -->
+
+<p><code>try</code> 语句块和 <code>catch</code> 语句块一起工作—— 一个 try 语句块检测 try 语句块中的任何语句抛出的异常，并且发送它们到，合适的 <code>catch</code> 语句块来进行处理。一个 <code>try</code> 语句块必须有至少一个 <code>catch</code> 语句块，紧跟着 <code>try</code> 语句，也许有很多个捕获语句快按顺序排列。</p>
+<!-- Once an exception has been caught by the try block and routed to a catch block for handling, the exception is considered handled, and execution will resume as normal after the catch block. -->
+
+<p>一旦一个异常在 <code>try</code> 语句中被捕获，并且发送到一个 <code>catch</code> 语句块来处理，异常被认为处理，并且在 <code>catch</code> 语句后执行将会像往常一样继续。</p>
+<!-- Catch parameters work just like function parameters, with the parameter being available within the subsequent catch block. Exceptions of fundamental types can be caught by value, but exceptions of non-fundamental types should be caught by const reference to avoid making an unnecessary copy. -->
+
+<p>捕获参数就像函数参数那样工作，参数在后续的 <code>try</code> 语句块中可用。基础类型的异常可以被捕获以值的形式，但是非基础类型的异常应该被捕获，以常引用的方式，来避免不必要的拷贝。</p>
+<!-- Just like with functions, if the parameter is not going to be used in the catch block, the variable name can be omitted: -->
+<p>就像用函数那样，如果参数没有在语句中被使用，变量名可以被省略</p>
+<div class="highlight"><pre><span></span><code><span class="k">catch</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span> <span class="c1">// note: no variable name since we don&#39;t use it in the catch block below</span>
+               <span class="c1">// 注意：无变量名，因为我们不会再catch语句块中使用它</span>
+<span class="p">{</span>
+    <span class="c1">// Handle exception of type double here</span>
+    <span class="c1">// 处理 double 类型的异常</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;We caught an exception of type double&quot;</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- This can help prevent compiler warnings about unused variables. -->
+
+<p>这可以防止编译器做有关未使用变量的警告。</p>
+<h2 id="throwtrycatch">抛出(throw)，try，捕获(catch)<a class="headerlink" href="#throwtrycatch" title="Permanent link">&para;</a></h2>
+<!-- Putting throw, try, and catch together -->
+
+<!-- Here’s a full program that uses throw, try, and multiple catch blocks: -->
+<p>这有一整个程序，使用了 <code>throw, try</code> 和许多 <code>catch</code> 语句块。</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;string&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="c1">// Statements that may throw exceptions you want to handle go here</span>
+        <span class="k">throw</span> <span class="mi">-1</span><span class="p">;</span> <span class="c1">// here&#39;s a trivial example</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="kt">int</span> <span class="n">x</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="c1">// Any exceptions of type int thrown within the above try block get sent here</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;We caught an int exception with value: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="kt">double</span><span class="p">)</span> <span class="c1">// no variable name since we don&#39;t use the exception itself in the catch block below</span>
+    <span class="p">{</span>
+        <span class="c1">// Any exceptions of type double thrown within the above try block get sent here</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;We caught an exception of type double&quot;</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="o">&amp;</span><span class="n">str</span><span class="p">)</span> <span class="c1">// catch classes by const reference</span>
+    <span class="p">{</span>
+        <span class="c1">// Any exceptions of type std::string thrown within the above try block get sent here</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;We caught an exception of type std::string&quot;</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Continuing on our merry way</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- Running the above try/catch block would produce the following result: -->
+<p>运行以上的 <code>try/catch</code> 语句块将会产生如下结果：</p>
+<div class="highlight"><pre><span></span><code>We caught an int exception with value -1
+Continuing on our merry way
+</code></pre></div>
+<!-- A throw statement was used to raise an exception with the value -1, which is of type int. The throw statement was then caught by the enclosing try block, and routed to the appropriate catch block that handles exceptions of type int. This catch block printed the appropriate error message. -->
+
+<p>一个抛出语句被用来抛出一个异常，通过 <code>-1</code> 这个值，类型为 <code>int</code>。<code>throw</code> 语句会被紧接着的封闭的 try 语句块捕获，并且发送到合适的处理整型异常的 <code>catch</code> 语句块。这个 <code>catch</code> 语句块打印了合适的错误信息。</p>
+<!-- Once the exception was handled, the program continued as normal after the catch blocks, printing “Continuing on our merry way”. -->
+<p>一旦异常被处理，程序就会从 <code>catch</code> 语句块结束的地方开始正常运行，并且打印 “Continuing on our merry way”。</p>
+<h2 id="_4">再复习异常处理<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<!-- Recapping exception handling -->
+
+<!-- Exception handling is actually quite simple, and the following two paragraphs cover most of what you need to remember about it: -->
+<p>异常处理实际上非常简单，下面两段话覆盖了大多数你需要记得的有关异常的事情：</p>
+<!-- When an exception is raised (using throw), execution of the program immediately jumps to the nearest enclosing try block (propagating up the stack if necessary to find an enclosing try block -- we’ll discuss this in more detail next lesson). If any of the catch handlers attached to the try block handle that type of exception, that handler is executed and the exception is considered handled. -->
+
+<p>当一个异常被使用 <code>throw</code> 抛出，程序的执行会立即跳到最近的 <code>try</code> 语句块（向上传播堆栈，如果有必要找到一个封闭的 try 语句块——我们将在下节课讨论更加详细的内容）。如果任何异常函数可以处理之前 <code>try</code> 语句快抛出的异常，那个函数将会被执行，异常也会被认为处理了。</p>
+<!-- If no appropriate catch handlers exist, execution of the program propagates to the next enclosing try block. If no appropriate catch handlers can be found before the end of the program, the program will fail with an exception error. -->
+
+<p>如果没有合适的处理函数存在，执行的程序会跳出到下一个 try 闭合语句，如果没有合适的 catch 语句可以被找到在程序结束前，程序将会带着异常错误失败。</p>
+<!-- Note that the compiler will not perform implicit conversions or promotions when matching exceptions with catch blocks! For example, a char exception will not match with an int catch block. An int exception will not match a float catch block. However, casts from a derived class to one of its parent classes will be performed. -->
+
+<p>注意，编译器不会执行一个隐式转化 (implicit conversions) 或者升级 (promotions) 当使用 <code>catch</code> 语句来捕获异常时！例如，一个 <code>char</code> 类型的异常将不会匹配一个 <code>int</code> 类型的 <code>catch</code> 语句块。一个 <code>int</code> 异常将不会匹配一个 <code>float</code> 类型的 <code>catch</code> 语句块。然而，从派生类到父类之一将会执行。</p>
+<!-- That’s really all there is to it. The rest of this chapter will be dedicated to showing examples of these principles at work. -->
+<p>这就是全部，接下来的章节将会尽量展示所有这些原则的例子。</p>
+<h2 id="_5">异常被立即处理<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<!-- Exceptions are handled immediately -->
+
+<!-- Here’s a short program that demonstrates how exceptions are handled immediately: -->
+<p>这是一个短小的程序，展示了异常如何被立刻处理：</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">try</span>
+    <span class="p">{</span>
+        <span class="k">throw</span> <span class="mf">4.5</span><span class="p">;</span> <span class="c1">// throw exception of type double</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;This never prints</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">catch</span><span class="p">(</span><span class="kt">double</span> <span class="n">x</span><span class="p">)</span> <span class="c1">// handle exception of type double</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;We caught a double of value: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- This program is about as simple as it gets. Here’s what happens: the throw statement is the first statement that gets executed -- this causes an exception of type double to be raised. Execution immediately moves to the nearest enclosing try block, which is the only try block in this program. The catch handlers are then checked to see if any handler matches. Our exception is of type double, so we’re looking for a catch handler of type double. We have one, so it executes. -->
+
+<p>这个程序非常简单。这就是具体发生的的事情：抛出语句是第一执行的语句 —— 这引起了一个 <code>double</code> 类型的异常被抛出。执行流程一颗移动到最近的 <code>try</code> 语句块闭合处，也是这个程序中唯一的 <code>try</code> block。<code>catch</code> 语句将会紧接着检查是否有 <code>handler</code> 匹配。我们的异常就是 <code>double</code> 类型的。而且我们正在寻找一个 <code>double</code> 类型的 <code>catch</code> 语句，我们刚好有一个，紧接着它就会执行。</p>
+<!-- Consequently, the result of this program is as follows: -->
+
+<p>因此，这个程序输出如下：</p>
+<p>We caught a double of value: 4.5</p>
+<!-- Note that “This never prints” is never printed, because the exception caused the execution path to jump immediately to the exception handler for doubles. -->
+
+<p>注意到 "this never prints" 是从没被打印的，因为异常造成执行路径立刻跳到 <code>double</code> 的异常处理。</p>
+<h2 id="_6">一个更加真实的例子<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<!-- A more realistic example -->
+
+<!-- Let’s take a look at an example that’s not quite so academic: -->
+
+<p>让我们看一个不是那么理论的例子：</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&quot;math.h&quot;</span><span class="c1"> // for sqrt() function</span><span class="cp"></span>
+<span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter a number: &quot;</span><span class="p">;</span>
+    <span class="kt">double</span> <span class="n">x</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">;</span>
+
+    <span class="k">try</span> <span class="c1">// Look for exceptions that occur within try block and route to attached catch block(s)</span>
+    <span class="p">{</span>
+        <span class="c1">// If the user entered a negative number, this is an error condition</span>
+        <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">&lt;</span> <span class="mf">0.0</span><span class="p">)</span>
+            <span class="k">throw</span> <span class="s">&quot;Can not take sqrt of negative number&quot;</span><span class="p">;</span> <span class="c1">// throw exception of type const char*</span>
+
+        <span class="c1">// Otherwise, print the answer</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The sqrt of &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">x</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; is &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">sqrt</span><span class="p">(</span><span class="n">x</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="k">catch</span> <span class="p">(</span><span class="k">const</span> <span class="kt">char</span><span class="o">*</span> <span class="n">exception</span><span class="p">)</span> <span class="c1">// catch exceptions of type const char*</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cerr</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Error: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">exception</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>In this code, the user is asked to enter a number. If they enter a positive number, the if statement does not execute, no exception is thrown, and the square root of the number is printed. Because no exception is thrown in this case, the code inside the catch block never executes. The result is something like this:</p>
+<p>在这段代码中，用户被要求输入一个数字，如果他们输入一个正数，那么 if 语句不会执行，没有异常抛出，并且输入数字的平方根将会被打印。因为没有异常在这个例子中被抛出，<code>catch</code> 语句块中的代码从不会执行，结果如下：</p>
+<div class="highlight"><pre><span></span><code>Enter a number: 9
+The sqrt of 9 is 3
+</code></pre></div>
+<p>If the user enters a negative number, we throw an exception of type const char*. Because we’re within a try block and a matching exception handler is found, control immediately transfers to the const char* exception handler. The result is:</p>
+<p>Enter a number: -4
+Error: Can not take sqrt of negative number</p>
+<p>By now, you should be getting the basic idea behind exceptions. In the next lesson, we’ll do quite a few more examples to show how flexible exceptions are.</p>
+<p>What catch blocks typically do</p>
+<p>If an exception is routed to a catch block, it is considered “handled” even if the catch block is empty. However, typically you’ll want your catch blocks to do something useful. There are three common things that catch blocks do when they catch an exception:</p>
+<p>First, catch blocks may print an error (either to the console, or a log file).</p>
+<p>Second, catch blocks may return a value or error code back to the caller.</p>
+<p>Third, a catch block may throw another exception. Because the catch block is outside of the try block, the newly thrown exception in this case is not handled by the preceding try block -- it’s handled by the next enclosing try block.</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../14.1-the-need-for-exceptions/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              14.1 为什么需要异常
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../14.3-exceptions-functions-and-stack-unwinding/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              14.3 异常，函数，栈展开
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.926459b3.min.js"></script>
+      
+    
+  </body>
+</html>

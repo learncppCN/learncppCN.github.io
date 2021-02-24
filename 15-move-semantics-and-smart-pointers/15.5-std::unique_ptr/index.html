@@ -1,0 +1,1658 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+    
+    
+      
+        <title>15.5 std::unique_ptr - LearnCPP 中文教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a3f8f96a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#155-stdunique_ptr" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnCPP 中文教程" class="md-header__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnCPP 中文教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              15.5 std::unique_ptr
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnCPP 中文教程" class="md-nav__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    LearnCPP 中文教程
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BF%BB%E8%AF%91%E6%97%A5%E8%AE%B0/" class="md-nav__link">
+        翻译日记
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        00 Introduction getting started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="00 Introduction getting started" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          00 Introduction getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/" class="md-nav__link">
+        第零章 介绍/起步
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/0.1-Introduction-to-these-tutorials/" class="md-nav__link">
+        0.1 教程介绍
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        08 basic object oriented programming
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="08 basic object oriented programming" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          08 basic object oriented programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/" class="md-nav__link">
+        第八章 面向对象编程基础
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.1-welcome-to-object-oriented-programming/" class="md-nav__link">
+        8.1 欢迎来到面向对象的世界
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.2-classes-and-class-member/" class="md-nav__link">
+        8.2 类和类成员 (Classes and class member)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        14 exceptions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="14 exceptions" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          14 exceptions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/" class="md-nav__link">
+        14 异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.1-the-need-for-exceptions/" class="md-nav__link">
+        14.1 为什么需要异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.2-basic-exception-handloing/" class="md-nav__link">
+        14.2 基本异常处理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.3-exceptions-functions-and-stack-unwinding/" class="md-nav__link">
+        14.3 异常，函数，栈展开
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.4-uncaught-exceptions-catch-all-handlers-and-exception-specifiers/" class="md-nav__link">
+        14.4 未捕获异常，捕获全部异常和异常说明符
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.5-exceptions-classes-and-inheritance/" class="md-nav__link">
+        14.5 异常，类和继承
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.6-rethrowing-exceptions/" class="md-nav__link">
+        14.6 异常的再抛出
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.7-function-try-blocks/" class="md-nav__link">
+        14.7 函数级的 try 代码块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.8-exception-dangers-and-downsides/" class="md-nav__link">
+        14.8 异常的危险和缺点
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+      
+      <label class="md-nav__link" for="nav-6">
+        15 move semantics and smart pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="15 move semantics and smart pointers" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          15 move semantics and smart pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        15 移动语义和智能指针
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.1-intro-to-smart-pointers-and-move-semantics/" class="md-nav__link">
+        15.1 智能指针和移动语义的介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.2-r-value-reference/" class="md-nav__link">
+        15.2 右值引用
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.3-move-constructors-and-move-assignment/" class="md-nav__link">
+        15.3 移动构造和移动赋值
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.4-std%3A%3Amove/" class="md-nav__link">
+        15.4 std::move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          15.5 std::unique_ptr
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        15.5 std::unique_ptr
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#stdunique_ptr" class="md-nav__link">
+    std::unique_ptr
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    访问被管理的对象
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdunique_ptr_1" class="md-nav__link">
+    std::unique_ptr 和数组
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdmake_unique" class="md-nav__link">
+    std::make_unique
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    异常安全问题细节
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdunique_ptr_2" class="md-nav__link">
+    从函数返回 std::unique_ptr
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdunique_ptr_3" class="md-nav__link">
+    向函数传入 std::unique_ptr
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdunique_ptr_4" class="md-nav__link">
+    std::unique_ptr 和类型
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdunique_ptr_5" class="md-nav__link">
+    std::unique_ptr 的误用
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.6-std%3A%3Ashared_ptr/" class="md-nav__link">
+        15.6 std::shared_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.7-std%3A%3Aweak_ptr/" class="md-nav__link">
+        15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.x-chapter15-comprehensive-review/" class="md-nav__link">
+        15.x 十五章理解和复习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+      
+      <label class="md-nav__link" for="nav-7">
+        18 virtual functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="18 virtual functions" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          18 virtual functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/" class="md-nav__link">
+        第十八章 虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.1-pointers-and-references-to-the-base-class-of-derived-objects/" class="md-nav__link">
+        18.1 基类指针和引用指向派生类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.2-virtual-functions-and-polymorphism/" class="md-nav__link">
+        18.2 — 虚函数和多态
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.3-The-override-and-final-specifiers-and-covariant-return-types/" class="md-nav__link">
+        18.3 重写 final 标识符，并且协变返回类型
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-nav__link">
+        18.4 虚构造函数，虚赋值，重写虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.5-early-binding-and-late-binding/" class="md-nav__link">
+        18.5 预绑定和后期绑定
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.6-the-virtual-table/" class="md-nav__link">
+        18.6 虚表
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.7-virtual-base-classes/" class="md-nav__link">
+        18.7 虚基类 (Virtual base classes)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.8-object-slicing/" class="md-nav__link">
+        18.8 对象切割
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.9-dynamic-casting/" class="md-nav__link">
+        18.9 动态类型转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.x%20chapter-18-comprehensice-quiz/" class="md-nav__link">
+        18.x 十二章理解和练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+      
+      <label class="md-nav__link" for="nav-8">
+        19 templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="19 templates" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          19 templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/" class="md-nav__link">
+        十九章 模板
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.1-function-templates/" class="md-nav__link">
+        19.1 函数模板 Function templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.2-function-template-instances/" class="md-nav__link">
+        19.2 类模板实例
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.3-template-classes/" class="md-nav__link">
+        19.3 模板类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.4-template-non-type-parameters/" class="md-nav__link">
+        19.4 模板非类型参数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.5-function-template-specialization/" class="md-nav__link">
+        19.5 函数模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.6-class-template-specialization/" class="md-nav__link">
+        19.6 类模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.7-partial-template-specialization/" class="md-nav__link">
+        19.7 模板局部特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.8-partial-template-specialization-for-pointers/" class="md-nav__link">
+        19.8 局部模板特化指针的
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.x%20chapter-19-comprehensice-quiz/" class="md-nav__link">
+        19.x - 19章节练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" >
+      
+      <label class="md-nav__link" for="nav-9">
+        23 input and output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="23 input and output" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          23 input and output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.1-input-and-output-streams/" class="md-nav__link">
+        18.1 输入输出流
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.2-input-with-istream/" class="md-nav__link">
+        18.2 使用 istream 输入
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.3-output-with-ostream-and-ios/" class="md-nav__link">
+        18.3 使用 ostrea 和 ios 进行输出
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#stdunique_ptr" class="md-nav__link">
+    std::unique_ptr
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    访问被管理的对象
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdunique_ptr_1" class="md-nav__link">
+    std::unique_ptr 和数组
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdmake_unique" class="md-nav__link">
+    std::make_unique
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    异常安全问题细节
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdunique_ptr_2" class="md-nav__link">
+    从函数返回 std::unique_ptr
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdunique_ptr_3" class="md-nav__link">
+    向函数传入 std::unique_ptr
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdunique_ptr_4" class="md-nav__link">
+    std::unique_ptr 和类型
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#stdunique_ptr_5" class="md-nav__link">
+    std::unique_ptr 的误用
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="155-stdunique_ptr">15.5 std::unique_ptr<a class="headerlink" href="#155-stdunique_ptr" title="Permanent link">&para;</a></h1>
+<!-- 15.5 — std::unique_ptr -->
+
+<blockquote>
+<p>By Alex on March 15<sup>th</sup>, 2017 | last modified by nascardriver on July 12<sup>th</sup>, 2020</p>
+<p>翻译by dashjay 2020.07.18</p>
+</blockquote>
+<!-- At the beginning of the chapter, we discussed how use of pointers can lead to bugs and memory leaks in some situations. For example, this can happen when a function early returns, or throws an exception, and the pointer is not properly deleted. -->
+
+<p>在本章的开始，我们讨论了在一些条件下，如何使用指针会引起bug和内存泄露。例如，这就可能会发生在，当一个函数提前退出，或抛出异常，或者指针没有被合理的删除时。</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+<span class="kt">void</span> <span class="nf">someFunction</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="o">*</span><span class="n">ptr</span><span class="p">{</span> <span class="k">new</span> <span class="n">Resource</span><span class="p">()</span> <span class="p">};</span>
+
+    <span class="kt">int</span> <span class="n">x</span><span class="p">{};</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Enter an integer: &quot;</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cin</span> <span class="o">&gt;&gt;</span> <span class="n">x</span><span class="p">;</span>
+
+    <span class="k">if</span> <span class="p">(</span><span class="n">x</span> <span class="o">==</span> <span class="mi">0</span><span class="p">)</span>
+        <span class="k">throw</span> <span class="mi">0</span><span class="p">;</span> <span class="c1">// the function returns early, and ptr won’t be deleted!</span>
+
+    <span class="c1">// do stuff with ptr here</span>
+
+    <span class="k">delete</span> <span class="n">ptr</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- Now that we’ve covered the fundamentals of move semantics, we can return to the topic of smart pointer classes. As a reminder, a smart pointer is a class that manages a dynamically allocated object. Although smart pointers can offer other features, the defining characteristic of a smart pointer is that it manages a dynamically allocated resource, and ensures the dynamically allocated object is properly cleaned up at the appropriate time (usually when the smart pointer goes out of scope). -->
+
+<p>既然我们已经知道了 <strong>移动语义</strong> 的操作，我们可以回到 <strong>智能指针</strong> 的话题了。提醒一下，<strong>智能指针</strong> 是一个管理着 <strong>动态分配资源</strong> 的类，并且保证动态分配的对象在合适的时间被合适的 <strong>释放</strong>，（通常是智能指针离开作用域时）。</p>
+<!-- Because of this, smart pointers should never be dynamically allocated themselves (otherwise, there is the risk that the smart pointer may not be properly deallocated, which means the object it owns would not be deallocated, causing a memory leak). By always allocating smart pointers on the stack (as local variables or composition members of a class), we’re guaranteed that the smart pointer will properly go out of scope when the function or object it is contained within ends, ensuring the object the smart pointer owns is properly deallocated. -->
+
+<p>因为这样，智能指针本身应该从不被动态分配（否则，如果他们自己本身就可能有没被合适地释放的风险，这意味着它持有的对象将不会被释放，造成内存泄露）。通过始终只在栈区创建智能指针的方式（作为局部变量或者是其他类的组成），我们保证那样的智能指针将会合理地离开作用域，当函数结束或者对象离开作用域时时，能确保智能指针 <strong>持有的对象</strong> 被合适的释放。</p>
+<!-- C++11 standard library ships with 4 smart pointer classes: std::auto_ptr (which you shouldn’t use -- it’s being removed in C++17), std::unique_ptr, std::shared_ptr, and std::weak_ptr. std::unique_ptr is by far the most used smart pointer class, so we’ll cover that one first. In the next lessons, we’ll cover std::shared_ptr and std::weak_ptr. -->
+
+<p>C++11 标准库附带四种指针类型：<code>std::auto_ptr</code>（不应该使用————在C++17中已经被移除），<code>std::unique_ptr</code>，<code>std::share_ptr</code> 和 <code>std::weak_ptr</code>。<code>std::unique_ptr</code> 是目前最多使用的智能指针类，因此我们也第一个来讲它。在之后的课程里，我们会讲 <code>std::shared_ptr</code> 和 <code>std::weak_ptr</code>。</p>
+<h2 id="stdunique_ptr">std::unique_ptr<a class="headerlink" href="#stdunique_ptr" title="Permanent link">&para;</a></h2>
+<!-- std::unique_ptr is the C++11 replacement for std::auto_ptr. It should be used to manage any dynamically allocated object that is not shared by multiple objects. That is, std::unique_ptr should completely own the object it manages, not share that ownership with other classes. std::unique_ptr lives in the <memory> header. -->
+
+<p><code>std::unique_ptr</code> 是 C++11 中 <code>std::auto_ptr</code> 的替代品。它应该被用于管理任何动态分配，并不会在多个对象中分享的对象。 <code>std::unique_ptr</code>，应该完全的持有它管理的对象，不应该和其他类型分享对象的所有权。</p>
+<blockquote>
+<p>std::unique_ptr 定义在 <code>&lt;memory&gt;</code> 头中。</p>
+</blockquote>
+<!-- Let’s take a look at a simple smart pointer example: -->
+<p>让我们来看一下这个简单的智能指针的例子：</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+<span class="cp"># include &lt;memory&gt; </span><span class="c1">// for std::unique_ptr</span>
+
+<span class="k">class</span> <span class="nc">Resource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+ <span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource acquired</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+ <span class="o">~</span><span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource destroyed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+
+ <span class="c1">// allocate a Resource object and have it owned by std::unique_ptr</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">{</span> <span class="k">new</span> <span class="n">Resource</span><span class="p">()</span> <span class="p">};</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">}</span> <span class="c1">// res goes out of scope here, and the allocated Resource is destroyed</span>
+</code></pre></div>
+<!-- Because the std::unique_ptr is allocated on the stack here, it’s guaranteed to eventually go out of scope, and when it does, it will delete the Resource it is managing. -->
+
+<p>因为 <code>std::unique_ptr</code> 在栈区上被分配，它最终会离开作用域，并且会自动删除它管理的资源。</p>
+<!-- Unlike std::auto_ptr, std::unique_ptr properly implements move semantics. -->
+<p>不像 <code>std::auto_ptr</code>，<code>std::unique_ptr</code> 更适合用来实现移动语义。</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="cp"># include &lt;memory&gt; </span><span class="c1">// for std::unique_ptr</span>
+
+<span class="k">class</span> <span class="nc">Resource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+ <span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource acquired</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+ <span class="o">~</span><span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource destroyed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">res1</span><span class="p">{</span> <span class="k">new</span> <span class="n">Resource</span><span class="p">{}</span> <span class="p">};</span> <span class="c1">// Resource created here</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">res2</span><span class="p">{};</span> <span class="c1">// Start as nullptr</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;res1 is &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">res1</span><span class="p">)</span> <span class="o">?</span> <span class="s">&quot;not null</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">:</span> <span class="s">&quot;null</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;res2 is &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">res2</span><span class="p">)</span> <span class="o">?</span> <span class="s">&quot;not null</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">:</span> <span class="s">&quot;null</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+ <span class="c1">// res2 = res1; // Won&#39;t compile: copy assignment is disabled</span>
+ <span class="n">res2</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">res1</span><span class="p">);</span> <span class="c1">// res2 assumes ownership, res1 is set to null</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Ownership transferred</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;res1 is &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">res1</span><span class="p">)</span> <span class="o">?</span> <span class="s">&quot;not null</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">:</span> <span class="s">&quot;null</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;res2 is &quot;</span> <span class="o">&lt;&lt;</span> <span class="p">(</span><span class="k">static_cast</span><span class="o">&lt;</span><span class="kt">bool</span><span class="o">&gt;</span><span class="p">(</span><span class="n">res2</span><span class="p">)</span> <span class="o">?</span> <span class="s">&quot;not null</span><span class="se">\n</span><span class="s">&quot;</span> <span class="o">:</span> <span class="s">&quot;null</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">);</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">}</span> <span class="c1">// Resource destroyed here when res2 goes out of scope</span>
+</code></pre></div>
+<div class="highlight"><pre><span></span><code>这个例子会打印：
+
+Resource acquired
+res1 is not null
+res2 is null
+Ownership transferred
+res1 is null
+res2 is not null
+Resource destroyed
+</code></pre></div>
+<!-- Because std::unique_ptr is designed with move semantics in mind, copy initialization and copy assignment are disabled. If you want to transfer the contents managed by std::unique_ptr, you must use move semantics. In the program above, we accomplish this via std::move (which converts res1 into an r-value, which triggers a move assignment instead of a copy assignment). -->
+
+<p>因为 <code>std__unique_ptr</code> 在设计时考虑了移动语义，<strong>拷贝初始化</strong> 和 <strong>拷贝赋值</strong> 都被禁用了。如果你我相要转移一个被 <code>std::unique_ptr</code>管理的内容，你必须使用 <strong>移动语义</strong>。在以上的程序中，我们使用 <code>std::move</code>（将 res1 转化成一个右值，可以触发一个移动赋值，而不是拷贝赋值） 来完成。</p>
+<h2 id="_1">访问被管理的对象<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<!-- Accessing the managed object -->
+
+<!-- std::unique_ptr has an overloaded operator* and operator-> that can be used to return the resource being managed. Operator* returns a reference to the managed resource, and operator-> returns a pointer. -->
+
+<p><code>std::unique_ptr</code> 重载了 <code>*操作符</code>和 <code>-&gt;操作符</code> 可以用来返回所管理的资源，<code>operator*</code> 返回一个资源的引用，<code>operator-&gt;</code> 返回一个指针。</p>
+<!-- Remember that std::unique_ptr may not always be managing an object -- either because it was created empty (using the default constructor or passing in a nullptr as the parameter), or because the resource it was managing got moved to another std::unique_ptr. So before we use either of these operators, we should check whether the std::unique_ptr actually has a resource. Fortunately, this is easy: std::unique_ptr has a cast to bool that returns true if the std::unique_ptr is managing a resource. -->
+
+<p>记住 <code>std::unique_ptr</code> 可能不总是管理一个资源，它也可能被创造为空(使用默认的构造函数并且传入一个空指针作为参数)，或者因为它管理的资源被移动到另一个 <code>std::unique_ptr</code>. 因此在我们使用这些指针之前，我们应该检查 <code>std::unique_ptr</code> 是否管理一个资源。幸运的是，这很简单：<code>std::unique_ptr</code> 有一个可以转化成一个bool值的函数，如果该<code>unique_ptr</code>管理一份资源则返回 true。</p>
+<p>这是一个简单的例子：</p>
+<!-- Here’s an example of this: -->
+
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="cp"># include &lt;memory&gt; </span><span class="c1">// for std::unique_ptr</span>
+
+<span class="k">class</span> <span class="nc">Resource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+ <span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource acquired</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+ <span class="o">~</span><span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource destroyed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Resource</span> <span class="o">&amp;</span><span class="n">res</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;I am a resource</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+ <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">{</span> <span class="k">new</span> <span class="n">Resource</span><span class="p">{}</span> <span class="p">};</span>
+
+ <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="p">)</span> <span class="c1">// use implicit cast to bool to ensure res contains a Resource</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span> <span class="c1">// print the Resource that res is owning</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p>输出：</p>
+<div class="highlight"><pre><span></span><code>Resource acquired
+I am a resource
+Resource destroyed
+</code></pre></div>
+<!-- In the above program, we use the overloaded operator* to get the Resource object owned by std::unique_ptr res, which we then send to std::cout for printing. -->
+
+<p>在上方的程序中，我们使用重载的<code>operator*</code>来获得 <code>unique_ptr</code> 持有的资源，然后送到 <code>std::cout</code> 打印。</p>
+<h2 id="stdunique_ptr_1">std::unique_ptr 和数组<a class="headerlink" href="#stdunique_ptr_1" title="Permanent link">&para;</a></h2>
+<!-- std::unique_ptr and arrays -->
+
+<!-- Unlike std::auto_ptr, std::unique_ptr is smart enough to know whether to use scalar delete or array delete, so std::unique_ptr is okay to use with both scalar objects and arrays. -->
+<p>不像 <code>std::auto_ptr</code> 那样，<code>std::unique_ptr</code>是足够智能的知道是否使用标量删除(scalar delete)或数组删除(array delete[])，因此 <code>std::unique_ptr</code>可以同时搭配 <code>scalar objects</code> 和 <code>arrays</code>。</p>
+<p>然而，<code>std::array</code> 或者 <code>std::vector</code>(或 <code>std::string</code>) 总会是一个更好的选择，相比起用固定数组(<code>fixed array</code>)，C类型字符串(<code>C-style string</code>) 或 动态数组（<code>dynamic array</code>）搭配 <code>std::unique_ptr</code>。</p>
+<!-- However, std::array or std::vector (or std::string) are almost always better choices than using std::unique_ptr with a fixed array, dynamic array, or C-style string. -->
+
+<!-- Rule: Favor std::array, std::vector, or std::string over a smart pointer managing a fixed array, dynamic array, or C-style string -->
+<p>规则：更加偏好使用 <code>std::array</code>, <code>std::vector</code> 或者 <code>std::string</code> 而不是智能指针管理的定长数组，动态数组，或者C风格字符串。</p>
+<h2 id="stdmake_unique">std::make_unique<a class="headerlink" href="#stdmake_unique" title="Permanent link">&para;</a></h2>
+<!-- std::make_unique -->
+
+<!-- C++14 comes with an additional function named std::make_unique(). This templated function constructs an object of the template type and initializes it with the arguments passed into the function. -->
+<p>C++14 带有一个附加的函数叫做 <code>std::make_unique()</code>。此模板化函数构造模板类型的对象，并使用传递给函数的参数对其进行初始化。</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;memory&gt; </span><span class="c1">// for std::unique_ptr and std::make_unique</span>
+
+<span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="k">class</span> <span class="nc">Fraction</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+
+ <span class="kt">int</span> <span class="n">m_numerator</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span>
+ <span class="kt">int</span> <span class="n">m_denominator</span><span class="p">{</span> <span class="mi">1</span> <span class="p">};</span>
+
+<span class="k">public</span><span class="o">:</span>
+
+ <span class="n">Fraction</span><span class="p">(</span><span class="kt">int</span> <span class="n">numerator</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">denominator</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">:</span>
+  <span class="n">m_numerator</span><span class="p">{</span> <span class="n">numerator</span> <span class="p">},</span> <span class="n">m_denominator</span><span class="p">{</span> <span class="n">denominator</span> <span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Fraction</span> <span class="o">&amp;</span><span class="n">f1</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="n">f1</span><span class="p">.</span><span class="n">m_numerator</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;/&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">f1</span><span class="p">.</span><span class="n">m_denominator</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+ <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+
+ <span class="c1">// Create a single dynamically allocated Fraction with numerator 3 and denominator 5</span>
+ <span class="c1">// We can also use automatic type deduction to good effect here</span>
+ <span class="k">auto</span> <span class="n">f1</span><span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Fraction</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="p">};</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">f1</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="c1">// Create a dynamically allocated array of Fractions of length 4</span>
+ <span class="k">auto</span> <span class="n">f2</span><span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Fraction</span><span class="p">[]</span><span class="o">&gt;</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span> <span class="p">};</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">f2</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p>输出</p>
+<div class="highlight"><pre><span></span><code><span class="m">3</span>/5
+<span class="m">0</span>/1
+</code></pre></div>
+<!-- Use of std::make_unique() is optional, but is recommended over creating std::unique_ptr yourself. This is because code using std::make_unique is simpler, and it also requires less typing (when used with automatic type deduction). Furthermore it resolves an exception safety issue that can result from C++ leaving the order of evaluation for function arguments unspecified. -->
+
+<p><code>std::make_unique</code>的使用是一个可选项，但是是非常推荐的。这是因为使用 <code>std::make_unique</code> 很简单，并且它也需要写更少的代码。（当使用自动类型判断时），更进一步来说，它也解决了一个异常安全问题，这会引起C++... (Furthermore it resolves an exception safety issue that can result from C++ leaving the order of evaluation for function arguments unspecified.)</p>
+<!-- Rule: use std::make_unique() instead of creating std::unique_ptr and using new yourself -->
+<p>规定: 使用 <code>std::make_unique()</code> 而不是自己手动创建。</p>
+<h2 id="_2">异常安全问题细节<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<!-- The exception safety issue in more detail -->
+
+<!-- For those wondering what the “exception safety issue” mentioned above is, here’s a description of the issue. -->
+<p>给那些想知道上方提到的是什么 “异常安全问题”的人一些解释，这里有一个关于此问题的描述</p>
+<!-- Consider an expression like this one: -->
+
+<p>思考一个像这样的表达式：</p>
+<div class="highlight"><pre><span></span><code><span class="n">some_function</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">T</span><span class="o">&gt;</span><span class="p">(</span><span class="k">new</span> <span class="n">T</span><span class="p">),</span> <span class="n">function_that_can_throw_exception</span><span class="p">());</span>
+</code></pre></div>
+<!-- The compiler is given a lot of flexibility in terms of how it handles this call. It could create a new T, then call function_that_can_throw_exception(), then create the std::unique_ptr that manages the dynamically allocated T. If function_that_can_throw_exception() throws an exception, then the T that was allocated will not be deallocated, because the smart pointer to do the deallocation hasn’t been created yet. This leads to T being leaked. -->
+
+<p>编译器在如何处理这个调用方面有很大的活动空间。它可能创建一个新的 T，然后再调用 <code>function_that_can_throw_exception()</code>，然后创建<code>std::unique_ptr</code>管理这动态分配的T。如果 <code>function_that_can_throw_exception()</code> 抛出一个异常，然后 <code>T</code> 被分配但是没有被释放，因为用来释放该资源的智能指针还没有被创建，这引起了 <code>T</code> 的泄露。</p>
+<!-- std::make_unique() doesn’t suffer from this problem because the creation of the object T and the creation of the std::unique_ptr happen inside the std::make_unique() function, where there’s no ambiguity about order of execution. -->
+
+<p><code>std::make_unique()</code> 不会遇到这个问题，因为对象 T 的创建和创建 <code>std::unique_ptr</code> 都发生在 <code>std::make_unique()</code>函数，不存在执行顺序模糊的问题。</p>
+<h2 id="stdunique_ptr_2">从函数返回 <code>std::unique_ptr</code><a class="headerlink" href="#stdunique_ptr_2" title="Permanent link">&para;</a></h2>
+<!-- Returning std::unique_ptr from a function -->
+
+<!-- std::unique_ptr can be safely returned from a function by value: -->
+
+<p><code>std::unique_ptr</code> 可以被从一个函数安全的返回：</p>
+<div class="highlight"><pre><span></span><code><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">createResource</span><span class="p">()</span>
+<span class="p">{</span>
+     <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span><span class="p">();</span>
+<span class="p">}</span>
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">ptr</span><span class="p">{</span> <span class="n">createResource</span><span class="p">()</span> <span class="p">};</span>
+    <span class="c1">// do whatever</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- In the above code, createResource() returns a std::unique_ptr by value. If this value is not assigned to anything, the temporary return value will go out of scope and the Resource will be cleaned up. If it is assigned (as shown in main()), in C++14 or earlier, move semantics will be employed to transfer the Resource from the return value to the object assigned to (in the above example, ptr), and in C++17 or newer, the return will be elided. This makes returning a resource by std::unique_ptr much safer than returning raw pointers! -->
+
+<p>在上方的代码中，<code>createResource()</code> 通过值返回一个 <code>std::unique_ptr</code>。如果这值不会被赋值给任何对象，返回的临时值将会离开作用域并且被清理。如果它被赋值（像main中展示的那样），在C++14或者更早，移动语义将会被使用来从返回值转移资源到即将赋值的对象（上方例子中的ptr），在C++17或者更新，返回将会被省略，这使得相比返回原指针，返回一个 <code>unique_ptr</code> 的资源更加安全。</p>
+<!-- In general, you should not return std::unique_ptr by pointer (ever) or reference (unless you have a specific compelling reason to). -->
+
+<p>总体来讲，你应该从不通过指针或引用返回 <code>std::unique_ptr</code> （除非你有特殊的原因来这样做）。</p>
+<h2 id="stdunique_ptr_3">向函数传入 <code>std::unique_ptr</code><a class="headerlink" href="#stdunique_ptr_3" title="Permanent link">&para;</a></h2>
+<!-- Passing std::unique_ptr to a function -->
+
+<!-- If you want the function to take ownership of the contents of the pointer, pass the std::unique_ptr by value. Note that because copy semantics have been disabled, you’ll need to use std::move to actually pass the variable in. -->
+
+<p>如果你想要函数来获得指针内容的所有权，通过值传一个 <code>std::unique_ptr</code>。注意，因为拷贝语义已经被禁用，你将会使用 <code>std::move</code> 来传值进入函数。</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;memory&gt; </span><span class="c1">// for std::unique_ptr</span>
+
+<span class="k">class</span> <span class="nc">Resource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+ <span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource acquired</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+ <span class="o">~</span><span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource destroyed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Resource</span> <span class="o">&amp;</span><span class="n">res</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;I am a resource</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+ <span class="p">}</span>
+
+<span class="p">};</span>
+<span class="kt">void</span> <span class="nf">takeOwnership</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">)</span>
+<span class="p">{</span>
+     <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="p">)</span>
+          <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="p">}</span> <span class="c1">// the Resource is destroyed here</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="k">auto</span> <span class="n">ptr</span><span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">};</span>
+
+<span class="c1">//    takeOwnership(ptr); // This doesn&#39;t work, need to use move semantics</span>
+
+    <span class="n">takeOwnership</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">move</span><span class="p">(</span><span class="n">ptr</span><span class="p">));</span> <span class="c1">// ok: use move semantics</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Ending program</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- The above program prints: -->
+<p>输出：</p>
+<div class="highlight"><pre><span></span><code>Resource acquired
+I am a resource
+Resource destroyed
+Ending program
+</code></pre></div>
+<!-- Note that in this case, ownership of the Resource was transferred to takeOwnership(), so the Resource was destroyed at the end of takeOwnership() rather than the end of main(). -->
+
+<p>注意在这个例子里，资源的所有权被传给了 <code>takeOwnership()</code>，因此资源将会被销毁在 <code>takeOwnership()</code> 函数结束时，而不是 <code>main()</code></p>
+<!-- However, most of the time, you won’t want the function to take ownership of the resource. Although you can pass a std::unique_ptr by reference (which will allow the function to use the object without assuming ownership), you should only do so when the called function might alter or change the object being managed. -->
+
+<p>然而，在大多数情况下，你不想让函数得到资源的所有权。虽然你可以传入一个 <code>std::unique_ptr</code>的引用（这允许函数使用对象，而不得到所有权），你应该仅仅在 调用函数会修改或者改变持其管理的对象的情况下使用。</p>
+<!-- Instead, it’s better to just pass the resource itself (by pointer or reference, depending on whether null is a valid argument). This allows the function to remain agnostic of how the caller is managing its resources. To get a raw resource pointer from a std::unique_ptr, you can use the get() member function: -->
+
+<p>相反，更好的方式是传入一个资源本身（通过指针或者引用，根据null是否是一个合法的参数），这允许函数保持调用者管理资源。为了从一个 <code>std::unique_ptr</code> 得到原来的资源指针，你可以使用 <code>get()</code> 成员函数：</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;memory&gt; </span><span class="c1">// for std::unique_ptr</span>
+
+<span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="k">class</span> <span class="nc">Resource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+ <span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource acquired</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+ <span class="o">~</span><span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource destroyed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+
+ <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Resource</span> <span class="o">&amp;</span><span class="n">res</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;I am a resource</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+ <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="c1">// The function only uses the resource, so we&#39;ll accept a pointer to the resource, not a reference to the whole std::unique_ptr&lt;Resource&gt;</span>
+<span class="kt">void</span> <span class="nf">useResource</span><span class="p">(</span><span class="n">Resource</span> <span class="o">*</span><span class="n">res</span><span class="p">)</span>
+<span class="p">{</span>
+
+ <span class="k">if</span> <span class="p">(</span><span class="n">res</span><span class="p">)</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="o">*</span><span class="n">res</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+
+ <span class="k">auto</span> <span class="n">ptr</span><span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">make_unique</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span><span class="p">()</span> <span class="p">};</span>
+
+ <span class="n">useResource</span><span class="p">(</span><span class="n">ptr</span><span class="p">.</span><span class="n">get</span><span class="p">());</span> <span class="c1">// note: get() used here to get a pointer to the Resource</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Ending program</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">}</span> <span class="c1">// The Resource is destroyed here</span>
+</code></pre></div>
+<p>输出</p>
+<div class="highlight"><pre><span></span><code>Resource acquired
+I am a resource
+Ending program
+Resource destroyed
+</code></pre></div>
+<h2 id="stdunique_ptr_4"><code>std::unique_ptr</code> 和类型<a class="headerlink" href="#stdunique_ptr_4" title="Permanent link">&para;</a></h2>
+<!-- std::unique_ptr and classes -->
+
+<!-- You can, of course, use std::unique_ptr as a composition member of your class. This way, you don’t have to worry about ensuring your class destructor deletes the dynamic memory, as the std::unique_ptr will be automatically destroyed when the class object is destroyed. However, do note that if your class object is dynamically allocated, the object itself is at risk for not being properly deallocated, in which case even a smart pointer won’t help. -->
+
+<p>当然，你可以使用 <code>std::unique_ptr</code>作为你的类型中的组成部分，以这个方式，你将不用担心确保你的类型的析构函数释放动态内存了，因为 <code>std::uniqut_ptr</code> 将会自动的销毁，当类型对象被销毁时。然而，记住如果你的类型是动态分配的，那么对象本身就有风险不能被正确的释放，在这种情况下，智能指针也不能帮你。</p>
+<h2 id="stdunique_ptr_5"><code>std::unique_ptr</code> 的误用<a class="headerlink" href="#stdunique_ptr_5" title="Permanent link">&para;</a></h2>
+<!-- Misusing std::unique_ptr -->
+
+<!-- There are two easy ways to misuse std::unique_ptrs, both of which are easily avoided. First, don’t let multiple classes manage the same resource. For example: -->
+
+<p>这有两个简单的例子，误用 <code>std::unique_ptr</code>，他们都是非常容易避免的。</p>
+<p>首先，不要让多个指针管理同样的资源，例如：</p>
+<div class="highlight"><pre><span></span><code><span class="n">Resource</span> <span class="o">*</span><span class="n">res</span><span class="p">{</span> <span class="k">new</span> <span class="nf">Resource</span><span class="p">()</span> <span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">res1</span><span class="p">{</span> <span class="n">res</span> <span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">res2</span><span class="p">{</span> <span class="n">res</span> <span class="p">};</span>
+</code></pre></div>
+<!-- While this is legal syntactically, the end result will be that both res1 and res2 will try to delete the Resource, which will lead to undefined behavior. -->
+
+<p>这在语义上是合法的，最后的结果就是 <code>res1</code> 和 <code>res2</code> 尝试删除资源，会引发未定义行为。</p>
+<!-- Second, don’t manually delete the resource out from underneath the std::unique_ptr. -->
+
+<p>第二，不要手动删除 <code>std::unique_ptr</code> 管理的资源</p>
+<div class="highlight"><pre><span></span><code><span class="n">Resource</span> <span class="o">*</span><span class="n">res</span><span class="p">{</span> <span class="k">new</span> <span class="nf">Resource</span><span class="p">()</span> <span class="p">};</span>
+<span class="n">std</span><span class="o">::</span><span class="n">unique_ptr</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">res1</span><span class="p">{</span> <span class="n">res</span> <span class="p">};</span>
+<span class="k">delete</span> <span class="n">res</span><span class="p">;</span>
+</code></pre></div>
+<!-- If you do, the std::unique_ptr will try to delete an already deleted resource, again leading to undefined behavior. -->
+
+<p>如果你那样做，<code>std::unique_ptr</code> 将会尝试删除一个早就删除的资源，也会引起未定义行为。</p>
+<p>我们注意到，<code>std::make_unique()</code> 刚好无意中就避免了这两种情况的发生。</p>
+<!-- Note that std::make_unique() prevents both of the above cases from happening inadvertently. -->
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../15.4-std%3A%3Amove/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              15.4 std::move
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../15.6-std%3A%3Ashared_ptr/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              15.6 std::shared_ptr
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.926459b3.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,1558 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+    
+    
+      
+        <title>8.2 类和类成员 (Classes and class member) - LearnCPP 中文教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a3f8f96a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#82-classes-and-class-member" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnCPP 中文教程" class="md-header__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnCPP 中文教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              8.2 类和类成员 (Classes and class member)
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnCPP 中文教程" class="md-nav__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    LearnCPP 中文教程
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BF%BB%E8%AF%91%E6%97%A5%E8%AE%B0/" class="md-nav__link">
+        翻译日记
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        00 Introduction getting started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="00 Introduction getting started" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          00 Introduction getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/" class="md-nav__link">
+        第零章 介绍/起步
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/0.1-Introduction-to-these-tutorials/" class="md-nav__link">
+        0.1 教程介绍
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" checked>
+      
+      <label class="md-nav__link" for="nav-4">
+        08 basic object oriented programming
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="08 basic object oriented programming" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          08 basic object oriented programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        第八章 面向对象编程基础
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../8.1-welcome-to-object-oriented-programming/" class="md-nav__link">
+        8.1 欢迎来到面向对象的世界
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          8.2 类和类成员 (Classes and class member)
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        8.2 类和类成员 (Classes and class member)
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    类
+  </a>
+  
+    <nav class="md-nav" aria-label="类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#warning" class="md-nav__link">
+    Warning
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    成员函数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    成员类型
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        14 exceptions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="14 exceptions" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          14 exceptions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/" class="md-nav__link">
+        14 异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.1-the-need-for-exceptions/" class="md-nav__link">
+        14.1 为什么需要异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.2-basic-exception-handloing/" class="md-nav__link">
+        14.2 基本异常处理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.3-exceptions-functions-and-stack-unwinding/" class="md-nav__link">
+        14.3 异常，函数，栈展开
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.4-uncaught-exceptions-catch-all-handlers-and-exception-specifiers/" class="md-nav__link">
+        14.4 未捕获异常，捕获全部异常和异常说明符
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.5-exceptions-classes-and-inheritance/" class="md-nav__link">
+        14.5 异常，类和继承
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.6-rethrowing-exceptions/" class="md-nav__link">
+        14.6 异常的再抛出
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.7-function-try-blocks/" class="md-nav__link">
+        14.7 函数级的 try 代码块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.8-exception-dangers-and-downsides/" class="md-nav__link">
+        14.8 异常的危险和缺点
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+      
+      <label class="md-nav__link" for="nav-6">
+        15 move semantics and smart pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="15 move semantics and smart pointers" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          15 move semantics and smart pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/" class="md-nav__link">
+        15 移动语义和智能指针
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.1-intro-to-smart-pointers-and-move-semantics/" class="md-nav__link">
+        15.1 智能指针和移动语义的介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.2-r-value-reference/" class="md-nav__link">
+        15.2 右值引用
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.3-move-constructors-and-move-assignment/" class="md-nav__link">
+        15.3 移动构造和移动赋值
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.4-std%3A%3Amove/" class="md-nav__link">
+        15.4 std::move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.5-std%3A%3Aunique_ptr/" class="md-nav__link">
+        15.5 std::unique_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.6-std%3A%3Ashared_ptr/" class="md-nav__link">
+        15.6 std::shared_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.7-std%3A%3Aweak_ptr/" class="md-nav__link">
+        15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.x-chapter15-comprehensive-review/" class="md-nav__link">
+        15.x 十五章理解和复习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+      
+      <label class="md-nav__link" for="nav-7">
+        18 virtual functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="18 virtual functions" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          18 virtual functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/" class="md-nav__link">
+        第十八章 虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.1-pointers-and-references-to-the-base-class-of-derived-objects/" class="md-nav__link">
+        18.1 基类指针和引用指向派生类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.2-virtual-functions-and-polymorphism/" class="md-nav__link">
+        18.2 — 虚函数和多态
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.3-The-override-and-final-specifiers-and-covariant-return-types/" class="md-nav__link">
+        18.3 重写 final 标识符，并且协变返回类型
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-nav__link">
+        18.4 虚构造函数，虚赋值，重写虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.5-early-binding-and-late-binding/" class="md-nav__link">
+        18.5 预绑定和后期绑定
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.6-the-virtual-table/" class="md-nav__link">
+        18.6 虚表
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.7-virtual-base-classes/" class="md-nav__link">
+        18.7 虚基类 (Virtual base classes)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.8-object-slicing/" class="md-nav__link">
+        18.8 对象切割
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.9-dynamic-casting/" class="md-nav__link">
+        18.9 动态类型转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.x%20chapter-18-comprehensice-quiz/" class="md-nav__link">
+        18.x 十二章理解和练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+      
+      <label class="md-nav__link" for="nav-8">
+        19 templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="19 templates" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          19 templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/" class="md-nav__link">
+        十九章 模板
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.1-function-templates/" class="md-nav__link">
+        19.1 函数模板 Function templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.2-function-template-instances/" class="md-nav__link">
+        19.2 类模板实例
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.3-template-classes/" class="md-nav__link">
+        19.3 模板类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.4-template-non-type-parameters/" class="md-nav__link">
+        19.4 模板非类型参数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.5-function-template-specialization/" class="md-nav__link">
+        19.5 函数模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.6-class-template-specialization/" class="md-nav__link">
+        19.6 类模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.7-partial-template-specialization/" class="md-nav__link">
+        19.7 模板局部特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.8-partial-template-specialization-for-pointers/" class="md-nav__link">
+        19.8 局部模板特化指针的
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.x%20chapter-19-comprehensice-quiz/" class="md-nav__link">
+        19.x - 19章节练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" >
+      
+      <label class="md-nav__link" for="nav-9">
+        23 input and output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="23 input and output" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          23 input and output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.1-input-and-output-streams/" class="md-nav__link">
+        18.1 输入输出流
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.2-input-with-istream/" class="md-nav__link">
+        18.2 使用 istream 输入
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.3-output-with-ostream-and-ios/" class="md-nav__link">
+        18.3 使用 ostrea 和 ios 进行输出
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    类
+  </a>
+  
+    <nav class="md-nav" aria-label="类">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#warning" class="md-nav__link">
+    Warning
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    成员函数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    成员类型
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="82-classes-and-class-member">8.2 类和类成员 (Classes and class member)<a class="headerlink" href="#82-classes-and-class-member" title="Permanent link">&para;</a></h1>
+<!-- While C++ provides a number of fundamental data types (e.g. char, int, long, float, double, etc…) that are often sufficient for solving relatively simple problems, it can be difficult to solve complex problems using just these types. One of C++’s more useful features is the ability to define your own data types that better correspond to the problem being solved. You have already seen how enumerated types and structs can be used to create your own custom data types. -->
+
+<p>当 C++ 提供了一系列基本类型（例如：char，int，long，float，double等等）常常能够解决一些简单问题，很难用它仅仅用这些类型来解决复杂的问题。一个 C++ 的非常有用的特性就是定义你自己的数据类型，能够符合需要解决的问题。你早就学过了如何枚举类型和结构，用同样的方法，你也可以创建自己的类型。</p>
+<p>这有一个结构持有日期的例子</p>
+<!-- Here is an example of a struct used to hold a date: -->
+
+<div class="highlight"><pre><span></span><code><span class="k">struct</span> <span class="nc">DateStruct</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">year</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">month</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">day</span><span class="p">{};</span>
+<span class="p">};</span>
+</code></pre></div>
+<!-- Enumerated types and data-only structs (structs that only contain variables) represent the traditional non-object-oriented programming world, as they can only hold data. In C++11, we can create and initialize this struct as follows: -->
+
+<p>枚举类型和纯数据的结构（仅仅包含变量的结构）仅代表着传统的非 OOP 编程的世界，因为他们只能用来从持有数据，在 C++11 中，我们可以像下方这样创建并且初始化对象。</p>
+<div class="highlight"><pre><span></span><code><span class="n">DateStruct</span> <span class="n">today</span> <span class="p">{</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span> <span class="p">};</span> <span class="c1">// use uniform initialization</span>
+</code></pre></div>
+<!-- Now, if we want to print the date to the screen (something we probably want to do a lot), it makes sense to write a function to do this. Here’s a full program: -->
+
+<p>现在，如果你想打印这个日期到屏幕（还有很多多我们想做的类似的事情），写一个函数来做这件事是可以的：</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">struct</span> <span class="nc">DateStruct</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">year</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">month</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">day</span><span class="p">{};</span>
+
+<span class="p">};</span>
+<span class="kt">void</span> <span class="nf">print</span><span class="p">(</span><span class="k">const</span> <span class="n">DateStruct</span> <span class="o">&amp;</span><span class="n">date</span><span class="p">)</span>
+<span class="p">{</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">date</span><span class="p">.</span><span class="n">year</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;/&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">date</span><span class="p">.</span><span class="n">month</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;/&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">date</span><span class="p">.</span><span class="n">day</span><span class="p">;</span>
+
+<span class="p">}</span>
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">DateStruct</span> <span class="n">today</span> <span class="p">{</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span> <span class="p">};</span> <span class="c1">// use uniform initialization</span>
+    <span class="n">today</span><span class="p">.</span><span class="n">day</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span> <span class="c1">// use member selection operator to select a member of the struct</span>
+    <span class="n">print</span><span class="p">(</span><span class="n">today</span><span class="p">);</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<!-- This program prints: -->
+
+<p>程序打印：</p>
+<div class="highlight"><pre><span></span><code><span class="mi">2020</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">16</span>
+</code></pre></div>
+<!-- Classes -->
+
+<h2 id="_1">类<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<!-- In the world of object-oriented programming, we often want our types to not only hold data, but provide functions that work with the data as well. In C++, this is typically done via the class keyword. The class keyword defines a new user-defined type called a class. -->
+
+<p>在面向对象编程的世界中，我们通茶才能够想要我们的类型不仅仅持有数据，并且也提供一些函数来处理数据。在 C++ 中，这通常通过 class 关键词来完成。类关键词定义了一些用户定义类型叫做 class。</p>
+<!-- In C++, classes and structs are essentially the same. In fact, the following struct and class are effectively identical: -->
+
+<p>在 C++ 中，类型和结构是基本相同的，事实上，下列结构和类是等效的：</p>
+<div class="highlight"><pre><span></span><code><span class="k">struct</span> <span class="nc">DateStruct</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">year</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">month</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">day</span><span class="p">{};</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">DateClass</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">m_year</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">m_month</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">m_day</span><span class="p">{};</span>
+<span class="p">};</span>
+</code></pre></div>
+<!-- Note that the only significant difference is the public: keyword in the class. We will discuss the function of this keyword in the next lesson. -->
+<p>注意唯一不同的就是类中的 public 关键词。我们将会在下节课讨论这个关键词。</p>
+<!-- Just like a struct declaration, a class declaration does not allocate any memory. It only defines what the class looks like. -->
+
+<p>就像一个结构的定义那样，一个类的定义不分配任何内存，他仅仅定义了一个类模样而已。</p>
+<h3 id="warning">Warning<a class="headerlink" href="#warning" title="Permanent link">&para;</a></h3>
+<!-- Just like with structs, one of the easiest mistakes to make in C++ is to forget the semicolon at the end of a class declaration. This will cause a compiler error on the next line of code. Modern compilers like Visual Studio 2010 will give you an indication that you may have forgotten a semicolon, but older or less sophisticated compilers may not, which can make the actual error hard to find. -->
+
+<p>就像对待结构那样，在 C++ 中最容易犯的错误之一就是忘了写类型定义结尾的分号。这会导致一个变异错误，在下一行。现代的编译器，例如 Visual Studio 2010 会给你一个指示告诉你你有可能已经忘了一个分号，但是更老的或者更功能更简单的编译器不会那么做，这会让你很难发现这个错误</p>
+<!-- Class (and struct) definitions are like a blueprint -- they describe what the resulting object will look like, but they do not actually create the object. To actually create an object of the class, a variable of that class type must be defined: -->
+
+<p>类（和结构）定义就像一个 blueprint —— 他们描述了对象看起来将会像什么，但是他们不会实际创建一个对象。想要创建一个类的对象，一个类的变量一定要被定义出来才行：</p>
+<div class="highlight"><pre><span></span><code><span class="n">DateClass</span> <span class="n">today</span> <span class="p">{</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span> <span class="p">};</span> <span class="c1">// declare a variable of class DateClass</span>
+</code></pre></div>
+<!-- Member Functions -->
+
+<h2 id="_2">成员函数<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<!-- In addition to holding data, classes (and structs) can also contain functions! Functions defined inside of a class are called member functions (or sometimes methods). Member functions can be defined inside or outside of the class definition. We’ll define them inside the class for now (for simplicity), and show how to define them outside the class later. -->
+
+<p>除了持有数据，类（和结构）也可以包含函数！在类中定义的函数被叫做成员函数（有时候叫’方法‘）。成员函数可以被定义在类内或者类外，我们将会定义他们在类内（为了简单），之后展示如何在类外定义。</p>
+<p>这是我们的带有一个成员函数来打印日期的类：</p>
+<!-- Here is our Date class with a member function to print the date: -->
+
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">DateClass</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+    <span class="kt">int</span> <span class="n">m_year</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">m_month</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">m_day</span><span class="p">{};</span>
+
+    <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span> <span class="c1">// defines a member function named print()</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_year</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;/&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">m_month</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;/&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">m_day</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">};</span>
+</code></pre></div>
+<p>Just like members of a struct, members (variables and functions) of a class are accessed using the member selector operator (.):</p>
+<p>就像结构的成员，类的成员也可以使用成员选择操作符（.）来访问成员。</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="k">class</span> <span class="nc">DateClass</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+    <span class="kt">int</span> <span class="n">m_year</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">m_month</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">m_day</span><span class="p">{};</span>
+
+    <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_year</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;/&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">m_month</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;/&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">m_day</span><span class="p">;</span>
+    <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+
+    <span class="n">DateClass</span> <span class="n">today</span> <span class="p">{</span> <span class="mi">2020</span><span class="p">,</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">14</span> <span class="p">};</span>
+
+    <span class="n">today</span><span class="p">.</span><span class="n">m_day</span> <span class="o">=</span> <span class="mi">16</span><span class="p">;</span> <span class="c1">// use member selection operator to select a member variable of the class</span>
+    <span class="n">today</span><span class="p">.</span><span class="n">print</span><span class="p">();</span> <span class="c1">// use member selection operator to call a member function of the class</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>打印：</p>
+<!-- This prints: -->
+
+<div class="highlight"><pre><span></span><code><span class="mi">2020</span><span class="o">/</span><span class="mi">10</span><span class="o">/</span><span class="mi">16</span>
+</code></pre></div>
+<!-- Note how similar this program is to the struct version we wrote above. -->
+
+<p>注意这个程序要比我们上方使用 struct 实现的简单多了。</p>
+<!-- However, there are a few differences. In the DateStruct version of print() from the example above, we needed to pass the struct itself to the print() function as the first parameter. Otherwise, print() wouldn’t know what DateStruct we wanted to use. We then had to reference this parameter inside the function explicitly. -->
+
+<p>然而，有一些不同点。在上方 DataStruct 版本的例子中的 print() 我们传入了结构本身作为第一个参数进入 print() 函数。否则，print() 不会知道哪我们想打印哪个对象。我们紧接着不得不使用这个参数，在函数内部。</p>
+<!-- Member functions work slightly differently: All member function calls must be associated with an object of the class. When we call “today.print()”, we’re telling the compiler to call the print() member function, associated with the today object. -->
+
+<p>成员函数工作起来有轻微的不同：所有的成员函数调用必须和这个类的对象关联。当我们调用 <code>today.print()</code> 的时候，我们告诉编译器我们要调用和 <code>today</code> 这个对象关联的 <code>print</code> 成员函数。</p>
+<!-- Now let’s take a look at the definition of the print member function again: -->
+
+<p>现在让我们再看一遍成员函数的定义</p>
+<div class="highlight"><pre><span></span><code>    <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span> <span class="c1">// defines a member function named print()</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">m_year</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;/&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">m_month</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;/&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">m_day</span><span class="p">;</span>
+    <span class="p">}</span>
+</code></pre></div>
+<!-- What do m_year, m_month, and m_day actually refer to? They refer to the associated object (as determined by the caller). -->
+
+<p>m_year, m_month, m_day 实际上分别指向哪里？他们指向关联的对象（由调用者决定）。</p>
+<!-- So when we call “today.print()”, the compiler interprets m_day as today.m_day, m_month as today.m_month, and m_year as today.m_year. If we called “tomorrow.print()”, m_day would refer to tomorrow.m_day instead. -->
+
+<p>因此当我们调用 <code>today.print()</code> 的时候，编译器解释 m_day 为 today.m_today，m_month 和 m_year也分别解释为 <code>today.m_month</code> 和 <code>today.m_year</code>，如果我们调用 <code>tomorrow.print()</code>，<code>m_day</code> 就会被 <code>tomorrow.m_day</code> 指代。</p>
+<!-- In this way, the associated object is essentially implicitly passed to the member function. For this reason, it is often called the implicit object. -->
+
+<p>以这种方式，本质上隐式的传送了一个类的实例到成员函数。因为这样，他才能被隐式的调用。</p>
+<!-- We’ll talk more about how the implicit object passing works in detail in a later lesson in this chapter. -->
+
+<p>我们将会在后面的章节中，讨论更多的这个隐式对象如何传入并且起作用。</p>
+<!-- The key point is that with non-member functions, we have to pass data to the function to work with. With member functions, we can assume we always have an implicit object of the class to work with! -->
+
+<p>关键单是，当我们调用非成员函数，我们不得不传入一个对象到函数。而当我们调用成员函数的时候，我们可以假设我们总是有一个隐式的类对象可以被使用。</p>
+<!-- Using the “m_” prefix for member variables helps distinguish member variables from function parameters or local variables inside member functions. This is useful for several reasons. First, when we see an assignment to a variable with the “m_” prefix, we know that we are changing the state of the class instance. Second, unlike function parameters or local variables, which are declared within the function, member variables are declared in the class definition. Consequently, if we want to know how a variable with the “m_” prefix is declared, we know that we should look in the class definition instead of within the function. -->
+
+<p>给成员变量使用 ”m_“ 前缀可以帮助将成员变量、成员函数和在成员函数中使用的外部变量区分开。这是非常有用的，还有很多原因。</p>
+<ul>
+<li>第一，当我们看到操作一个带 m_ 前缀的变量时，我们就知道我们正在改变类实例的状态。</li>
+<li>第二，不像函数成员和局部变量，可以被定义在函数中，成员变量被定义在类声明中。因此，如果我们想要知道一个 m_ 前缀的变量如何被声明，我们知道应该它被定义在类中定义而不是函数中。</li>
+</ul>
+<!-- By convention, class names should begin with an upper-case letter. -->
+
+<p>为了方便，类名应该以一个大写的字母开始。</p>
+<!-- Rule -->
+<!-- Name your classes starting with a capital letter. -->
+
+<blockquote>
+<p>规则：类的名字以大写字母开始</p>
+</blockquote>
+<p>这是另一个类的例子：</p>
+<!-- Here’s another example of a class: -->
+
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+<span class="cp"># include &lt;string&gt;</span>
+
+<span class="k">class</span> <span class="nc">Employee</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+    <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">m_name</span><span class="p">{};</span>
+    <span class="kt">int</span> <span class="n">m_id</span><span class="p">{};</span>
+    <span class="kt">double</span> <span class="n">m_wage</span><span class="p">{};</span>
+
+    <span class="c1">// Print employee information to the screen</span>
+    <span class="kt">void</span> <span class="nf">print</span><span class="p">()</span>
+    <span class="p">{</span>
+        <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Name: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_name</span> <span class="o">&lt;&lt;</span>
+                <span class="s">&quot;  Id: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_id</span> <span class="o">&lt;&lt;</span> 
+                <span class="s">&quot;  Wage: $&quot;</span> <span class="o">&lt;&lt;</span> <span class="n">m_wage</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span> 
+    <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+
+    <span class="c1">// Declare two employees</span>
+    <span class="n">Employee</span> <span class="n">alex</span> <span class="p">{</span> <span class="s">&quot;Alex&quot;</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mf">25.00</span> <span class="p">};</span>
+    <span class="n">Employee</span> <span class="n">joe</span> <span class="p">{</span> <span class="s">&quot;Joe&quot;</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mf">22.25</span> <span class="p">};</span>
+
+    <span class="c1">// Print out the employee information</span>
+    <span class="n">alex</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>
+    <span class="n">joe</span><span class="p">.</span><span class="n">print</span><span class="p">();</span>
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+
+<span class="p">}</span>
+</code></pre></div>
+<p>输出了结果：</p>
+<!-- This produces the output: -->
+
+<div class="highlight"><pre><span></span><code><span class="nl">Name</span><span class="p">:</span> <span class="n">Alex</span>  <span class="nl">Id</span><span class="p">:</span> <span class="mi">1</span>  <span class="nl">Wage</span><span class="p">:</span> <span class="n">$25</span>
+<span class="nl">Name</span><span class="p">:</span> <span class="n">Joe</span>  <span class="nl">Id</span><span class="p">:</span> <span class="mi">2</span>  <span class="nl">Wage</span><span class="p">:</span> <span class="n">$22</span><span class="mf">.25</span>
+</code></pre></div>
+<p>在普通的非成员函数下，一个函数不可能调用在 ”下方“ 定义的函数（没有前置声明）</p>
+<!-- With normal non-member functions, a function can’t call a function that’s defined “below” it (without a forward declaration): -->
+
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">x</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="c1">// You can&#39;t call y() from here unless the compiler has already seen a forward declaration for y()</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">y</span><span class="p">()</span>
+<span class="p">{</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>在成员函数中，这个限制没有被应用：</p>
+<!-- With member functions, this limitation doesn’t apply: -->
+
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">foo</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+
+     <span class="kt">void</span> <span class="n">x</span><span class="p">()</span> <span class="p">{</span> <span class="n">y</span><span class="p">();</span> <span class="p">}</span> <span class="c1">// okay to call y() here, even though y() isn&#39;t defined until later in this class</span>
+     <span class="kt">void</span> <span class="n">y</span><span class="p">()</span> <span class="p">{</span> <span class="p">};</span>
+
+<span class="p">};</span>
+</code></pre></div>
+<h2 id="_3">成员类型<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<!-- Member types -->
+
+<!-- In addition to member variables and member functions, classes can have member types or nested types (including type aliases). In the following example, we’re creating a calculator where we can swiftly change the type of number it’s using if we ever need to. -->
+
+<p>除了成员变量和成员函数，类可以又成员类型或者嵌套类型（包括类型别名）。在下面的例子中，我们创建了一个计算器，我们可以快速的改变数字的类型如果需要。（we can swiftly change the type of number it’s using if we ever need to.）</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+<span class="cp"># include &lt;vector&gt;</span>
+
+<span class="k">class</span> <span class="nc">Calculator</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+  <span class="k">using</span> <span class="n">number_t</span> <span class="o">=</span> <span class="kt">int</span><span class="p">;</span> <span class="c1">// this is a nested type alias</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">vector</span><span class="o">&lt;</span><span class="n">number_t</span><span class="o">&gt;</span> <span class="n">m_resultHistory</span><span class="p">{};</span>
+
+  <span class="n">number_t</span> <span class="nf">add</span><span class="p">(</span><span class="n">number_t</span> <span class="n">a</span><span class="p">,</span> <span class="n">number_t</span> <span class="n">b</span><span class="p">)</span>
+  <span class="p">{</span>
+
+    <span class="k">auto</span> <span class="n">result</span><span class="p">{</span> <span class="n">a</span> <span class="o">+</span> <span class="n">b</span> <span class="p">};</span>
+
+    <span class="n">m_resultHistory</span><span class="p">.</span><span class="n">push_back</span><span class="p">(</span><span class="n">result</span><span class="p">);</span>
+
+    <span class="k">return</span> <span class="n">result</span><span class="p">;</span>
+
+  <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+  <span class="n">Calculator</span> <span class="n">calculator</span><span class="p">{};</span>
+
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">calculator</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span> <span class="c1">// 7</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">calculator</span><span class="p">.</span><span class="n">add</span><span class="p">(</span><span class="mi">99</span><span class="p">,</span> <span class="mi">24</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span> <span class="c1">// 123</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="n">Calculator</span><span class="o">::</span><span class="n">number_t</span> <span class="nl">result</span> <span class="p">:</span> <span class="n">calculator</span><span class="p">.</span><span class="n">m_resultHistory</span><span class="p">)</span>
+  <span class="p">{</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">result</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+  <span class="p">}</span>
+  <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>输出</p>
+<!-- Output -->
+
+<div class="highlight"><pre><span></span><code><span class="mi">7</span>
+<span class="mi">123</span>
+<span class="mi">7</span>
+<span class="mi">123</span>
+</code></pre></div>
+<p>在这样的上下文中，类名高效的给内嵌类型扮演了一个命名空间的角色。在类中，我们只需要参照 number_t。在类外面，我们可以阿访问类型通过 <code>Calculator::number_t</code>.</p>
+<!-- In such a context, the class name effectively acts like a namespace for the nested type. From inside the class, we only need reference number_t. From outside the class, we can access the type via Calculator::number_t. -->
+
+<p>当我们决定一个整型不再</p>
+<blockquote>
+<p>TODO翻译中</p>
+</blockquote>
+<p>When we decide that an int no longer fulfills our needs and we want to use a double, we only need to update the type alias, rather than having to replace every occurrence of int with double.</p>
+<p>Type alias members make code easier to maintain and can reduce typing. Template classes, which we’ll cover later, often make use of type alias members. You’ve already seen this as std::vector::size_type, where size_type is an alias for an unsigned integer.</p>
+<p>Nested types cannot be forward declared. Generally, nested types should only be used when the nested type is used exclusively within that class. Note that since classes are types, it’s possible to nest classes inside other classes -- this is uncommon and is typically only done by advanced programmers.</p>
+<p>A note about structs in C++</p>
+<p>In C, structs can only hold data, and do not have associated member functions. In C++, after designing classes (using the class keyword), Bjarne Stroustrup spent some amount of time considering whether structs (which were inherited from C) should be granted the ability to have member functions. Upon consideration, he determined that they should, in part to have a unified ruleset for both. So although we wrote the above programs using the class keyword, we could have used the struct keyword instead.</p>
+<p>Many developers (including myself) feel this was the incorrect decision to be made, as it can lead to dangerous assumptions. For example, it’s fair to assume a class will clean up after itself (e.g. a class that allocates memory will deallocate it before being destroyed), but it’s not safe to assume a struct will. Consequently, we recommend using the struct keyword for data-only structures, and the class keyword for defining objects that require both data and functions to be bundled together.</p>
+<p>Rule</p>
+<p>Use the struct keyword for data-only structures. Use the class keyword for objects that have both data and functions.</p>
+<p>You have already been using classes without knowing it</p>
+<p>It turns out that the C++ standard library is full of classes that have been created for your benefit. std::string, std::vector, and std::array are all class types! So when you create an object of any of these types, you’re instantiating a class object. And when you call invoke a function using these objects, you’re calling a member function.</p>
+<p>1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15</p>
+<h1 id="include">include <string><a class="headerlink" href="#include" title="Permanent link">&para;</a></h1>
+<h1 id="include_1">include <array><a class="headerlink" href="#include_1" title="Permanent link">&para;</a></h1>
+<h1 id="include_2">include <vector><a class="headerlink" href="#include_2" title="Permanent link">&para;</a></h1>
+<h1 id="include_3">include <iostream><a class="headerlink" href="#include_3" title="Permanent link">&para;</a></h1>
+<p>int main()
+{</p>
+<div class="codehilite"><pre><span></span><code>std::string s { &quot;Hello, world!&quot; }; // instantiate a string class object
+std::array&lt;int, 3&gt; a { 1, 2, 3 }; // instantiate an array class object
+std::vector&lt;double&gt; v { 1.1, 2.2, 3.3 }; // instantiate a vector class object
+
+
+
+std::cout &lt;&lt; &quot;length: &quot; &lt;&lt; s.length() &lt;&lt; &#39;\n&#39;; // call a member function
+
+
+
+return 0;
+</code></pre></div>
+
+<p>}</p>
+<p>Conclusion</p>
+<p>The class keyword lets us create a custom type in C++ that can contain both member variables and member functions. Classes form the basis for Object-oriented programming, and we’ll spend the rest of this chapter and many of the future chapters exploring all they have to offer!</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../8.1-welcome-to-object-oriented-programming/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              8.1 欢迎来到面向对象的世界
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../../14-exceptions/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              14 异常
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.926459b3.min.js"></script>
+      
+    
+  </body>
+</html>

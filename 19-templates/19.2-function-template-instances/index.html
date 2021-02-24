@@ -1,0 +1,1529 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+    
+    
+      
+        <title>19.2 类模板实例 - LearnCPP 中文教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a3f8f96a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#192" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnCPP 中文教程" class="md-header__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnCPP 中文教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              19.2 类模板实例
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnCPP 中文教程" class="md-nav__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    LearnCPP 中文教程
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BF%BB%E8%AF%91%E6%97%A5%E8%AE%B0/" class="md-nav__link">
+        翻译日记
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        00 Introduction getting started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="00 Introduction getting started" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          00 Introduction getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/" class="md-nav__link">
+        第零章 介绍/起步
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/0.1-Introduction-to-these-tutorials/" class="md-nav__link">
+        0.1 教程介绍
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        08 basic object oriented programming
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="08 basic object oriented programming" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          08 basic object oriented programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/" class="md-nav__link">
+        第八章 面向对象编程基础
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.1-welcome-to-object-oriented-programming/" class="md-nav__link">
+        8.1 欢迎来到面向对象的世界
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.2-classes-and-class-member/" class="md-nav__link">
+        8.2 类和类成员 (Classes and class member)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        14 exceptions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="14 exceptions" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          14 exceptions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/" class="md-nav__link">
+        14 异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.1-the-need-for-exceptions/" class="md-nav__link">
+        14.1 为什么需要异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.2-basic-exception-handloing/" class="md-nav__link">
+        14.2 基本异常处理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.3-exceptions-functions-and-stack-unwinding/" class="md-nav__link">
+        14.3 异常，函数，栈展开
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.4-uncaught-exceptions-catch-all-handlers-and-exception-specifiers/" class="md-nav__link">
+        14.4 未捕获异常，捕获全部异常和异常说明符
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.5-exceptions-classes-and-inheritance/" class="md-nav__link">
+        14.5 异常，类和继承
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.6-rethrowing-exceptions/" class="md-nav__link">
+        14.6 异常的再抛出
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.7-function-try-blocks/" class="md-nav__link">
+        14.7 函数级的 try 代码块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.8-exception-dangers-and-downsides/" class="md-nav__link">
+        14.8 异常的危险和缺点
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+      
+      <label class="md-nav__link" for="nav-6">
+        15 move semantics and smart pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="15 move semantics and smart pointers" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          15 move semantics and smart pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/" class="md-nav__link">
+        15 移动语义和智能指针
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.1-intro-to-smart-pointers-and-move-semantics/" class="md-nav__link">
+        15.1 智能指针和移动语义的介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.2-r-value-reference/" class="md-nav__link">
+        15.2 右值引用
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.3-move-constructors-and-move-assignment/" class="md-nav__link">
+        15.3 移动构造和移动赋值
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.4-std%3A%3Amove/" class="md-nav__link">
+        15.4 std::move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.5-std%3A%3Aunique_ptr/" class="md-nav__link">
+        15.5 std::unique_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.6-std%3A%3Ashared_ptr/" class="md-nav__link">
+        15.6 std::shared_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.7-std%3A%3Aweak_ptr/" class="md-nav__link">
+        15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.x-chapter15-comprehensive-review/" class="md-nav__link">
+        15.x 十五章理解和复习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+      
+      <label class="md-nav__link" for="nav-7">
+        18 virtual functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="18 virtual functions" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          18 virtual functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/" class="md-nav__link">
+        第十八章 虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.1-pointers-and-references-to-the-base-class-of-derived-objects/" class="md-nav__link">
+        18.1 基类指针和引用指向派生类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.2-virtual-functions-and-polymorphism/" class="md-nav__link">
+        18.2 — 虚函数和多态
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.3-The-override-and-final-specifiers-and-covariant-return-types/" class="md-nav__link">
+        18.3 重写 final 标识符，并且协变返回类型
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-nav__link">
+        18.4 虚构造函数，虚赋值，重写虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.5-early-binding-and-late-binding/" class="md-nav__link">
+        18.5 预绑定和后期绑定
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.6-the-virtual-table/" class="md-nav__link">
+        18.6 虚表
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.7-virtual-base-classes/" class="md-nav__link">
+        18.7 虚基类 (Virtual base classes)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.8-object-slicing/" class="md-nav__link">
+        18.8 对象切割
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.9-dynamic-casting/" class="md-nav__link">
+        18.9 动态类型转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.x%20chapter-18-comprehensice-quiz/" class="md-nav__link">
+        18.x 十二章理解和练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" checked>
+      
+      <label class="md-nav__link" for="nav-8">
+        19 templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="19 templates" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          19 templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        十九章 模板
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.1-function-templates/" class="md-nav__link">
+        19.1 函数模板 Function templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          19.2 类模板实例
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        19.2 类模板实例
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    操作符，函数调用和函数模板
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    另一个例子
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.3-template-classes/" class="md-nav__link">
+        19.3 模板类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.4-template-non-type-parameters/" class="md-nav__link">
+        19.4 模板非类型参数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.5-function-template-specialization/" class="md-nav__link">
+        19.5 函数模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.6-class-template-specialization/" class="md-nav__link">
+        19.6 类模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.7-partial-template-specialization/" class="md-nav__link">
+        19.7 模板局部特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.8-partial-template-specialization-for-pointers/" class="md-nav__link">
+        19.8 局部模板特化指针的
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../19.x%20chapter-19-comprehensice-quiz/" class="md-nav__link">
+        19.x - 19章节练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" >
+      
+      <label class="md-nav__link" for="nav-9">
+        23 input and output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="23 input and output" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          23 input and output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.1-input-and-output-streams/" class="md-nav__link">
+        18.1 输入输出流
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.2-input-with-istream/" class="md-nav__link">
+        18.2 使用 istream 输入
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.3-output-with-ostream-and-ios/" class="md-nav__link">
+        18.3 使用 ostrea 和 ios 进行输出
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    操作符，函数调用和函数模板
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    另一个例子
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="192">19.2 类模板实例<a class="headerlink" href="#192" title="Permanent link">&para;</a></h1>
+<!-- 19.2 — Function template instances -->
+<blockquote>
+<p>By Alex on April 29<sup>th</sup>, 2008 | last modified by Alex on December 21<sup>st</sup>, 2020</p>
+<p>翻译 By dashjay 2020-12-26 | last modified by 2020-12-26</p>
+</blockquote>
+<!-- It’s worth taking a brief look at how template functions are implemented in C++, because future lessons will build off of some of these concepts. It turns out that C++ does not compile the template function directly. Instead, at compile time, when the compiler encounters a call to a template function, it replicates the template function and replaces the template type parameters with actual types. The function with actual types is called a function template instance. -->
+
+<p>模板函数在 C++ 中的实现是一件很有值得的事情，因为未来的课程将会在这些基于这些概念。事实证明 C++ 不会直接直接编译函数。相反，在编译的时，当编译器遇到一个模板函数的时候，他会复制模板函数并且替换模板类参数为实际类型。带有实际类型的函数被称为 <strong>函数模板实例</strong>。</p>
+<!-- Let’s take a look at an example of this process. First, we have a templated function: -->
+
+<p>让我们看一个简单的例子，首先，我们写了一个模板函数：</p>
+<div class="highlight"><pre><span></span><code><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span> <span class="c1">// this is the template parameter declaration</span>
+<span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">max</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- When compiling your program, the compiler encounters a call to the templated function: -->
+<p>当编译你的程序的时候，如果编译器遇到一个模板函数的调用：</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="n">i</span><span class="p">{</span> <span class="n">max</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="mi">7</span><span class="p">)</span> <span class="p">};</span> <span class="c1">// calls max(int, int)</span>
+</code></pre></div>
+<!-- The compiler says, “oh, we want to call max(int, int)”. The compiler replicates the function template and creates the template instance max(int, int): -->
+<p>编译器说，“好吧，我们想要调用 <code>max(int, int)</code>”。编译器拷贝了函数模板，然后创建模板实例 <code>max(int, int)</code>：</p>
+<div class="highlight"><pre><span></span><code><span class="k">const</span> <span class="kt">int</span><span class="o">&amp;</span> <span class="n">max</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- This is now a “normal function” that can be compiled into machine language. -->
+
+<p>这现在是一个 “正常的函数” 可以被编译成机器语言的。</p>
+<!-- Now, let’s say later in your code, you called max() again using a different type: -->
+
+<p>现在，让我们在稍后的代码中，你再次调用了 <code>max()</code> 使用不同的类型：</p>
+<div class="highlight"><pre><span></span><code><span class="kt">double</span> <span class="n">d</span><span class="p">{</span> <span class="n">max</span><span class="p">(</span><span class="mf">6.34</span><span class="p">,</span> <span class="mf">18.523</span><span class="p">)</span> <span class="p">};</span> <span class="c1">// calls max(double, double)</span>
+</code></pre></div>
+<!-- C++ automatically creates a template instance for max(double, double): -->
+<p>C++ 为 <code>max(double, double)</code> 自动的创建了一个模板实例：</p>
+<div class="highlight"><pre><span></span><code><span class="k">const</span> <span class="kt">double</span><span class="o">&amp;</span> <span class="n">max</span><span class="p">(</span><span class="k">const</span> <span class="kt">double</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="kt">double</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>并且然后编译它。</p>
+<!-- and then compiles it. -->
+
+<!-- The compiler is smart enough to know it only needs to create one template instance per set of unique type parameters (per file). It’s also worth noting that if you create a template function but do not call it, no template instances will be created. -->
+
+<p>编译器足够聪明，知道它只需要为每组唯一类型参数（每个文件）创建一个模板实例。也值得注意如果你创建了一个模板函数但是没有调用它，没有模板实例会被创建。</p>
+<p>Operators, function calls, and function templates</p>
+<h2 id="_1">操作符，函数调用和函数模板<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<!-- Template functions will work with both built-in types (e.g. char, int, double, etc…) and classes, with one caveat. When the compiler compiles the template instance, it compiles it just like a normal function. In a normal function, any operators or function calls that you use with your types must be defined, or you will get a compiler error. Similarly, any operators or function calls in your template function must be defined for any types the function template is instantiated for. Let’s take a look at this in more detail. -->
+
+<p>有一个前提，模板函数会既能和内置的类型工作（例如：char，int，double 等等）和类。当编译器编译模板实例的时候，它编译就像普通函数那样。在普通函数中，必须定义与类型一起使用的任何运算符或函数调用，否则你会得到编译错误。类似地，模板函数中的任何运算符或函数调用都必须为实例化函数模板的任何类型定义。让我们更详细地看看这个例子。</p>
+<!-- First, we’ll create a simple class: -->
+<p>首先，我们能创建一个简单的类：</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Cents</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<!-- Now, let’s see what happens when we try to call our templated max() function with the Cents class: -->
+<p>现在，让我们看一下当我们尝试使用 Cents 类来调用我们的模板函数 <code>max()</code> ：</p>
+<div class="highlight"><pre><span></span><code><span class="k">template</span> <span class="o">&lt;</span><span class="k">typename</span> <span class="nc">T</span><span class="o">&gt;</span> <span class="c1">// this is the template parameter declaration</span>
+<span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">max</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="k">class</span> <span class="nc">Cents</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Cents</span> <span class="n">nickle</span><span class="p">{</span> <span class="mi">5</span> <span class="p">};</span>
+    <span class="n">Cents</span> <span class="n">dime</span><span class="p">{</span> <span class="mi">10</span> <span class="p">};</span>
+
+    <span class="n">Cents</span> <span class="n">bigger</span><span class="p">{</span> <span class="n">max</span><span class="p">(</span><span class="n">nickle</span><span class="p">,</span> <span class="n">dime</span><span class="p">)</span> <span class="p">};</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- C++ will create a template instance for max() that looks like this: -->
+<p>C++ 会创建一个 <code>max()</code> 像这样的模板实例：</p>
+<div class="highlight"><pre><span></span><code><span class="k">const</span> <span class="n">Cents</span><span class="o">&amp;</span> <span class="n">max</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">x</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">y</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="k">return</span> <span class="p">(</span><span class="n">x</span> <span class="o">&gt;</span> <span class="n">y</span><span class="p">)</span> <span class="o">?</span> <span class="nl">x</span> <span class="p">:</span> <span class="n">y</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- And then it will try to compile this function. See the problem here? C++ can’t evaluate x > y, because x and y are Cents class objects, and doesn’t know how to compare them. Consequently, this will produce a fairly-tame looking compile error, like this: -->
+
+<p>然后紧接着他会尝试编译这个函数，看到问题了么？C++ 不能评估 <code>x &gt; y</code>，因为 x 和 y 都是 <code>Cents</code> 类对象，而且不能知道如何编译他们。因此，这会产生一个很难看的编译错误，像这样：</p>
+<div class="highlight"><pre><span></span><code><span class="mi">1</span><span class="o">&gt;</span><span class="nl">c</span><span class="p">:</span><span class="err">\</span><span class="n">consoleapplication1</span><span class="err">\</span><span class="n">main</span><span class="p">.</span><span class="n">cpp</span><span class="p">(</span><span class="mi">4</span><span class="p">)</span><span class="o">:</span> <span class="n">error</span> <span class="nl">C2676</span><span class="p">:</span> <span class="n">binary</span> <span class="sc">&#39;&gt;&#39;</span><span class="o">:</span> <span class="err">&#39;</span><span class="k">const</span> <span class="n">Cents</span><span class="err">&#39;</span> <span class="n">does</span> <span class="n">not</span> <span class="n">define</span> <span class="k">this</span> <span class="k">operator</span> <span class="n">or</span> <span class="n">a</span> <span class="n">conversion</span> <span class="n">to</span> <span class="n">a</span> <span class="n">type</span> <span class="n">acceptable</span> <span class="n">to</span> <span class="n">the</span> <span class="n">predefined</span> <span class="k">operator</span>
+<span class="mi">1</span><span class="o">&gt;</span>  <span class="nl">c</span><span class="p">:</span><span class="err">\</span><span class="n">consoleapplication1</span><span class="err">\</span><span class="n">main</span><span class="p">.</span><span class="n">cpp</span><span class="p">(</span><span class="mi">23</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">see</span> <span class="n">reference</span> <span class="n">to</span> <span class="n">function</span> <span class="k">template</span> <span class="n">instantiation</span> <span class="err">&#39;</span><span class="k">const</span> <span class="n">T</span> <span class="o">&amp;</span><span class="n">max</span><span class="p">(</span><span class="k">const</span> <span class="n">T</span> <span class="o">&amp;</span><span class="p">,</span><span class="k">const</span> <span class="n">T</span> <span class="o">&amp;</span><span class="p">)</span><span class="err">&#39;</span> <span class="n">being</span> <span class="n">compiled</span>
+<span class="mi">1</span><span class="o">&gt;</span>          <span class="n">with</span>
+<span class="mi">1</span><span class="o">&gt;</span>          <span class="p">[</span>
+<span class="mi">1</span><span class="o">&gt;</span>              <span class="n">T</span><span class="o">=</span><span class="n">Cents</span>
+<span class="mi">1</span><span class="o">&gt;</span>          <span class="p">]</span>
+</code></pre></div>
+<!-- The top error message points out the fact that there is no overloaded operator > for the Cents class. The bottom error points out the templated function call that spawned the error, along with the type of the templated parameter. -->
+
+<p>最上方的错误信息指出没有Cents这个类的 &gt; 操作符重载。底部的错误指出模板函数调用报错了，以及模板化参数的类型。</p>
+<!-- To get around this problem, simply overload the > operator for any class we wish to use max() with: -->
+<p>想要解决这个问题，简单的给每个你想要使用 <code>max()</code> 的任何类重载 &gt; 操作符：</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Cents</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&gt;</span> <span class="n">c2</span><span class="p">.</span><span class="n">m_cents</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<!-- Now C++ will know how to compare x > y when x and y are objects of the Cents class! As a result, our max() function will now work with two objects of type Cents. -->
+
+<p>现在 C++ 能知道如何比较 <code>x &gt; y</code> 当 x 和 y 是 Cents！结果，我们的 <code>max()</code> 现在可以和两个 Cents 类的两个对象。</p>
+<!-- Another example -->
+
+<h2 id="_2">另一个例子<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<!-- Let’s do one more example of a function template. The following function template will calculate the average of a number of objects in an array: -->
+
+<p>让我们在看一个函数模板的例子。接下来的函数模板将会计算数组中对象的平均值：</p>
+<div class="highlight"><pre><span></span><code><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">T</span> <span class="n">average</span><span class="p">(</span><span class="n">T</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">T</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
+        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+
+    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- Now let’s see it in action: -->
+
+<p>让我们来看一下实际使用：</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">T</span> <span class="n">average</span><span class="p">(</span><span class="n">T</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">T</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
+        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+
+    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="n">array1</span><span class="p">[]{</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">,</span> <span class="mi">4</span> <span class="p">};</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">average</span><span class="p">(</span><span class="n">array1</span><span class="p">,</span> <span class="mi">5</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+    <span class="kt">double</span> <span class="n">array2</span><span class="p">[]{</span> <span class="mf">3.12</span><span class="p">,</span> <span class="mf">3.45</span><span class="p">,</span> <span class="mf">9.23</span><span class="p">,</span> <span class="mf">6.34</span> <span class="p">};</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">average</span><span class="p">(</span><span class="n">array2</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- This produces the values: -->
+<p>结果产生了值：</p>
+<div class="highlight"><pre><span></span><code><span class="mi">3</span>
+<span class="mf">5.535</span>
+</code></pre></div>
+<!-- As you can see, it works great for built-in types! -->
+<p>如你所见，他能很好在内置的类型上运行！</p>
+<!-- It is worth noting that because our return type is the same templated type as our array elements, doing an integer average will produce an integer result (dropping any fractional value). This is similar to how doing an integer division will produce an integer result. It’s not wrong that we’ve defined things to work that way, but it may be unexpected, so a good comment to users of the class wouldn’t be amiss here. -->
+
+<p>值得注意的是，因为返回类型与数组元素是相同的模板化类型，做整型平均值会产生一个整型结果（丢弃任何）。这与整数除法产生整数结果的方式类似。我们将事物定义为这样是可以工作的，但是这可能是不可预期的，所以在这里写一些注释给类的用户也挺好。</p>
+<!-- Now let’s see what happens when we call this function on our Cents class: -->
+<p>现在当我们使用在 Cents 类上调用这个函数的时候，让我们来看看会发生什么：</p>
+<div class="highlight"><pre><span></span><code><span class="cp">#include</span> <span class="cpf">&lt;iostream&gt;</span><span class="cp"></span>
+
+<span class="k">class</span> <span class="nc">Cents</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&gt;</span> <span class="n">c2</span><span class="p">.</span><span class="n">m_cents</span><span class="p">);</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">T</span> <span class="n">average</span><span class="p">(</span><span class="n">T</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">T</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
+        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+
+    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="n">Cents</span> <span class="n">array3</span><span class="p">[]{</span> <span class="n">Cents</span><span class="p">(</span><span class="mi">5</span><span class="p">),</span> <span class="n">Cents</span><span class="p">(</span><span class="mi">10</span><span class="p">),</span> <span class="n">Cents</span><span class="p">(</span><span class="mi">15</span><span class="p">),</span> <span class="n">Cents</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span> <span class="p">};</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">average</span><span class="p">(</span><span class="n">array3</span><span class="p">,</span> <span class="mi">4</span><span class="p">)</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- The compiler goes berserk and produces a ton of error messages! -->
+<p>编译器陷入疯狂报了一堆错！</p>
+<div class="highlight"><pre><span></span><code><span class="n">example</span><span class="p">.</span><span class="n">cpp</span>
+
+<span class="p">(</span><span class="mi">33</span><span class="p">)</span><span class="o">:</span> <span class="n">error</span> <span class="nl">C2679</span><span class="p">:</span> <span class="n">binary</span> <span class="err">&#39;</span><span class="o">&lt;&lt;</span><span class="err">&#39;</span><span class="o">:</span> <span class="n">no</span> <span class="k">operator</span> <span class="n">found</span> <span class="n">which</span> <span class="n">takes</span> <span class="n">a</span> <span class="n">right</span><span class="o">-</span><span class="n">hand</span> <span class="n">operand</span> <span class="n">of</span> <span class="n">type</span> <span class="sc">&#39;T&#39;</span> <span class="p">(</span><span class="n">or</span> <span class="n">there</span> <span class="n">is</span> <span class="n">no</span> <span class="n">acceptable</span> <span class="n">conversion</span><span class="p">)</span>
+
+        <span class="n">with</span>
+
+        <span class="p">[</span>
+
+            <span class="n">T</span><span class="o">=</span><span class="n">Cents</span>
+
+        <span class="p">]</span>
+
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">437</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">could</span> <span class="n">be</span> <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_streambuf</span><span class="o">&gt;</span> <span class="o">*</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">412</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="k">const</span> <span class="kt">void</span> <span class="o">*</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">394</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="kt">long</span> <span class="kt">double</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">376</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="kt">double</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">358</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="kt">float</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">340</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kr">__int64</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">322</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="kr">__int64</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">304</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">long</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">286</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="kt">long</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">268</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">int</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">248</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="kt">int</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">230</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="kt">unsigned</span> <span class="kt">short</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">202</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="kt">short</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">184</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="kt">bool</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">179</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ios_base</span> <span class="o">&amp;</span><span class="p">(</span><span class="kr">__cdecl</span> <span class="o">*</span><span class="p">)(</span><span class="n">std</span><span class="o">::</span><span class="n">ios_base</span> <span class="o">&amp;</span><span class="p">))</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">174</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ios</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">(</span><span class="kr">__cdecl</span> <span class="o">*</span><span class="p">)(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ios</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">))</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">169</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;::</span><span class="k">operator</span> <span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">(</span><span class="kr">__cdecl</span> <span class="o">*</span><span class="p">)(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">))</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">613</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="k">operator</span> <span class="o">&lt;&lt;&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">,</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">658</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="k">operator</span> <span class="o">&lt;&lt;&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">,</span><span class="kt">char</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">694</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="k">operator</span> <span class="o">&lt;&lt;&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">,</span><span class="k">const</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">739</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="k">operator</span> <span class="o">&lt;&lt;&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">,</span><span class="kt">char</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">858</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="k">operator</span> <span class="o">&lt;&lt;&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">,</span><span class="k">const</span> <span class="kt">signed</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">864</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="k">operator</span> <span class="o">&lt;&lt;&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">,</span><span class="kt">signed</span> <span class="kt">char</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">870</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="k">operator</span> <span class="o">&lt;&lt;&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">,</span><span class="k">const</span> <span class="kt">unsigned</span> <span class="kt">char</span> <span class="o">*</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">876</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="k">operator</span> <span class="o">&lt;&lt;&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">,</span><span class="kt">unsigned</span> <span class="kt">char</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="nl">C</span><span class="p">:</span><span class="o">/</span><span class="n">data</span><span class="o">/</span><span class="n">msvc</span><span class="o">/</span><span class="mf">14.22.27905</span><span class="o">/</span><span class="n">include</span><span class="err">\</span><span class="n">ostream</span><span class="p">(</span><span class="mi">931</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="n">or</span>       <span class="err">&#39;</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">std</span><span class="o">::</span><span class="k">operator</span> <span class="o">&lt;&lt;&gt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">basic_ostream</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="p">,</span><span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">error_code</span> <span class="o">&amp;</span><span class="p">)</span><span class="err">&#39;</span>
+<span class="p">(</span><span class="mi">33</span><span class="p">)</span><span class="o">:</span> <span class="nl">note</span><span class="p">:</span> <span class="k">while</span> <span class="n">trying</span> <span class="n">to</span> <span class="n">match</span> <span class="n">the</span> <span class="n">argument</span> <span class="n">list</span> <span class="err">&#39;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="p">,</span> <span class="n">T</span><span class="p">)</span><span class="err">&#39;</span>
+
+        <span class="n">with</span>
+
+        <span class="p">[</span>
+
+            <span class="n">T</span><span class="o">=</span><span class="n">Cents</span>
+
+        <span class="p">]</span>
+
+<span class="n">Compiler</span> <span class="nl">returned</span><span class="p">:</span> <span class="mi">2</span>
+</code></pre></div>
+<!-- Remember what I said about crazy error messages? We hit the motherlode! Despite looking intimidating, these are actually quite straightforward. The first line is telling you that it couldn’t find an overloaded operator<< for the Cents class. All of the lines in the middle are all of the different functions it tried to match with but failed. The last error points out the function call that spawned this wall of errors. -->
+
+<p>记得我说过的疯狂报错信息么？We hit the motherlode！尽管看起来很吓人，这些实际上相当直接。第一行告诉你不能在 Cents 类中找到一个重载的 &lt;&lt; 操作符。中间是所有想要用来匹配的函数，但是都失败了。最后一个错误指出了产生这一堆错的的函数调用。</p>
+<!-- Remember that average() returns a Cents object, and we are trying to stream that object to std::cout using the << operator. However, we haven’t defined the << operator for our Cents class yet. Let’s do that: -->
+
+<p>记住 <code>average()</code> 返回了一个 Cents 对象，并且我们正在尝试去输出那个对象到 <code>std::cout</code> 使用 <code>&lt;&lt;</code> 操作符。然而，我们已经为我们的 Cents 类型定义了 <code>&lt;&lt;</code> 从操作符。让我们那样做：</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Cents</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&gt;</span> <span class="n">c2</span><span class="p">.</span><span class="n">m_cents</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">cents</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="n">cents</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; cents &quot;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<!-- If we compile again, we will get another error: -->
+
+<p>如果我们再次编译，我们就会得到另一个错误：</p>
+<div class="highlight"><pre><span></span><code><span class="nl">c</span><span class="p">:</span><span class="n">test</span><span class="p">.</span><span class="n">cpp</span><span class="p">(</span><span class="mi">14</span><span class="p">)</span> <span class="o">:</span> <span class="n">error</span> <span class="nl">C2676</span><span class="p">:</span> <span class="n">binary</span> <span class="err">&#39;</span><span class="o">+=</span><span class="err">&#39;</span> <span class="o">:</span> <span class="err">&#39;</span><span class="n">Cents</span><span class="err">&#39;</span> <span class="n">does</span> <span class="n">not</span> <span class="n">define</span> <span class="k">this</span> <span class="k">operator</span> <span class="n">or</span> <span class="n">a</span> <span class="n">conversion</span> <span class="n">to</span> <span class="n">a</span> <span class="n">type</span> <span class="n">acceptable</span> <span class="n">to</span> <span class="n">the</span> <span class="n">predefined</span> <span class="k">operator</span>
+</code></pre></div>
+<!-- This error is actually being caused by the function template instance created when we call average(Cents*, int). Remember that when we call a templated function, the compiler “stencils” out a copy of the function where the template type parameters (the placeholder types) have been replaced with the actual types in the function call. Here is the function template instance for average() when T is a Cents object: -->
+
+<p>这个错误实际上是当我们调用 <code>average(Cents* int)</code> 的时候创建的函数模板实例造成的。记住当我们调用一个模板函数的时候，编译器使用漏字板可出一个函数的拷贝，并且模板类型参数（占位符类型）已经被替换为实际上函数调用时的类型。这是一个函数模板实例化时，当 <code>T</code> 替换为一个 <code>Cents</code> 对象时，再调用 <code>average()</code>的例子：</p>
+<div class="highlight"><pre><span></span><code><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="n">Cents</span> <span class="n">average</span><span class="p">(</span><span class="n">Cents</span> <span class="o">*</span><span class="n">array</span><span class="p">,</span> <span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+<span class="p">{</span>
+    <span class="n">Cents</span> <span class="nf">sum</span><span class="p">(</span><span class="mi">0</span><span class="p">);</span>
+    <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">count</span><span class="p">{</span> <span class="mi">0</span> <span class="p">};</span> <span class="n">count</span> <span class="o">&lt;</span> <span class="n">length</span><span class="p">;</span> <span class="o">++</span><span class="n">count</span><span class="p">)</span>
+        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+
+    <span class="n">sum</span> <span class="o">/=</span> <span class="n">length</span><span class="p">;</span>
+    <span class="k">return</span> <span class="n">sum</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- The reason we are getting an error message is because of the following line: -->
+<p>我们得到错误信息的原因是因为下面这行：</p>
+<div class="highlight"><pre><span></span><code>        <span class="n">sum</span> <span class="o">+=</span> <span class="n">array</span><span class="p">[</span><span class="n">count</span><span class="p">];</span>
+</code></pre></div>
+<!-- In this case, sum is a Cents object, but we have not defined the += operator for Cents objects! We will need to define this function in order for average() to be able to work with Cents. Looking forward, we can see that average() also uses the /= operator, so we will go ahead and define that as well: -->
+
+<p>在这个例子当中，sum 是一个 <code>Cents</code> 对象，但是我们为 Cents 对象去没有定义 <code>+=</code> 操作符！为了让 <code>average()</code> 能在 Cents 类下调用，我们需要去定义这个函数。往后看，我们可以看到 <code>average()</code> 也使用了 <code>/=</code> 操作符，因此我们也要继续定义：</p>
+<div class="highlight"><pre><span></span><code><span class="k">class</span> <span class="nc">Cents</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+    <span class="kt">int</span> <span class="n">m_cents</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+    <span class="n">Cents</span><span class="p">(</span><span class="kt">int</span> <span class="n">cents</span><span class="p">)</span>
+        <span class="o">:</span> <span class="n">m_cents</span><span class="p">{</span> <span class="n">cents</span> <span class="p">}</span>
+    <span class="p">{</span>
+    <span class="p">}</span>
+
+    <span class="k">friend</span> <span class="kt">bool</span> <span class="k">operator</span><span class="o">&gt;</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c1</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">c2</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="k">return</span> <span class="p">(</span><span class="n">c1</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&gt;</span> <span class="n">c2</span><span class="p">.</span><span class="n">m_cents</span><span class="p">);</span>
+    <span class="p">}</span>
+
+    <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span> <span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span> <span class="o">&amp;</span><span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">cents</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="n">cents</span><span class="p">.</span><span class="n">m_cents</span> <span class="o">&lt;&lt;</span> <span class="s">&quot; cents &quot;</span><span class="p">;</span>
+        <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">Cents</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">+=</span><span class="p">(</span><span class="k">const</span> <span class="n">Cents</span> <span class="o">&amp;</span><span class="n">cents</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">m_cents</span> <span class="o">+=</span> <span class="n">cents</span><span class="p">.</span><span class="n">m_cents</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+    <span class="p">}</span>
+
+    <span class="n">Cents</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">/=</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+    <span class="p">{</span>
+        <span class="n">m_cents</span> <span class="o">/=</span> <span class="n">value</span><span class="p">;</span>
+        <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+    <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<!-- Finally, our code will compile and run! Here is the result: -->
+<p>最终我们的代码会编译并且运行！这是结果：</p>
+<div class="highlight"><pre><span></span><code><span class="mi">11</span> <span class="n">cents</span>
+</code></pre></div>
+<!-- If this seems like a lot of work, that’s really only because our Cents class was so bare-bones to start. The key point here is actually that we didn’t have to modify average() at all to make it work with objects of type Cents (or any other type). We simply had to define the operators used to implement average() for the Cents class, and the compiler took care of the rest! -->
+
+<p>如果这看起来很费事，那只是因为我们的 <code>Cents</code> 类是一个如此基础的开始。这里的关键点是实际上我们根本没有必要去修改 <code>average()</code> 来保证它在 Cents 类下工作（或者为任何其他类型）。我们简单地为 Cents 类定义实现 <code>average()</code> 要用到的操作符，然后编译器做了剩下部分的工作！</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../19.1-function-templates/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              19.1 函数模板 Function templates
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../19.3-template-classes/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              19.3 模板类
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.926459b3.min.js"></script>
+      
+    
+  </body>
+</html>

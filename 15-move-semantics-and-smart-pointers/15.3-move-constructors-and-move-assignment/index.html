@@ -1,0 +1,1862 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+    
+    
+      
+        <title>15.3 移动构造和移动赋值 - LearnCPP 中文教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a3f8f96a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#153" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnCPP 中文教程" class="md-header__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnCPP 中文教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              15.3 移动构造和移动赋值
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnCPP 中文教程" class="md-nav__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    LearnCPP 中文教程
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BF%BB%E8%AF%91%E6%97%A5%E8%AE%B0/" class="md-nav__link">
+        翻译日记
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        00 Introduction getting started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="00 Introduction getting started" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          00 Introduction getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/" class="md-nav__link">
+        第零章 介绍/起步
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/0.1-Introduction-to-these-tutorials/" class="md-nav__link">
+        0.1 教程介绍
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        08 basic object oriented programming
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="08 basic object oriented programming" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          08 basic object oriented programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/" class="md-nav__link">
+        第八章 面向对象编程基础
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.1-welcome-to-object-oriented-programming/" class="md-nav__link">
+        8.1 欢迎来到面向对象的世界
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.2-classes-and-class-member/" class="md-nav__link">
+        8.2 类和类成员 (Classes and class member)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        14 exceptions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="14 exceptions" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          14 exceptions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/" class="md-nav__link">
+        14 异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.1-the-need-for-exceptions/" class="md-nav__link">
+        14.1 为什么需要异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.2-basic-exception-handloing/" class="md-nav__link">
+        14.2 基本异常处理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.3-exceptions-functions-and-stack-unwinding/" class="md-nav__link">
+        14.3 异常，函数，栈展开
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.4-uncaught-exceptions-catch-all-handlers-and-exception-specifiers/" class="md-nav__link">
+        14.4 未捕获异常，捕获全部异常和异常说明符
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.5-exceptions-classes-and-inheritance/" class="md-nav__link">
+        14.5 异常，类和继承
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.6-rethrowing-exceptions/" class="md-nav__link">
+        14.6 异常的再抛出
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.7-function-try-blocks/" class="md-nav__link">
+        14.7 函数级的 try 代码块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.8-exception-dangers-and-downsides/" class="md-nav__link">
+        14.8 异常的危险和缺点
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+      
+      <label class="md-nav__link" for="nav-6">
+        15 move semantics and smart pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="15 move semantics and smart pointers" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          15 move semantics and smart pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        15 移动语义和智能指针
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.1-intro-to-smart-pointers-and-move-semantics/" class="md-nav__link">
+        15.1 智能指针和移动语义的介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.2-r-value-reference/" class="md-nav__link">
+        15.2 右值引用
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          15.3 移动构造和移动赋值
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        15.3 移动构造和移动赋值
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    拷贝构造和拷贝赋值
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    移动构造和移动赋值
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    何时调用移动构造函数和移动赋值运算符
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    移动语义背后的关进因素
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    移动函数应始终使两个对象处于定义良好的状态
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    左值通过移动值返回，替代复制返回
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    禁用拷贝
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    另一个例子
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.4-std%3A%3Amove/" class="md-nav__link">
+        15.4 std::move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.5-std%3A%3Aunique_ptr/" class="md-nav__link">
+        15.5 std::unique_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.6-std%3A%3Ashared_ptr/" class="md-nav__link">
+        15.6 std::shared_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.7-std%3A%3Aweak_ptr/" class="md-nav__link">
+        15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.x-chapter15-comprehensive-review/" class="md-nav__link">
+        15.x 十五章理解和复习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+      
+      <label class="md-nav__link" for="nav-7">
+        18 virtual functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="18 virtual functions" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          18 virtual functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/" class="md-nav__link">
+        第十八章 虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.1-pointers-and-references-to-the-base-class-of-derived-objects/" class="md-nav__link">
+        18.1 基类指针和引用指向派生类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.2-virtual-functions-and-polymorphism/" class="md-nav__link">
+        18.2 — 虚函数和多态
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.3-The-override-and-final-specifiers-and-covariant-return-types/" class="md-nav__link">
+        18.3 重写 final 标识符，并且协变返回类型
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-nav__link">
+        18.4 虚构造函数，虚赋值，重写虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.5-early-binding-and-late-binding/" class="md-nav__link">
+        18.5 预绑定和后期绑定
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.6-the-virtual-table/" class="md-nav__link">
+        18.6 虚表
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.7-virtual-base-classes/" class="md-nav__link">
+        18.7 虚基类 (Virtual base classes)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.8-object-slicing/" class="md-nav__link">
+        18.8 对象切割
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.9-dynamic-casting/" class="md-nav__link">
+        18.9 动态类型转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.x%20chapter-18-comprehensice-quiz/" class="md-nav__link">
+        18.x 十二章理解和练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+      
+      <label class="md-nav__link" for="nav-8">
+        19 templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="19 templates" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          19 templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/" class="md-nav__link">
+        十九章 模板
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.1-function-templates/" class="md-nav__link">
+        19.1 函数模板 Function templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.2-function-template-instances/" class="md-nav__link">
+        19.2 类模板实例
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.3-template-classes/" class="md-nav__link">
+        19.3 模板类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.4-template-non-type-parameters/" class="md-nav__link">
+        19.4 模板非类型参数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.5-function-template-specialization/" class="md-nav__link">
+        19.5 函数模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.6-class-template-specialization/" class="md-nav__link">
+        19.6 类模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.7-partial-template-specialization/" class="md-nav__link">
+        19.7 模板局部特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.8-partial-template-specialization-for-pointers/" class="md-nav__link">
+        19.8 局部模板特化指针的
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.x%20chapter-19-comprehensice-quiz/" class="md-nav__link">
+        19.x - 19章节练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" >
+      
+      <label class="md-nav__link" for="nav-9">
+        23 input and output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="23 input and output" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          23 input and output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.1-input-and-output-streams/" class="md-nav__link">
+        18.1 输入输出流
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.2-input-with-istream/" class="md-nav__link">
+        18.2 使用 istream 输入
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.3-output-with-ostream-and-ios/" class="md-nav__link">
+        18.3 使用 ostrea 和 ios 进行输出
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    拷贝构造和拷贝赋值
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    移动构造和移动赋值
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    何时调用移动构造函数和移动赋值运算符
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_4" class="md-nav__link">
+    移动语义背后的关进因素
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_5" class="md-nav__link">
+    移动函数应始终使两个对象处于定义良好的状态
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_6" class="md-nav__link">
+    左值通过移动值返回，替代复制返回
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_7" class="md-nav__link">
+    禁用拷贝
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_8" class="md-nav__link">
+    另一个例子
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="153">15.3 移动构造和移动赋值<a class="headerlink" href="#153" title="Permanent link">&para;</a></h1>
+<!-- 15.3 — Move constructors and move assignment -->
+
+<blockquote>
+<p>By Alex on February 26<sup>th</sup>, 2017 | last modified by Alex on January 23<sup>rd</sup>, 2020</p>
+<p>翻译by dashjay 2020.07.17</p>
+</blockquote>
+<!-- In lesson 15.1 -- Intro to smart pointers and move semantics, we took a look at std::auto_ptr, discussed the desire for move semantics, and took a look at some of the downsides that occur when functions designed for copy semantics (copy constructors and copy assignment operators) are redefined to implement move semantics. -->
+
+<p>在课程 <a href="../15.1-intro-to-smart-pointers-and-move-semantics">15.1 智能指针和移动语义的介绍</a> 中, 我们了解到了 <code>std::auto ptr</code>，讨论了对移动语义的需求，并研究了为复制语义设计的函数（复制构造函数和复制赋值运算符），以及被重新定义为实现移动语义时出现的一些缺点。</p>
+<!-- In this lesson, we’ll take a deeper look at how C++11 resolves these problems via move constructors and move assignment. -->
+
+<p>在这堂课中，我们将深入了解 <code>C++11</code> 是如何通过 <strong>移动构造函数</strong> 和 <strong>移动赋值运算</strong> 来解决这些问题。</p>
+<h2 id="_1">拷贝构造和拷贝赋值<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<!-- Copy constructors and copy assignment -->
+
+<!-- First, let’s take a moment to recap copy semantics. -->
+<p>首先，让我们复习一下拷贝语义(<code>copy semantics</code>)。</p>
+<!-- Copy constructors are used to initialize a class by making a copy of an object of the same class. Copy assignment is used to copy one class to another existing class. By default, C++ will provide a copy constructor and copy assignment operator if one is not explicitly provided. These compiler-provided functions do shallow copies, which may cause problems for classes that allocate dynamic memory. So classes that deal with dynamic memory should override these functions to do deep copies. -->
+
+<p><strong>拷贝构造函数</strong> 通过创建一份该类的拷贝来初始化一个类。<strong>拷贝赋值运算符</strong> 通过拷贝一个已存在类对象，创建一个新的对象。默认情况下，如果一个类没有显式的提供，C++ 将会默认提供拷贝构造函数和拷贝赋值函数。这些由编译器提供的函数仅实现了浅拷贝，在进行动态分配内存的类对象上使用可能造成问题。因此在涉及动态内存分配的类必须通过重写这些函数来进行深拷贝。</p>
+<!-- Returning back to our Auto_ptr smart pointer class example from the first lesson in this chapter, let’s look at a version that implements a copy constructor and copy assignment operator that do deep copies, and a sample program that exercises them: -->
+
+<p>回到我们本章的前些课中提到的 <code>Auto_ptr</code> 智能指针类的例子，让我们看一眼实现深拷贝的拷贝构造函数和拷贝赋值函数，还有一个简单的程序来测试他们：</p>
+<div class="highlight"><pre><span></span><code><span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Auto_ptr3</span>
+<span class="p">{</span>
+ <span class="n">T</span><span class="o">*</span> <span class="n">m_ptr</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Auto_ptr3</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">)</span>
+  <span class="o">:</span><span class="n">m_ptr</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="o">~</span><span class="n">Auto_ptr3</span><span class="p">()</span>
+ <span class="p">{</span>
+  <span class="k">delete</span> <span class="n">m_ptr</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Copy constructor 拷贝构造函数</span>
+ <span class="c1">// Do deep copy of a.m_ptr to m_ptr</span>
+ <span class="c1">// 从 a.m_ptr 到 m_ptr 进行深拷贝</span>
+ <span class="n">Auto_ptr3</span><span class="p">(</span><span class="k">const</span> <span class="n">Auto_ptr3</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">m_ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">;</span>
+  <span class="o">*</span><span class="n">m_ptr</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">.</span><span class="n">m_ptr</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Copy assignment</span>
+ <span class="c1">// 拷贝赋值函数</span>
+ <span class="c1">// Do deep copy of a.m_ptr to m_ptr</span>
+  <span class="c1">// 从 a.m_ptr 到 m_ptr 进行深拷贝</span>
+ <span class="n">Auto_ptr3</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Auto_ptr3</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="c1">// Self-assignment detection</span>
+  <span class="c1">// 自赋值检测</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">a</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span>
+   <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+
+  <span class="c1">// 释放所有持有的资源</span>
+  <span class="c1">// Release any resource we&#39;re holding</span>
+  <span class="k">delete</span> <span class="n">m_ptr</span><span class="p">;</span>
+
+  <span class="c1">// 拷贝资源</span>
+  <span class="c1">// Copy the resource</span>
+  <span class="n">m_ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">;</span>
+  <span class="o">*</span><span class="n">m_ptr</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">.</span><span class="n">m_ptr</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="n">m_ptr</span><span class="p">;</span> <span class="p">}</span>
+ <span class="n">T</span><span class="o">*</span> <span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_ptr</span><span class="p">;</span> <span class="p">}</span>
+ <span class="kt">bool</span> <span class="n">isNull</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_ptr</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Resource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource acquired</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+ <span class="o">~</span><span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource destroyed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">Auto_ptr3</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">generateResource</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Auto_ptr3</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">(</span><span class="k">new</span> <span class="n">Resource</span><span class="p">);</span>
+ <span class="k">return</span> <span class="n">res</span><span class="p">;</span> <span class="c1">// this return value will invoke the copy constructor</span>
+             <span class="c1">// 这个返回值将会触发拷贝构造函数</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Auto_ptr3</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">mainres</span><span class="p">;</span>
+ <span class="n">mainres</span> <span class="o">=</span> <span class="n">generateResource</span><span class="p">();</span> <span class="c1">// this assignment will invoke the copy assignment</span>
+                               <span class="c1">// 这个赋值将会触发赋值赋值函数</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- In this program, we’re using a function named generateResource() to create a smart pointer encapsulated resource, which is then passed back to function main(). Function main() then assigns that to an existing Auto_ptr3 object. -->
+
+<p>在这个程序中，我们使用一个叫做 <code>generateResource()</code> 的函数来创建一个智能指针封装的<code>Resource</code>，并且将它传回到 <code>main</code> 函数中。<code>main</code> 函数紧接着将其赋值给已经存在的 <code>Auto_ptr3</code> 对象 <code>mainres</code>。</p>
+<!-- When this program is run, it prints: -->
+
+<p>当这个程序运行的时候，打印：</p>
+<div class="highlight"><pre><span></span><code>Resource acquired
+Resource acquired
+Resource destroyed
+Resource acquired
+Resource destroyed
+Resource destroyed
+</code></pre></div>
+<!-- (Note: You may only get 4 outputs if your compiler elides the return value from function generateResource()) -->
+<p>（注意：你可能只得到4个输出，如果你的编译器 省略\优化 了<code>generateResource()</code>的返回值）</p>
+<!-- That’s a lot of resource creation and destruction going on for such a simple program! What’s going on here? -->
+<p>那会有很多次创建和销毁，仅仅为了这样一个简单的程序！发生了什么？</p>
+<!-- Let’s take a closer look. There are 6 key steps that happen in this program (one for each printed message): -->
+<p>让我们仔细看看，程序里有 6 个关键步骤（每次打印都发生一件）：</p>
+<!-- 1) Inside generateResource(), local variable res is created and initialized with a dynamically allocated Resource, which causes the first “Resource acquired”. -->
+
+<p>1; 在 <code>generateResource()</code> 中，局部变量 <code>res</code> 被创建并用初始化为一个动态分配的 <code>Resource</code>。</p>
+<!-- 2) Res is returned back to main() by value. We return by value here because res is a local variable -- it can’t be returned by address or reference because res will be destroyed when generateResource() ends. So res is copy constructed into a temporary object. Since our copy constructor does a deep copy, a new Resource is allocated here, which causes the second “Resource acquired”. -->
+
+<p>2; <code>Res</code> 值返回到 <code>main()</code>。通过值返回的原因是，<code>res</code> 是一个局部变量 —— 它不能被通过地址或引用返回，因为 <code>res</code> 将会在 <code>generateResource()</code> 函数结束前被销毁  结束。因为 <code>res</code> 是拷贝构造，做了一次深拷贝，一个新的 <code>Resource</code> 在这被分配，触发了第二次 "Resource acquired"。</p>
+<!-- 3) Res goes out of scope, destroying the originally created Resource, which causes the first “Resource destroyed”. -->
+
+<p>3; Res 离开作用域，销毁之前创建的 <code>Resource</code>，这触发了第一个 "Resource destroyed"。</p>
+<!-- 4) The temporary object is assigned to mainres by copy assignment. Since our copy assignment also does a deep copy, a new Resource is allocated, causing yet another “Resource acquired”. -->
+
+<p>4; 临时对象被赋值进 <code>mainres</code> 通过拷贝赋值。因为我们的拷贝赋值也做了一次深拷贝，一个新的 <code>Reource</code> 被分配，触发了另一个 "Resource acquired"。</p>
+<!-- 5) The assignment expression ends, and the temporary object goes out of expression scope and is destroyed, causing a “Resource destroyed”. -->
+
+<p>5; 赋值表达式结尾，临时对象离开了表达式作用域并且被销毁，触发了一个 "Resource acquired"。</p>
+<!-- 6) At the end of main(), mainres goes out of scope, and our final “Resource destroyed” is displayed. -->
+
+<p>6; 在 <code>main()</code> 的末尾，<code>mainres</code> 离开了作用域，并且触发了最后一个 "Resource destroyed"。</p>
+<!-- So, in short, because we call the copy constructor once to copy construct res to a temporary, and copy assignment once to copy the temporary into mainres, we end up allocating and destroying 3 separate objects in total. -->
+
+<p>因此，简而言之，因为我们调用了一次拷贝构造函数来拷贝构造 <code>res</code> 成一个临时变量，并调用了一次拷贝赋值函数来拷贝临时变量进入 <code>mainres</code>，我们最终分配和销毁了3个独立的 <code>objects</code> 总计。</p>
+<!-- Inefficient, but at least it doesn’t crash! -->
+
+<p>这是低效的，但是它至少不会崩溃。</p>
+<!-- However, with move semantics, we can do better. -->
+<p>然而如果用移动语义，我们可以做的更好。</p>
+<h2 id="_2">移动构造和移动赋值<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<!-- Move constructors and move assignment -->
+
+<!-- C++11 defines two new functions in service of move semantics: a move constructor, and a move assignment operator. Whereas the goal of the copy constructor and copy assignment is to make a copy of one object to another, the goal of the move constructor and move assignment is to move ownership of the resources from one object to another (which is much less expensive than making a copy). -->
+
+<p>C++ 定义了两个新的函数来实现 <strong>“移动语义”</strong>：一个是 <strong>移动构造函数</strong>，一个是 <strong>移动赋值操作符</strong> 。拷贝构造函数的和拷贝赋值函数的目标是创建一份对象的拷贝到另一个对象，移动构造函数和移动赋值赋值运算符是来移动资源的 <strong>所有权(ownership)</strong> ，从一个对象到另一个对象（这样做消耗的资源少很多）。</p>
+<!-- Defining a move constructor and move assignment work analogously to their copy counterparts. However, whereas the copy flavors of these functions take a const l-value reference parameter, the move flavors of these functions use non-const r-value reference parameters. -->
+
+<p>定义一个移动构造函数和一个移动赋值函数和拷贝的同类函数所实现的目的相似。然而，这些复制函数的风格采用 <strong>常量左值引用</strong> 参数，移动函数的风格使用了 <strong>非常量右值引用</strong> 参数。</p>
+<!-- Here’s the same Auto_ptr3 class as above, with a move constructor and move assignment operator added. We’ve left in the deep-copying copy constructor and copy assignment operator for comparison purposes. -->
+
+<p>有一个和之前的 <code>Auto_ptr3</code> 相同的类，添加了移动构造函数和移动东赋值操作符。我们留下了进行 <strong>深拷贝</strong> 的拷贝构造函数和拷贝赋值操作符仅仅为了作比较。</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Auto_ptr4</span>
+<span class="p">{</span>
+ <span class="n">T</span><span class="o">*</span> <span class="n">m_ptr</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Auto_ptr4</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">)</span>
+  <span class="o">:</span><span class="n">m_ptr</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="o">~</span><span class="n">Auto_ptr4</span><span class="p">()</span>
+ <span class="p">{</span>
+  <span class="k">delete</span> <span class="n">m_ptr</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Copy constructor</span>
+ <span class="c1">// Do deep copy of a.m_ptr to m_ptr</span>
+ <span class="n">Auto_ptr4</span><span class="p">(</span><span class="k">const</span> <span class="n">Auto_ptr4</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">m_ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">;</span>
+  <span class="o">*</span><span class="n">m_ptr</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">.</span><span class="n">m_ptr</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Move constructor</span>
+ <span class="c1">// Transfer ownership of a.m_ptr to m_ptr</span>
+ <span class="n">Auto_ptr4</span><span class="p">(</span><span class="n">Auto_ptr4</span><span class="o">&amp;&amp;</span> <span class="n">a</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_ptr</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">m_ptr</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">a</span><span class="p">.</span><span class="n">m_ptr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span> <span class="c1">// we&#39;ll talk more about this line below</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Copy assignment</span>
+ <span class="c1">// Do deep copy of a.m_ptr to m_ptr</span>
+ <span class="n">Auto_ptr4</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Auto_ptr4</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="c1">// Self-assignment detection</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">a</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span>
+   <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+
+  <span class="c1">// Release any resource we&#39;re holding</span>
+  <span class="k">delete</span> <span class="n">m_ptr</span><span class="p">;</span>
+
+  <span class="c1">// Copy the resource</span>
+  <span class="n">m_ptr</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">;</span>
+  <span class="o">*</span><span class="n">m_ptr</span> <span class="o">=</span> <span class="o">*</span><span class="n">a</span><span class="p">.</span><span class="n">m_ptr</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Move assignment</span>
+ <span class="c1">// Transfer ownership of a.m_ptr to m_ptr</span>
+ <span class="n">Auto_ptr4</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">Auto_ptr4</span><span class="o">&amp;&amp;</span> <span class="n">a</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="c1">// Self-assignment detection</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">a</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span>
+   <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+
+  <span class="c1">// Release any resource we&#39;re holding</span>
+  <span class="k">delete</span> <span class="n">m_ptr</span><span class="p">;</span>
+
+  <span class="c1">// Transfer ownership of a.m_ptr to m_ptr</span>
+  <span class="n">m_ptr</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">m_ptr</span><span class="p">;</span>
+  <span class="n">a</span><span class="p">.</span><span class="n">m_ptr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span> <span class="c1">// we&#39;ll talk more about this line below</span>
+
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="o">*</span><span class="n">m_ptr</span><span class="p">;</span> <span class="p">}</span>
+ <span class="n">T</span><span class="o">*</span> <span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_ptr</span><span class="p">;</span> <span class="p">}</span>
+ <span class="kt">bool</span> <span class="n">isNull</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_ptr</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Resource</span>
+<span class="p">{</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource acquired</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+ <span class="o">~</span><span class="n">Resource</span><span class="p">()</span> <span class="p">{</span> <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;Resource destroyed</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">Auto_ptr4</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">generateResource</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Auto_ptr4</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">res</span><span class="p">(</span><span class="k">new</span> <span class="n">Resource</span><span class="p">);</span>
+ <span class="k">return</span> <span class="n">res</span><span class="p">;</span> <span class="c1">// this return value will invoke the move constructor</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Auto_ptr4</span><span class="o">&lt;</span><span class="n">Resource</span><span class="o">&gt;</span> <span class="n">mainres</span><span class="p">;</span>
+ <span class="n">mainres</span> <span class="o">=</span> <span class="n">generateResource</span><span class="p">();</span> <span class="c1">// this assignment will invoke the move assignment</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- The move constructor and move assignment operator are simple. Instead of deep copying the source object (a) into the implicit object, we simply move (steal) the source object’s resources. This involves shallow copying the source pointer into the implicit object, then setting the source pointer to null. -->
+
+<p><strong>移动构造函数</strong> 和 <strong>移动赋值操作符</strong> 非常简单。不再对原对象进行深拷贝到一个不同的对象，仅仅简单地从源对象 <strong>移动（偷）</strong> 到目标对象。其实就是涉及了从原指针到目对象的浅拷贝，然后原指针设定为 <code>null</code>。</p>
+<!-- When run, this program prints: -->
+
+<p>我们运行，这个程序将打印：</p>
+<div class="highlight"><pre><span></span><code>Resource acquired
+Resource destroyed
+</code></pre></div>
+<p>那好得多：</p>
+<!-- That’s much better! -->
+
+<!-- The flow of the program is exactly the same as before. However, instead of calling the copy constructor and copy assignment operators, this program calls the move constructor and move assignment operators. Looking a little more deeply: -->
+
+<p>程序的流程和以前相似，然而，不再调用拷贝构造函数和拷贝赋值函数，而这个程序调用了移动构造和移动赋值运算符。让我们深入来看：</p>
+<!-- 1) Inside generateResource(), local variable res is created and initialized with a dynamically allocated Resource, which causes the first “Resource acquired”. -->
+<p>1; 在 <code>generateResource()</code> 中，局部变量 <code>res</code> 被用动态分配创建和初始化。</p>
+<!-- 2) Res is returned back to main() by value. Res is move constructed into a temporary object, transferring the dynamically created object stored in res to the temporary object. We’ll talk about why this happens below. -->
+<p>2; <code>Res</code> 通过值返回到 <code>main()</code>。<code>Res</code> 被移动构造进一个临时对象，转义这个在 <code>res</code> 中动态创建的对象，我们将会在下方讨论为何这样做。</p>
+<!-- 3) Res goes out of scope. Because res no longer manages a pointer (it was moved to the temporary), nothing interesting happens here. -->
+
+<p>3; <code>Res</code> 离开作用于。因为 <code>res</code> 不再管理指针（已经被移动到临时区），没什么其他的发生（delete nullptr 不会发生什么）。</p>
+<!-- 4) The temporary object is move assigned to mainres. This transfers the dynamically created object stored in the temporary to mainres. -->
+<p>4; 临时对象被移动赋值给 <code>mainres</code>。这次转移了动态创建并储存在临时区的对象给 <code>mainres</code>。</p>
+<!-- 5) The assignment expression ends, and the temporary object goes out of expression scope and is destroyed. However, because the temporary no longer manages a pointer (it was moved to mainres), nothing interesting happens here either. -->
+
+<p>5; 在复制表达式结尾，临时的对象离开了表达式作用于，并且被销毁。然而因为临时区不再管理指针（被移动到了 <code>mainres</code> 上），因此这一步也什么都不会发生。</p>
+<!-- 6) At the end of main(), mainres goes out of scope, and our final “Resource destroyed” is displayed. -->
+
+<p>6; 在 <code>main()</code> 函数的末尾， <code>mainres</code> 离开了作用于，触发了最后一个 “Resource destroyed” 打印在屏幕上。</p>
+<!-- So instead of copying our Resource twice (once for the copy constructor and once for the copy assignment), we transfer it twice. This is more efficient, as Resource is only constructed and destroyed once instead of three times. -->
+
+<p>因此，不再拷贝 <code>Resource</code> 两次（一次为拷贝构造函数一次为拷贝赋值运算符），我们移动了它两次。这更高效，因为 <code>Resource</code> 仅仅被构造和销毁一次，而不是三次。</p>
+<h2 id="_3">何时调用移动构造函数和移动赋值运算符<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<!-- When are the move constructor and move assignment called? -->
+
+<!-- The move constructor and move assignment are called when those functions have been defined, and the argument for construction or assignment is an r-value. Most typically, this r-value will be a literal or temporary value. -->
+
+<p>当那些函数被调用，并且构造函数或者赋值运算符的参数是一个右值时，会调用移动构造函数和移动赋值运算符。最典型的是，右值会是一个字面量(literal)或一个临时值。</p>
+<!-- In most cases, a move constructor and move assignment operator will not be provided by default, unless the class does not have any defined copy constructors, copy assignment, move assignment, or destructors. However, the default move constructor and move assignment do the same thing as the default copy constructor and copy assignment (make copies, not do moves). -->
+
+<p>在大多数情况下，<strong>移动构造函数</strong> 和移动赋值运算符不会被默认提供，除非该类没有定义任何 <strong>拷贝构造函数</strong> ，拷贝赋值运算符， <strong>移动赋值运算符</strong> ，或者**析构函数** 。然而，默认的 <strong>移动构造函数</strong> 和 <strong>移动赋值运算符</strong> 只会做和拷贝构造函数和拷贝赋值运算符相似的事情（制作拷贝，不移动）。</p>
+<!-- Rule: If you want a move constructor and move assignment that do moves, you’ll need to write them yourself. -->
+<p><strong>规定：如果你想要一个移动构造函数和移动赋值运算符来实现移动语义，你需要自己实现一个。</strong></p>
+<h2 id="_4">移动语义背后的关进因素<a class="headerlink" href="#_4" title="Permanent link">&para;</a></h2>
+<!-- The key insight behind move semantics -->
+
+<!-- You now have enough context to understand the key insight behind move semantics. -->
+
+<p>你现在了解了足够多的上下文，理解移动语义背后的关键因素。</p>
+<!-- If we construct an object or do an assignment where the argument is an l-value, the only thing we can reasonably do is copy the l-value. We can’t assume it’s safe to alter the l-value, because it may be used again later in the program. If we have an expression “a = b”, we wouldn’t reasonably expect b to be changed in any way. -->
+
+<p>如果我们构造一个对象或者进行一次赋值时，当参数是一个左值，我们唯一能做的就是拷贝这个左值。我们不能假设修改它是安全的，因为它可能在之后的程序中被使用。就好像如果有一个表达式 <code>a = b</code>，<strong>我们无论如何不会期待b被改变</strong> 。</p>
+<!-- However, if we construct an object or do an assignment where the argument is an r-value, then we know that r-value is just a temporary object of some kind. Instead of copying it (which can be expensive), we can simply transfer its resources (which is cheap) to the object we’re constructing or assigning. This is safe to do because the temporary will be destroyed at the end of the expression anyway, so we know it will never be used again! -->
+
+<p>然而，如果我们构造一个对象或者做一次赋值时，参数是一个右值，我们知道右值仅仅是一个某个类型的临时值。相比拷贝他（花费更多资源），我们可以简单的移动它的资源（花费非常少）给我们正在创建或者赋值的资源。这是实现起来是安全的，因为临时值将会被销毁在表达式的结尾，因此我们知道它将永远不会再被再次使用！</p>
+<!-- C++11, through r-value references, gives us the ability to provide different behaviors when the argument is an r-value vs an l-value, enabling us to make smarter and more efficient decisions about how our objects should behave. -->
+
+<p>C++11，通过右值引用，给我们能力来提供一个不同的实现，当参数是一个右值或一个左值，有了这个能力使得我们可以更简单，更高效的决定我们编写的对象的行为。</p>
+<h2 id="_5">移动函数应始终使两个对象处于定义良好的状态<a class="headerlink" href="#_5" title="Permanent link">&para;</a></h2>
+<!-- Move functions should always leave both objects in a well-defined state -->
+
+<!-- In the above examples, both the move constructor and move assignment functions set a.m_ptr to nullptr. This may seem extraneous -- after all, if “a” is a temporary r-value, why bother doing “cleanup” if parameter “a” is going to be destroyed anyway? -->
+<p>在以上的例子中，移动构造和移动赋值函数设置 <code>a.m_ptr</code> 为 <code>nullptr</code>。这是看起来似乎是没什么用————毕竟，如果 “a” 是一个临时右值，为什么阻止“清理”，如果 “a” 无论如何都会被销毁。</p>
+<!-- The answer is simple: When “a” goes out of scope, a’s destructor will be called, and a.m_ptr will be deleted. If at that point, a.m_ptr is still pointing to the same object as m_ptr, then m_ptr will be left as a dangling pointer. When the object containing m_ptr eventually gets used (or destroyed), we’ll get undefined behavior. -->
+
+<p>这个问题的答案很简单：当 “a” 离开作用域， "a" 的析构函数将会被调用，并且 <code>a.m_ptr</code> 将会被删除。如果在那时 <code>a.m_ptr</code> 仍然指着和<code>m_ptr</code>相同的的资源，<code>m_ptr</code> 就会成为一个悬空指针。当对象对象包含的 <code>m_ptr</code> 最终被使用（或者销毁），将会发生未定义操作(undefiend behavior)。</p>
+<!-- Additionally, in the next lesson we’ll see cases where “a” can be an l-value. In such a case, “a” wouldn’t be destroyed immediately, and could be queried further before its lifetime ends. -->
+
+<p>另外，在下节课中我们将会看到一些例子当 <code>a</code> 可以是一个左值时。在这种情况下，<code>a</code> 将不会被立即销毁，我们可以在其声明周期结束前查询。</p>
+<h2 id="_6">左值通过移动值返回，替代复制返回<a class="headerlink" href="#_6" title="Permanent link">&para;</a></h2>
+<!-- Automatic l-values returned by value may be moved instead of copied -->
+
+<!-- In the generateResource() function of the Auto_ptr4 example above, when variable res is returned by value, it is moved instead of copied, even though res is an l-value. The C++ specification has a special rule that says automatic objects returned from a function by value can be moved even if they are l-values. This makes sense, since res was going to be destroyed at the end of the function anyway! We might as well steal its resources instead of making an expensive and unnecessary copy. -->
+<p>在 之前的例子里，<code>Auto_ptr4</code> 中的<code>generateResource()</code>，当变量 <code>res</code> 被通过值返回，它被移动而不是拷贝，即便 <code>res</code> 始终是一个左值。C++ 规范中有一个特例这样描述：通过值从函数返回的对象将自动使用移动语义，即便他们是一个左值。这很有意义，因为 <code>res</code> 无论如何即将被销毁在函数的末尾！我们可以也偷走它的资源而不是做没必要的拷贝。</p>
+<!-- Although the compiler can move l-value return values, in some cases it may be able to do even better by simply eliding the copy altogether (which avoids the need to make a copy or do a move at all). In such a case, neither the copy constructor nor move constructor would be called. -->
+
+<p>尽管编译器可以移动左值作为函数的返回值（Although the compiler can move l-value return values），在一些例子中，可以做的更好，通过简单的淘汰完全拷贝（避免拷贝而或全部使用移动）。在这样的例子中，拷贝构造函数和移动构造函数都不会被调用。</p>
+<h2 id="_7">禁用拷贝<a class="headerlink" href="#_7" title="Permanent link">&para;</a></h2>
+<!-- Disabling copying -->
+
+<!-- In the Auto_ptr4 class above, we left in the copy constructor and assignment operator for comparison purposes. But in move-enabled classes, it is sometimes desirable to delete the copy constructor and copy assignment functions to ensure copies aren’t made. In the case of our Auto_ptr class, we don’t want to copy our templated object T -- both because it’s expensive, and whatever class T is may not even support copying! -->
+
+<p>在 上方的<code>Auto_ptr4</code> 类中，我们留下了 copy 构造函数和赋值操作符为了比较的目的。但在开启移动(mode-enabled)更愿意删除拷贝构造和拷贝赋值函数来确保拷贝不会发生。在接下来的例子中 <code>Auto_ptr</code> 类，我们想要拷贝我们的 <code>templated</code> 对象 T ———— 不仅因为它的开销很大，而且 T 类可能甚至不支持拷贝！</p>
+<!-- Here’s a version of Auto_ptr that supports move semantics but not copy semantics: -->
+<p>这是 <code>Auto_ptr</code> 支持移动语义，但是不支持拷贝语义的版本。</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="k">template</span><span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">Auto_ptr5</span>
+<span class="p">{</span>
+ <span class="n">T</span><span class="o">*</span> <span class="n">m_ptr</span><span class="p">;</span>
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Auto_ptr5</span><span class="p">(</span><span class="n">T</span><span class="o">*</span> <span class="n">ptr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">)</span>
+  <span class="o">:</span><span class="n">m_ptr</span><span class="p">(</span><span class="n">ptr</span><span class="p">)</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="o">~</span><span class="n">Auto_ptr5</span><span class="p">()</span>
+ <span class="p">{</span>
+  <span class="k">delete</span> <span class="n">m_ptr</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Copy constructor -- no copying allowed!</span>
+ <span class="n">Auto_ptr5</span><span class="p">(</span><span class="k">const</span> <span class="n">Auto_ptr5</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+ <span class="c1">// Move constructor</span>
+ <span class="c1">// Transfer ownership of a.m_ptr to m_ptr</span>
+ <span class="n">Auto_ptr5</span><span class="p">(</span><span class="n">Auto_ptr5</span><span class="o">&amp;&amp;</span> <span class="n">a</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_ptr</span><span class="p">(</span><span class="n">a</span><span class="p">.</span><span class="n">m_ptr</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">a</span><span class="p">.</span><span class="n">m_ptr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Copy assignment -- no copying allowed!</span>
+ <span class="n">Auto_ptr5</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">Auto_ptr5</span><span class="o">&amp;</span> <span class="n">a</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+ <span class="c1">// Move assignment</span>
+ <span class="c1">// Transfer ownership of a.m_ptr to m_ptr</span>
+ <span class="n">Auto_ptr5</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">Auto_ptr5</span><span class="o">&amp;&amp;</span> <span class="n">a</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="c1">// Self-assignment detection</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">a</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span>
+   <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+
+  <span class="c1">// Release any resource we&#39;re holding</span>
+  <span class="k">delete</span> <span class="n">m_ptr</span><span class="p">;</span>
+
+  <span class="c1">// Transfer ownership of a.m_ptr to m_ptr</span>
+  <span class="n">m_ptr</span> <span class="o">=</span> <span class="n">a</span><span class="p">.</span><span class="n">m_ptr</span><span class="p">;</span>
+  <span class="n">a</span><span class="p">.</span><span class="n">m_ptr</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">*</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span><span class="o">*</span><span class="n">m_ptr</span><span class="p">;</span> <span class="p">}</span>
+ <span class="n">T</span><span class="o">*</span> <span class="k">operator</span><span class="o">-&gt;</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_ptr</span><span class="p">;</span> <span class="p">}</span>
+ <span class="kt">bool</span> <span class="n">isNull</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_ptr</span> <span class="o">==</span> <span class="k">nullptr</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+</code></pre></div>
+<!-- If you were to try to pass an Auto_ptr5 l-value to a function by value, the compiler would complain that the copy constructor required to initialize the copy constructor argument has been deleted. This is good, because we should probably be passing Auto_ptr5 by const l-value reference anyway! -->
+
+<p>如果你尝试通过左值传一个 <code>Auto_ptr5</code> 到一个函数，编译器将会报错告诉你拷贝构造函数是必须的，用来初始化拷贝构造参数已经被删除。这就对了，因为我们应该通过常左值引用传递 <code>Auto_ptr5</code>！</p>
+<!-- Auto_ptr5 is (finally) a good smart pointer class. And, in fact the standard library contains a class very much like this one (that you should use instead), named std::unique_ptr. We’ll talk more about std::unique_ptr later in this chapter. -->
+<p><code>Auto_ptr5</code> 是（终极）一个很好的只能指正类。并且事实上，标准库包含的类已经非常像这个（你应该用标准），被叫做 <code>std::unique_ptr</code>。我们将讨论更多有关 <code>std::unique_ptr</code> 在稍后的章节中。</p>
+<h2 id="_8">另一个例子<a class="headerlink" href="#_8" title="Permanent link">&para;</a></h2>
+<!-- Another example -->
+
+<!-- Let’s take a look at another class that uses dynamic memory: a simple dynamic templated array. This class contains a deep-copying copy constructor and copy assignment operator. -->
+
+<p>让我们看一眼另一个类使用了动态内存分配：一个简单的动态模板数组。这个类包含一个深拷贝的拷贝构造函数和拷贝赋值操作符。</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">DynamicArray</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+ <span class="n">T</span><span class="o">*</span> <span class="n">m_array</span><span class="p">;</span>
+ <span class="kt">int</span> <span class="n">m_length</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">DynamicArray</span><span class="p">(</span><span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_array</span><span class="p">(</span><span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">length</span><span class="p">]),</span> <span class="n">m_length</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="o">~</span><span class="n">DynamicArray</span><span class="p">()</span>
+ <span class="p">{</span>
+  <span class="k">delete</span><span class="p">[]</span> <span class="n">m_array</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Copy constructor</span>
+ <span class="n">DynamicArray</span><span class="p">(</span><span class="k">const</span> <span class="n">DynamicArray</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_length</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">m_length</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">m_array</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">m_length</span><span class="p">];</span>
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m_length</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+   <span class="n">m_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">m_array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Copy assignment</span>
+ <span class="n">DynamicArray</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">DynamicArray</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">arr</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span>
+   <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+
+  <span class="k">delete</span><span class="p">[]</span> <span class="n">m_array</span><span class="p">;</span>
+
+  <span class="n">m_length</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">m_length</span><span class="p">;</span>
+  <span class="n">m_array</span> <span class="o">=</span> <span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">m_length</span><span class="p">];</span>
+
+  <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">m_length</span><span class="p">;</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+   <span class="n">m_array</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">m_array</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="kt">int</span> <span class="n">getLength</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_length</span><span class="p">;</span> <span class="p">}</span>
+ <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_array</span><span class="p">[</span><span class="n">index</span><span class="p">];</span> <span class="p">}</span>
+ <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_array</span><span class="p">[</span><span class="n">index</span><span class="p">];</span> <span class="p">}</span>
+
+<span class="p">};</span>
+</code></pre></div>
+<!-- Now let’s use this class in a program. To show you how this class performs when we allocate a million integers on the heap, we’re going to leverage the Timer class we developed in lesson 8.16 -- Timing your code. We’ll use the Timer class to time how fast our code runs, and show you the performance difference between copying and moving. -->
+
+<p>现在，让我们在程序中使用这个类。为了向你展示这个类的性能，我们在堆上分配了一百万个整型，我们将使用我们在 <a href="">lesson 8.16 -- Timing your code</a> 中开发的计时器类。我们将使用这个计时器类来展示我们的代码运行有多快，向你展示拷贝和移动之间的性能差距。</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="cp"># include &lt;chrono&gt; </span><span class="c1">// for std::chrono functions</span>
+
+<span class="c1">// Uses the above DynamicArray class</span>
+
+<span class="k">class</span> <span class="nc">Timer</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+ <span class="c1">// Type aliases to make accessing nested type easier</span>
+ <span class="k">using</span> <span class="kt">clock_t</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="p">;</span>
+ <span class="k">using</span> <span class="n">second_t</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ratio</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="kt">clock_t</span><span class="o">&gt;</span> <span class="n">m_beg</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Timer</span><span class="p">()</span> <span class="o">:</span> <span class="n">m_beg</span><span class="p">(</span><span class="kt">clock_t</span><span class="o">::</span><span class="n">now</span><span class="p">())</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="kt">void</span> <span class="n">reset</span><span class="p">()</span>
+ <span class="p">{</span>
+  <span class="n">m_beg</span> <span class="o">=</span> <span class="kt">clock_t</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+ <span class="p">}</span>
+
+ <span class="kt">double</span> <span class="n">elapsed</span><span class="p">()</span> <span class="k">const</span>
+ <span class="p">{</span>
+  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">second_t</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">clock_t</span><span class="o">::</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">m_beg</span><span class="p">).</span><span class="n">count</span><span class="p">();</span>
+ <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Return a copy of arr with all of the values doubled</span>
+<span class="n">DynamicArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">cloneArrayAndDouble</span><span class="p">(</span><span class="k">const</span> <span class="n">DynamicArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">)</span>
+<span class="p">{</span>
+ <span class="n">DynamicArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">dbl</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">getLength</span><span class="p">());</span>
+ <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="p">.</span><span class="n">getLength</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="n">dbl</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="n">dbl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Timer</span> <span class="n">t</span><span class="p">;</span>
+
+ <span class="n">DynamicArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">arr</span><span class="p">(</span><span class="mi">1000000</span><span class="p">);</span>
+
+ <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="p">.</span><span class="n">getLength</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+
+ <span class="n">arr</span> <span class="o">=</span> <span class="n">cloneArrayAndDouble</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="p">.</span><span class="n">elapsed</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- On one of the author’s machines, in release mode, this program executed in 0.00825559 seconds. -->
+<p>在作者之一的机器上，在发布模式下，这段程序在 <code>0.00825559</code> 秒内执行完。</p>
+<!-- Now let’s run the same program again, replacing the copy constructor and copy assignment with a move constructor and move assignment. -->
+
+<p>现在，让我们再次运行同样的程序，使用移动构造和移动赋值函数来替换拷贝构造函数和拷贝赋值函数。</p>
+<div class="highlight"><pre><span></span><code><span class="k">template</span> <span class="o">&lt;</span><span class="k">class</span> <span class="nc">T</span><span class="o">&gt;</span>
+<span class="k">class</span> <span class="nc">DynamicArray</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+ <span class="n">T</span><span class="o">*</span> <span class="n">m_array</span><span class="p">;</span>
+ <span class="kt">int</span> <span class="n">m_length</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">DynamicArray</span><span class="p">(</span><span class="kt">int</span> <span class="n">length</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_array</span><span class="p">(</span><span class="k">new</span> <span class="n">T</span><span class="p">[</span><span class="n">length</span><span class="p">]),</span> <span class="n">m_length</span><span class="p">(</span><span class="n">length</span><span class="p">)</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="o">~</span><span class="n">DynamicArray</span><span class="p">()</span>
+ <span class="p">{</span>
+  <span class="k">delete</span><span class="p">[]</span> <span class="n">m_array</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Copy constructor</span>
+ <span class="n">DynamicArray</span><span class="p">(</span><span class="k">const</span> <span class="n">DynamicArray</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+ <span class="c1">// Copy assignment</span>
+ <span class="n">DynamicArray</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="k">const</span> <span class="n">DynamicArray</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">)</span> <span class="o">=</span> <span class="k">delete</span><span class="p">;</span>
+
+ <span class="c1">// Move constructor</span>
+ <span class="n">DynamicArray</span><span class="p">(</span><span class="n">DynamicArray</span> <span class="o">&amp;&amp;</span><span class="n">arr</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_length</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">m_length</span><span class="p">),</span> <span class="n">m_array</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">m_array</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">arr</span><span class="p">.</span><span class="n">m_length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">arr</span><span class="p">.</span><span class="n">m_array</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="c1">// Move assignment</span>
+ <span class="n">DynamicArray</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">=</span><span class="p">(</span><span class="n">DynamicArray</span> <span class="o">&amp;&amp;</span><span class="n">arr</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="k">if</span> <span class="p">(</span><span class="o">&amp;</span><span class="n">arr</span> <span class="o">==</span> <span class="k">this</span><span class="p">)</span>
+   <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+
+  <span class="k">delete</span><span class="p">[]</span> <span class="n">m_array</span><span class="p">;</span>
+
+  <span class="n">m_length</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">m_length</span><span class="p">;</span>
+  <span class="n">m_array</span> <span class="o">=</span> <span class="n">arr</span><span class="p">.</span><span class="n">m_array</span><span class="p">;</span>
+  <span class="n">arr</span><span class="p">.</span><span class="n">m_length</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="n">arr</span><span class="p">.</span><span class="n">m_array</span> <span class="o">=</span> <span class="k">nullptr</span><span class="p">;</span>
+
+  <span class="k">return</span> <span class="o">*</span><span class="k">this</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="kt">int</span> <span class="n">getLength</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_length</span><span class="p">;</span> <span class="p">}</span>
+ <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_array</span><span class="p">[</span><span class="n">index</span><span class="p">];</span> <span class="p">}</span>
+ <span class="k">const</span> <span class="n">T</span><span class="o">&amp;</span> <span class="k">operator</span><span class="p">[](</span><span class="kt">int</span> <span class="n">index</span><span class="p">)</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_array</span><span class="p">[</span><span class="n">index</span><span class="p">];</span> <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="cp"># include &lt;chrono&gt; </span><span class="c1">// for std::chrono functions</span>
+
+<span class="k">class</span> <span class="nc">Timer</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+ <span class="c1">// Type aliases to make accessing nested type easier</span>
+ <span class="k">using</span> <span class="kt">clock_t</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">high_resolution_clock</span><span class="p">;</span>
+ <span class="k">using</span> <span class="n">second_t</span> <span class="o">=</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration</span><span class="o">&lt;</span><span class="kt">double</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">ratio</span><span class="o">&lt;</span><span class="mi">1</span><span class="o">&gt;</span> <span class="o">&gt;</span><span class="p">;</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">time_point</span><span class="o">&lt;</span><span class="kt">clock_t</span><span class="o">&gt;</span> <span class="n">m_beg</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Timer</span><span class="p">()</span> <span class="o">:</span> <span class="n">m_beg</span><span class="p">(</span><span class="kt">clock_t</span><span class="o">::</span><span class="n">now</span><span class="p">())</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="kt">void</span> <span class="n">reset</span><span class="p">()</span>
+ <span class="p">{</span>
+  <span class="n">m_beg</span> <span class="o">=</span> <span class="kt">clock_t</span><span class="o">::</span><span class="n">now</span><span class="p">();</span>
+ <span class="p">}</span>
+
+ <span class="kt">double</span> <span class="n">elapsed</span><span class="p">()</span> <span class="k">const</span>
+ <span class="p">{</span>
+  <span class="k">return</span> <span class="n">std</span><span class="o">::</span><span class="n">chrono</span><span class="o">::</span><span class="n">duration_cast</span><span class="o">&lt;</span><span class="n">second_t</span><span class="o">&gt;</span><span class="p">(</span><span class="kt">clock_t</span><span class="o">::</span><span class="n">now</span><span class="p">()</span> <span class="o">-</span> <span class="n">m_beg</span><span class="p">).</span><span class="n">count</span><span class="p">();</span>
+ <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="c1">// Return a copy of arr with all of the values doubled</span>
+<span class="n">DynamicArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">cloneArrayAndDouble</span><span class="p">(</span><span class="k">const</span> <span class="n">DynamicArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="o">&amp;</span><span class="n">arr</span><span class="p">)</span>
+<span class="p">{</span>
+ <span class="n">DynamicArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">dbl</span><span class="p">(</span><span class="n">arr</span><span class="p">.</span><span class="n">getLength</span><span class="p">());</span>
+ <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="p">.</span><span class="n">getLength</span><span class="p">();</span> <span class="o">++</span><span class="n">i</span><span class="p">)</span>
+  <span class="n">dbl</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">*</span> <span class="mi">2</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="n">dbl</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="n">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Timer</span> <span class="n">t</span><span class="p">;</span>
+
+ <span class="n">DynamicArray</span><span class="o">&lt;</span><span class="kt">int</span><span class="o">&gt;</span> <span class="n">arr</span><span class="p">(</span><span class="mi">1000000</span><span class="p">);</span>
+
+ <span class="k">for</span> <span class="p">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="p">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">arr</span><span class="p">.</span><span class="n">getLength</span><span class="p">();</span> <span class="n">i</span><span class="o">++</span><span class="p">)</span>
+  <span class="n">arr</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">i</span><span class="p">;</span>
+
+ <span class="n">arr</span> <span class="o">=</span> <span class="n">cloneArrayAndDouble</span><span class="p">(</span><span class="n">arr</span><span class="p">);</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">t</span><span class="p">.</span><span class="n">elapsed</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div>
+<!-- On the same machine, this program executed in 0.0056 seconds. -->
+<p>在同样的机器上，这个程序在 <code>0.0056</code> 秒内执行完毕。</p>
+<p>比较两个程序的运行时间，<code>0.0056 / 0.00825559 = 67.8%</code> 。“移动语义”的版本几乎快了33%</p>
+<!-- Comparing the runtime of the two programs, 0.0056 / 0.00825559 = 67.8%. The move version was almost 33% faster! -->
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../15.2-r-value-reference/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              15.2 右值引用
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../15.4-std%3A%3Amove/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              15.4 std::move
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.926459b3.min.js"></script>
+      
+    
+  </body>
+</html>

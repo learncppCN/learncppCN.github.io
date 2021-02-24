@@ -1,0 +1,1495 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+    
+    
+      
+        <title>15.2 右值引用 - LearnCPP 中文教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a3f8f96a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#152" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnCPP 中文教程" class="md-header__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnCPP 中文教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              15.2 右值引用
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnCPP 中文教程" class="md-nav__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    LearnCPP 中文教程
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BF%BB%E8%AF%91%E6%97%A5%E8%AE%B0/" class="md-nav__link">
+        翻译日记
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        00 Introduction getting started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="00 Introduction getting started" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          00 Introduction getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/" class="md-nav__link">
+        第零章 介绍/起步
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/0.1-Introduction-to-these-tutorials/" class="md-nav__link">
+        0.1 教程介绍
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        08 basic object oriented programming
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="08 basic object oriented programming" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          08 basic object oriented programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/" class="md-nav__link">
+        第八章 面向对象编程基础
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.1-welcome-to-object-oriented-programming/" class="md-nav__link">
+        8.1 欢迎来到面向对象的世界
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.2-classes-and-class-member/" class="md-nav__link">
+        8.2 类和类成员 (Classes and class member)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        14 exceptions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="14 exceptions" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          14 exceptions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/" class="md-nav__link">
+        14 异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.1-the-need-for-exceptions/" class="md-nav__link">
+        14.1 为什么需要异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.2-basic-exception-handloing/" class="md-nav__link">
+        14.2 基本异常处理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.3-exceptions-functions-and-stack-unwinding/" class="md-nav__link">
+        14.3 异常，函数，栈展开
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.4-uncaught-exceptions-catch-all-handlers-and-exception-specifiers/" class="md-nav__link">
+        14.4 未捕获异常，捕获全部异常和异常说明符
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.5-exceptions-classes-and-inheritance/" class="md-nav__link">
+        14.5 异常，类和继承
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.6-rethrowing-exceptions/" class="md-nav__link">
+        14.6 异常的再抛出
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.7-function-try-blocks/" class="md-nav__link">
+        14.7 函数级的 try 代码块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.8-exception-dangers-and-downsides/" class="md-nav__link">
+        14.8 异常的危险和缺点
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" checked>
+      
+      <label class="md-nav__link" for="nav-6">
+        15 move semantics and smart pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="15 move semantics and smart pointers" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          15 move semantics and smart pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        15 移动语义和智能指针
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.1-intro-to-smart-pointers-and-move-semantics/" class="md-nav__link">
+        15.1 智能指针和移动语义的介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          15.2 右值引用
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        15.2 右值引用
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    左值和右值
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r-value" class="md-nav__link">
+    R-value 引用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    右值引用作为函数参数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    返回一个右值引用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz-time" class="md-nav__link">
+    Quiz time
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.3-move-constructors-and-move-assignment/" class="md-nav__link">
+        15.3 移动构造和移动赋值
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.4-std%3A%3Amove/" class="md-nav__link">
+        15.4 std::move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.5-std%3A%3Aunique_ptr/" class="md-nav__link">
+        15.5 std::unique_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.6-std%3A%3Ashared_ptr/" class="md-nav__link">
+        15.6 std::shared_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.7-std%3A%3Aweak_ptr/" class="md-nav__link">
+        15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../15.x-chapter15-comprehensive-review/" class="md-nav__link">
+        15.x 十五章理解和复习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" >
+      
+      <label class="md-nav__link" for="nav-7">
+        18 virtual functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="18 virtual functions" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          18 virtual functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/" class="md-nav__link">
+        第十八章 虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.1-pointers-and-references-to-the-base-class-of-derived-objects/" class="md-nav__link">
+        18.1 基类指针和引用指向派生类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.2-virtual-functions-and-polymorphism/" class="md-nav__link">
+        18.2 — 虚函数和多态
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.3-The-override-and-final-specifiers-and-covariant-return-types/" class="md-nav__link">
+        18.3 重写 final 标识符，并且协变返回类型
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-nav__link">
+        18.4 虚构造函数，虚赋值，重写虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.5-early-binding-and-late-binding/" class="md-nav__link">
+        18.5 预绑定和后期绑定
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.6-the-virtual-table/" class="md-nav__link">
+        18.6 虚表
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.7-virtual-base-classes/" class="md-nav__link">
+        18.7 虚基类 (Virtual base classes)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.8-object-slicing/" class="md-nav__link">
+        18.8 对象切割
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.9-dynamic-casting/" class="md-nav__link">
+        18.9 动态类型转换
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../18-virtual-functions/18.x%20chapter-18-comprehensice-quiz/" class="md-nav__link">
+        18.x 十二章理解和练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+      
+      <label class="md-nav__link" for="nav-8">
+        19 templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="19 templates" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          19 templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/" class="md-nav__link">
+        十九章 模板
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.1-function-templates/" class="md-nav__link">
+        19.1 函数模板 Function templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.2-function-template-instances/" class="md-nav__link">
+        19.2 类模板实例
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.3-template-classes/" class="md-nav__link">
+        19.3 模板类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.4-template-non-type-parameters/" class="md-nav__link">
+        19.4 模板非类型参数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.5-function-template-specialization/" class="md-nav__link">
+        19.5 函数模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.6-class-template-specialization/" class="md-nav__link">
+        19.6 类模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.7-partial-template-specialization/" class="md-nav__link">
+        19.7 模板局部特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.8-partial-template-specialization-for-pointers/" class="md-nav__link">
+        19.8 局部模板特化指针的
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.x%20chapter-19-comprehensice-quiz/" class="md-nav__link">
+        19.x - 19章节练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" >
+      
+      <label class="md-nav__link" for="nav-9">
+        23 input and output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="23 input and output" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          23 input and output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.1-input-and-output-streams/" class="md-nav__link">
+        18.1 输入输出流
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.2-input-with-istream/" class="md-nav__link">
+        18.2 使用 istream 输入
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.3-output-with-ostream-and-ios/" class="md-nav__link">
+        18.3 使用 ostrea 和 ios 进行输出
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    左值和右值
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#r-value" class="md-nav__link">
+    R-value 引用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    右值引用作为函数参数
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_3" class="md-nav__link">
+    返回一个右值引用
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#quiz-time" class="md-nav__link">
+    Quiz time
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="152">15.2 右值引用<a class="headerlink" href="#152" title="Permanent link">&para;</a></h1>
+<!-- 15.2 — R-value references -->
+<blockquote>
+<p>By Alex on February 20<sup>th</sup>, 2017 | last modified by Alex on January 23<sup>rd</sup>, 2020</p>
+<p>翻译by dashjay 7-17</p>
+</blockquote>
+<!-- Way back in chapter 1, we mentioned l-values and r-values, and then told you not to worry that much about them. That was fair advice prior to C++11. But understanding move semantics in C++11 requires a re-examination of the topic. So let’s do that now. -->
+
+<p>回到<a href="">第一章</a>我们讨论了左值和右值，然后告诉你不要太担心他们。在 <code>C++11</code> 之前，这是一个公平的建议。但是理解 <code>C++11</code> 中的移动语义需要对这个主题进行重新学习。所以现在就开始吧。</p>
+<h2 id="_1">左值和右值<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<!-- L-values and r-values -->
+
+<!-- Despite having the word “value” in their names, l-values and r-values are actually not properties of values, but rather, properties of expressions. -->
+
+<p>尽管名称中有 <strong>“值”</strong> 一词，但 <strong>左值</strong> 和 <strong>右值</strong> 实际上不是 <strong>值</strong> 的属性，而是表达式的属性。</p>
+<!-- Every expression in C++ has two properties: a type (which is used for type checking), and a value category (which is used for certain kinds of syntax checking, such as whether the result of the expression can be assigned to). In C++03 and earlier, l-values and r-values were the only two value categories available. -->
+
+<p>C++中的每个表达式都有两个属性：一个类型（用于类型检查）和一个值类别（用于某些类型的语法检查，例如表达式的结果是否可以分配）。在C++ 03和更早的时候，左值和右值是仅有的两个可用的值类别。</p>
+<!-- The actual definition of which expressions are l-values and which are r-values is surprisingly complicated, so we’ll take a simplified view of the subject that will largely suffice for our purposes. -->
+
+<p>对于哪些表达式是左值，哪些是右值的实际定义非常复杂，因此我们将对这个主题采取简化的观点，这在很大程度上满足了我们的目的。</p>
+<!-- It’s simplest to think of an l-value (also called a locator value) as a function or an object (or an expression that evaluates to a function or object). All l-values have assigned memory addresses. -->
+
+<p>简单点可以认为左值（也称为定位器值[locator value]）是函数或对象（或计算为函数或对象的表达式）所有左值都分配了内存地址。</p>
+<!-- When l-values were originally defined, they were defined as “values that are suitable to be on the left-hand side of an assignment expression”. However, later, the const keyword was added to the language, and l-values were split into two sub-categories: modifiable l-values, which can be changed, and non-modifiable l-values, which are const. -->
+
+<p>当左值最初被定义时，它们被定义为“适合位于赋值表达式左侧的值”。然而，后来，const关键字被添加到语言中，并且左值被分为两个子类：可修改的左值（可以更改）和不可修改的左值（const）。</p>
+<!-- It’s simplest to think of an r-value as “everything that is not an l-value”. This notably includes literals (e.g. 5), temporary values (e.g. x+1), and anonymous objects (e.g. Fraction(5, 2)). r-values are typically evaluated for their values, have expression scope (they die at the end of the expression they are in), and cannot be assigned to. This non-assignment rule makes sense, because assigning a value applies a side-effect to the object. Since r-values have expression scope, if we were to assign a value to an r-value, then the r-value would either go out of scope before we had a chance to use the assigned value in the next expression (which makes the assignment useless) or we’d have to use a variable with a side effect applied more than once in an expression (which by now you should know causes undefined behavior!). -->
+
+<p>最简单的方法是把右值看作“不是l值的所有东西”。这特别包括字面值（例如 <code>5</code> ）、临时值（例如 <code>x+1</code> ）和匿名对象（例如 <code>Fraction(5, 2)</code>）。右值通常是针对其值进行求值的，具有表达式范围（它们在其所在表达式的结尾处消亡），并且不能被赋值。这个非赋值规则是有意义的，因为赋值会给对象带来副作用。因为右值有表达式范围，如果我们要给右值赋值，那么右值会在我们有机会在下一个表达式中使用上次赋值之前就超出了范围（这使得赋值毫无用处），要么我们必须使用一个变量，在一个表达式中多次应用一个副作用（现在您应该知道这会导致未定义的行为！）。</p>
+<!-- In order to support move semantics, C++11 introduces 3 new value categories: pr-values, x-values, and gl-values. We will largely ignore these since understanding them isn’t necessary to learn about or use move semantics effectively. If you’re interested, cppreference.com has an extensive list of expressions that qualify for each of the various value categories, as well as more detail about them. -->
+
+<p>为了支持移动语义，C++ 引入了三个新的值类型：pr-values，x-values 和 gl-values. 我们大概率会忽略这些知识，因为高效的学习和使用移动语义并不需要理解他们。如果你感兴趣，<a href="https://cpprefernce.com">cppreference.com</a> 有一个广泛的表达给每一个变量类型，同时有更多关于他们的细节
+L-value references</p>
+<!-- Prior to C++11, only one type of reference existed in C++, and so it was just called a “reference”. However, in C++11, it’s sometimes called an l-value reference. L-value references can only be initialized with modifiable l-values. -->
+
+<p>在 C++ 之前，C++ 中只有一个类型的引用，并且因此它仅仅被叫做引用。然而，在 C++11 中，它有时候也被叫做 l-value 引用。L-value 引用只能由可修改的左值来初始化。</p>
+<table>
+<thead>
+<tr>
+<th>L-value reference</th>
+<th>Can be initialized with</th>
+<th>Can modify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Modifiable l-values</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+<tr>
+<td>Non-modifiable l-values</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>R-values</td>
+<td>No</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<!-- L-value references to const objects can be initialized with l-values and r-values alike. However, those values can’t be modified. -->
+
+<p>指向常对象的 l-value 可以被使用 l-value 和 r-value 来初始化，然而，这些值不能被修改。</p>
+<table>
+<thead>
+<tr>
+<th>L-value reference to const</th>
+<th>Can be initialized with</th>
+<th>Can modify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Modifiable l-values</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Non-modifiable l-values</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+<tr>
+<td>R-values</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<!-- L-value references to const objects are particularly useful because they allow us to pass any type of argument (l-value or r-value) into a function without making a copy of the argument. -->
+
+<p>常对象的左值引用非常有用，因为他们允许你传任何类型的参数（l-value 或 r-value）进入一个函数，而无需拷贝一份。</p>
+<!-- R-value references -->
+
+<h2 id="r-value">R-value 引用<a class="headerlink" href="#r-value" title="Permanent link">&para;</a></h2>
+<!-- C++11 adds a new type of reference called an r-value reference. An r-value reference is a reference that is designed to be initialized with an r-value (only). While an l-value reference is created using a single ampersand, an r-value reference is created using a double ampersand: -->
+
+<p>C++ 添加了一个新的叫做右值引用（r-value reference）。右值引用是被设计来只能使用右值初始化的。左值是引用使用一个 &amp; 创建的，而右值引用使用两个 &amp; 来创建。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="n">x</span><span class="p">{</span> <span class="mi">5</span> <span class="p">};</span>
+<span class="kt">int</span> <span class="o">&amp;</span><span class="n">lref</span><span class="p">{</span> <span class="n">x</span> <span class="p">};</span> <span class="c1">// l-value reference initialized with l-value x</span>
+<span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">rref</span><span class="p">{</span> <span class="mi">5</span> <span class="p">};</span> <span class="c1">// r-value reference initialized with r-value 5</span>
+</code></pre></div>
+<table>
+<thead>
+<tr>
+<th>R-value reference</th>
+<th>Can be initialized with</th>
+<th>Can modify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Modifiable l-values</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Non-modifiable l-values</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>R-values</td>
+<td>Yes</td>
+<td>Yes</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>R-value reference to const</th>
+<th>Can be initialized with</th>
+<th>Can modify</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Modifiable l-values</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>Non-modifiable l-values</td>
+<td>No</td>
+<td>No</td>
+</tr>
+<tr>
+<td>R-values</td>
+<td>Yes</td>
+<td>No</td>
+</tr>
+</tbody>
+</table>
+<!-- R-value references have two properties that are useful. First, r-value references extend the lifespan of the object they are initialized with to the lifespan of the r-value reference (l-value references to const objects can do this too). Second, non-const r-value references allow you to modify the r-value! -->
+
+<p>右值引用有两个很有用的性质。第一，右值引用扩展了原初始化值的生命周期到右值引用的生命周期（指向常对象的左值引用也可以做到）。第二，非常量引用允许你修改右值。</p>
+<!-- Let’s take a look at some examples: -->
+<p>让我们再来看一个例子：</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="k">class</span> <span class="nc">Fraction</span>
+<span class="p">{</span>
+<span class="k">private</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_numerator</span><span class="p">;</span>
+ <span class="kt">int</span> <span class="n">m_denominator</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Fraction</span><span class="p">(</span><span class="kt">int</span> <span class="n">numerator</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="kt">int</span> <span class="n">denominator</span> <span class="o">=</span> <span class="mi">1</span><span class="p">)</span> <span class="o">:</span>
+  <span class="n">m_numerator</span><span class="p">{</span> <span class="n">numerator</span> <span class="p">},</span> <span class="n">m_denominator</span><span class="p">{</span> <span class="n">denominator</span> <span class="p">}</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">friend</span> <span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="k">operator</span><span class="o">&lt;&lt;</span><span class="p">(</span><span class="n">std</span><span class="o">::</span><span class="n">ostream</span><span class="o">&amp;</span> <span class="n">out</span><span class="p">,</span> <span class="k">const</span> <span class="n">Fraction</span> <span class="o">&amp;</span><span class="n">f1</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="n">out</span> <span class="o">&lt;&lt;</span> <span class="n">f1</span><span class="p">.</span><span class="n">m_numerator</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;/&#39;</span> <span class="o">&lt;&lt;</span> <span class="n">f1</span><span class="p">.</span><span class="n">m_denominator</span><span class="p">;</span>
+  <span class="k">return</span> <span class="n">out</span><span class="p">;</span>
+ <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="k">auto</span> <span class="o">&amp;&amp;</span><span class="n">rref</span><span class="p">{</span> <span class="n">Fraction</span><span class="p">{</span> <span class="mi">3</span><span class="p">,</span> <span class="mi">5</span> <span class="p">}</span> <span class="p">};</span> <span class="c1">// r-value reference to temporary Fraction</span>
+
+    <span class="c1">// f1 of operator&lt;&lt; binds to the temporary, no copies are created.</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">rref</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span> <span class="c1">// rref (and the temporary Fraction) goes out of scope here</span>
+</code></pre></div>
+<!-- This program prints: -->
+
+<p>程序打印</p>
+<p><code>3/5</code></p>
+<!-- As an anonymous object, Fraction(3, 5) would normally go out of scope at the end of the expression in which it is defined. However, since we’re initializing an r-value reference with it, its duration is extended until the end of the block. We can then use that r-value reference to print the Fraction’s value. -->
+
+<p>作为一个匿名对象，<code>Fraction(w3, 5)</code> 将会正常的在定义它语句结束时离开作用域。然而，因为我们以它来初始化了一个右值引用，他的声明周期就持续到了语句块结束。我们紧接着可以使用右值引用来打印 Fraction 的值。</p>
+<p>好的，我们来看一个更加直观的例子：</p>
+<!-- Now let’s take a look at a less intuitive example: -->
+
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+    <span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">rref</span><span class="p">{</span> <span class="mi">5</span> <span class="p">};</span> <span class="c1">// because we&#39;re initializing an r-value reference with a literal, a temporary with value 5 is created here</span>
+    <span class="n">rref</span> <span class="o">=</span> <span class="mi">10</span><span class="p">;</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="n">rref</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+    <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>程序打印</p>
+<!-- This program prints: -->
+
+<div class="highlight"><pre><span></span><code><span class="mi">10</span>
+</code></pre></div>
+<p>使用一个字面值来初始化一个右值，然后能够改变那个右值。这是因为，当使用字面值来初始化右值，会创建一块临时的空间，所以引用是一块临时空间的引用，而不是字面值的引用。</p>
+<!-- While it may seem weird to initialize an r-value reference with a literal value and then be able to change that value, when initializing an r-value with a literal, a temporary is constructed from the literal so that the reference is referencing a temporary object, not a literal value. -->
+
+<p>右值引用在以上的代码例子中的使用方式并不很常见。</p>
+<!-- R-value references are not very often used in either of the manners illustrated above. -->
+
+<!-- R-value references as function parameters -->
+
+<h2 id="_2">右值引用作为函数参数<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<!-- R-value references are more often used as function parameters. This is most useful for function overloads when you want to have different behavior for l-value and r-value arguments. -->
+
+<p>右值引用经常作为函数参数来使用。最有用的方式就是当函数重载的时候你希望对待左值和右值的时候有不同的表现。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">void</span> <span class="nf">fun</span><span class="p">(</span><span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">lref</span><span class="p">)</span> <span class="c1">// l-value arguments will select this function</span>
+<span class="p">{</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;l-value reference to const</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">void</span> <span class="nf">fun</span><span class="p">(</span><span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">rref</span><span class="p">)</span> <span class="c1">// r-value arguments will select this function</span>
+<span class="p">{</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;r-value reference</span><span class="se">\n</span><span class="s">&quot;</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="kt">int</span> <span class="n">x</span><span class="p">{</span> <span class="mi">5</span> <span class="p">};</span>
+ <span class="n">fun</span><span class="p">(</span><span class="n">x</span><span class="p">);</span> <span class="c1">// l-value argument calls l-value version of function</span>
+ <span class="n">fun</span><span class="p">(</span><span class="mi">5</span><span class="p">);</span> <span class="c1">// r-value argument calls r-value version of function</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>这会打印：</p>
+<!-- This prints: -->
+
+<div class="highlight"><pre><span></span><code><span class="n">l</span><span class="o">-</span><span class="n">value</span> <span class="n">reference</span> <span class="n">to</span> <span class="k">const</span>
+<span class="n">r</span><span class="o">-</span><span class="n">value</span> <span class="n">reference</span>
+</code></pre></div>
+<!-- As you can see, when passed an l-value, the overloaded function resolved to the version with the l-value reference. When passed an r-value, the overloaded function resolved to the version with the r-value reference (this is considered a better match than a l-value reference to const). -->
+
+<p>如你所见，当传入一个左值的时候，重载函数解析到了左值引用的版本。当传入右值的时候，重载函数解析到了右值引用的版本（这是比左值常引用更好的一个办法）</p>
+<!-- Why would you ever want to do this? We’ll discuss this in more detail in the next lesson. Needless to say, it’s an important part of move semantics. -->
+
+<p>为什么你会想要这样做呢？我们将会在下节课中详细讨论，不得不说，这是移动语义的重要部分。</p>
+<!-- One interesting note: -->
+
+<p>一个有趣的笔记：</p>
+<div class="highlight"><pre><span></span><code> <span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">ref</span><span class="p">{</span> <span class="mi">5</span> <span class="p">};</span>
+ <span class="n">fun</span><span class="p">(</span><span class="n">ref</span><span class="p">);</span>
+</code></pre></div>
+<!-- actually calls the l-value version of the function! Although variable ref has type r-value reference to an integer, it is actually an l-value itself (as are all named variables). The confusion stems from the use of the term r-value in two different contexts. Think of it this way: Named-objects are l-values. Anonymous objects are r-values. The type of the named object or anonymous object is independent from whether it’s an l-value or r-value. Or, put another way, if r-value reference had been called anything else, this confusion wouldn’t exist. -->
+
+<p>事实上，调用的是左值版本的函数！尽管变量 <code>ref</code> 有一个整型的右值引用，但是它本身实际上是一个左值（所有的命名变量都是如此）。混淆的原因是右值这个词在不同的上下文中使用。你可以这样想：命名的对象是左值，匿名的对象是右值。命名对象和匿名对象不依赖于它是左值或者右值。或者，这样说，如果右值引用被叫做任何其他的名字，这个疑惑就不会存在。</p>
+<!-- Returning an r-value reference -->
+
+<h2 id="_3">返回一个右值引用<a class="headerlink" href="#_3" title="Permanent link">&para;</a></h2>
+<!-- You should almost never return an r-value reference, for the same reason you should almost never return an l-value reference. In most cases, you’ll end up returning a hanging reference when the referenced object goes out of scope at the end of the function. -->
+
+<p>你应该几乎不会返回一个右值引用，同样你也应该几乎不返回一个左值引用。在大多数情况下，你会返回一个悬空引用当引用对象离开函数的作用域时</p>
+<h2 id="quiz-time">Quiz time<a class="headerlink" href="#quiz-time" title="Permanent link">&para;</a></h2>
+<!-- 1) State which of the following lettered statements will not compile: -->
+
+<p>1) 标记哪一个字母对应的语句编译失败：</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="kt">int</span> <span class="n">x</span><span class="p">{};</span>
+
+ <span class="c1">// l-value references</span>
+ <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref1</span><span class="p">{</span> <span class="n">x</span> <span class="p">};</span> <span class="c1">// A</span>
+ <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref2</span><span class="p">{</span> <span class="mi">5</span> <span class="p">};</span> <span class="c1">// B</span>
+
+ <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref3</span><span class="p">{</span> <span class="n">x</span> <span class="p">};</span> <span class="c1">// C</span>
+ <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;</span><span class="n">ref4</span><span class="p">{</span> <span class="mi">5</span> <span class="p">};</span> <span class="c1">// D</span>
+
+ <span class="c1">// r-value references</span>
+ <span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">ref5</span><span class="p">{</span> <span class="n">x</span> <span class="p">};</span> <span class="c1">// E</span>
+ <span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">ref6</span><span class="p">{</span> <span class="mi">5</span> <span class="p">};</span> <span class="c1">// F</span>
+
+ <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">ref7</span><span class="p">{</span> <span class="n">x</span> <span class="p">};</span> <span class="c1">// G</span>
+ <span class="k">const</span> <span class="kt">int</span> <span class="o">&amp;&amp;</span><span class="n">ref8</span><span class="p">{</span> <span class="mi">5</span> <span class="p">};</span> <span class="c1">// H</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>B, E, and G 会编译失败</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../15.1-intro-to-smart-pointers-and-move-semantics/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              15.1 智能指针和移动语义的介绍
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../15.3-move-constructors-and-move-assignment/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              15.3 移动构造和移动赋值
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.926459b3.min.js"></script>
+      
+    
+  </body>
+</html>

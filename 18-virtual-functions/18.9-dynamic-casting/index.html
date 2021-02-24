@@ -1,0 +1,1468 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+      
+      
+      
+      <link rel="shortcut icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.1.2, mkdocs-material-7.0.0">
+    
+    
+      
+        <title>18.9 动态类型转换 - LearnCPP 中文教程</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.a3f8f96a.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.7fa14f5b.min.css">
+        
+      
+    
+    
+    
+      
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,400i,700%7CRoboto+Mono&display=fallback">
+        <style>:root{--md-text-font-family:"Roboto";--md-code-font-family:"Roboto Mono"}</style>
+      
+    
+    
+    
+    
+      
+    
+    
+  </head>
+  
+  
+    
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="" data-md-color-primary="none" data-md-color-accent="none">
+      
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#189" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+      
+
+<header class="md-header" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="LearnCPP 中文教程" class="md-header__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3V6m0 5h18v2H3v-2m0 5h18v2H3v-2z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            LearnCPP 中文教程
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              18.9 动态类型转换
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    <div class="md-header__options">
+      
+    </div>
+    
+      <label class="md-header__button md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+      </label>
+      
+<div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" data-md-state="active" required>
+      <label class="md-search__icon md-icon" for="__search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.516 6.516 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5z"/></svg>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+      </label>
+      <button type="reset" class="md-search__icon md-icon" aria-label="Clear" tabindex="-1">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12 19 6.41z"/></svg>
+      </button>
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    
+    
+  </nav>
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="LearnCPP 中文教程" class="md-nav__button md-logo" aria-label="LearnCPP 中文教程">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54z"/></svg>
+
+    </a>
+    LearnCPP 中文教程
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        目录
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../%E7%BF%BB%E8%AF%91%E6%97%A5%E8%AE%B0/" class="md-nav__link">
+        翻译日记
+      </a>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-3" type="checkbox" id="nav-3" >
+      
+      <label class="md-nav__link" for="nav-3">
+        00 Introduction getting started
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="00 Introduction getting started" data-md-level="1">
+        <label class="md-nav__title" for="nav-3">
+          <span class="md-nav__icon md-icon"></span>
+          00 Introduction getting started
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/" class="md-nav__link">
+        第零章 介绍/起步
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-Introduction-getting-started/0.1-Introduction-to-these-tutorials/" class="md-nav__link">
+        0.1 教程介绍
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-4" type="checkbox" id="nav-4" >
+      
+      <label class="md-nav__link" for="nav-4">
+        08 basic object oriented programming
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="08 basic object oriented programming" data-md-level="1">
+        <label class="md-nav__title" for="nav-4">
+          <span class="md-nav__icon md-icon"></span>
+          08 basic object oriented programming
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/" class="md-nav__link">
+        第八章 面向对象编程基础
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.1-welcome-to-object-oriented-programming/" class="md-nav__link">
+        8.1 欢迎来到面向对象的世界
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-basic-object-oriented-programming/8.2-classes-and-class-member/" class="md-nav__link">
+        8.2 类和类成员 (Classes and class member)
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-5" type="checkbox" id="nav-5" >
+      
+      <label class="md-nav__link" for="nav-5">
+        14 exceptions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="14 exceptions" data-md-level="1">
+        <label class="md-nav__title" for="nav-5">
+          <span class="md-nav__icon md-icon"></span>
+          14 exceptions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/" class="md-nav__link">
+        14 异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.1-the-need-for-exceptions/" class="md-nav__link">
+        14.1 为什么需要异常
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.2-basic-exception-handloing/" class="md-nav__link">
+        14.2 基本异常处理
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.3-exceptions-functions-and-stack-unwinding/" class="md-nav__link">
+        14.3 异常，函数，栈展开
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.4-uncaught-exceptions-catch-all-handlers-and-exception-specifiers/" class="md-nav__link">
+        14.4 未捕获异常，捕获全部异常和异常说明符
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.5-exceptions-classes-and-inheritance/" class="md-nav__link">
+        14.5 异常，类和继承
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.6-rethrowing-exceptions/" class="md-nav__link">
+        14.6 异常的再抛出
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.7-function-try-blocks/" class="md-nav__link">
+        14.7 函数级的 try 代码块
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../14-exceptions/14.8-exception-dangers-and-downsides/" class="md-nav__link">
+        14.8 异常的危险和缺点
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-6" type="checkbox" id="nav-6" >
+      
+      <label class="md-nav__link" for="nav-6">
+        15 move semantics and smart pointers
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="15 move semantics and smart pointers" data-md-level="1">
+        <label class="md-nav__title" for="nav-6">
+          <span class="md-nav__icon md-icon"></span>
+          15 move semantics and smart pointers
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/" class="md-nav__link">
+        15 移动语义和智能指针
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.1-intro-to-smart-pointers-and-move-semantics/" class="md-nav__link">
+        15.1 智能指针和移动语义的介绍
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.2-r-value-reference/" class="md-nav__link">
+        15.2 右值引用
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.3-move-constructors-and-move-assignment/" class="md-nav__link">
+        15.3 移动构造和移动赋值
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.4-std%3A%3Amove/" class="md-nav__link">
+        15.4 std::move
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.5-std%3A%3Aunique_ptr/" class="md-nav__link">
+        15.5 std::unique_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.6-std%3A%3Ashared_ptr/" class="md-nav__link">
+        15.6 std::shared_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.7-std%3A%3Aweak_ptr/" class="md-nav__link">
+        15.7 std::shared_ptr 的循环依赖问题，介绍 std::weak_ptr
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../15-move-semantics-and-smart-pointers/15.x-chapter15-comprehensive-review/" class="md-nav__link">
+        15.x 十五章理解和复习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+    
+  
+  
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-7" type="checkbox" id="nav-7" checked>
+      
+      <label class="md-nav__link" for="nav-7">
+        18 virtual functions
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="18 virtual functions" data-md-level="1">
+        <label class="md-nav__title" for="nav-7">
+          <span class="md-nav__icon md-icon"></span>
+          18 virtual functions
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../" class="md-nav__link">
+        第十八章 虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.1-pointers-and-references-to-the-base-class-of-derived-objects/" class="md-nav__link">
+        18.1 基类指针和引用指向派生类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.2-virtual-functions-and-polymorphism/" class="md-nav__link">
+        18.2 — 虚函数和多态
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.3-The-override-and-final-specifiers-and-covariant-return-types/" class="md-nav__link">
+        18.3 重写 final 标识符，并且协变返回类型
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.4-Virtual-destructors-virtual-assignment-and-overriding-virtualization/" class="md-nav__link">
+        18.4 虚构造函数，虚赋值，重写虚函数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.5-early-binding-and-late-binding/" class="md-nav__link">
+        18.5 预绑定和后期绑定
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.6-the-virtual-table/" class="md-nav__link">
+        18.6 虚表
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.7-virtual-base-classes/" class="md-nav__link">
+        18.7 虚基类 (Virtual base classes)
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.8-object-slicing/" class="md-nav__link">
+        18.8 对象切割
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+    
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" data-md-toggle="toc" type="checkbox" id="__toc">
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          18.9 动态类型转换
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        18.9 动态类型转换
+      </a>
+      
+        
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    何时需要进行动态类型转换
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic-cast" class="md-nav__link">
+    动态类型转化 (Dynamic Cast)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic-cast-failure" class="md-nav__link">
+    动态类型转换失败 (Dynamic Cast Failure)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downcasting-with-static_cast" class="md-nav__link">
+    使用静态类型转换进行向下转化 (Downcasting with static_cast)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic_cast-and-references" class="md-nav__link">
+    动态转化和引用 (dynamic_cast and references)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic_cast-vs-static_cast" class="md-nav__link">
+    动静态转化的对比 (dynamic_cast vs static_cast)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    向下转换和虚函数的对比
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rtti-a-warning-about-dynamic_cast-and-rtti" class="md-nav__link">
+    一个有关动态类型转换和RTTI的警告 (A warning about dynamic_cast and RTTI)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../18.x%20chapter-18-comprehensice-quiz/" class="md-nav__link">
+        18.x 十二章理解和练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-8" type="checkbox" id="nav-8" >
+      
+      <label class="md-nav__link" for="nav-8">
+        19 templates
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="19 templates" data-md-level="1">
+        <label class="md-nav__title" for="nav-8">
+          <span class="md-nav__icon md-icon"></span>
+          19 templates
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/" class="md-nav__link">
+        十九章 模板
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.1-function-templates/" class="md-nav__link">
+        19.1 函数模板 Function templates
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.2-function-template-instances/" class="md-nav__link">
+        19.2 类模板实例
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.3-template-classes/" class="md-nav__link">
+        19.3 模板类
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.4-template-non-type-parameters/" class="md-nav__link">
+        19.4 模板非类型参数
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.5-function-template-specialization/" class="md-nav__link">
+        19.5 函数模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.6-class-template-specialization/" class="md-nav__link">
+        19.6 类模板特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.7-partial-template-specialization/" class="md-nav__link">
+        19.7 模板局部特化
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.8-partial-template-specialization-for-pointers/" class="md-nav__link">
+        19.8 局部模板特化指针的
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../19-templates/19.x%20chapter-19-comprehensice-quiz/" class="md-nav__link">
+        19.x - 19章节练习
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+      
+      
+      
+
+  
+  
+  
+    
+    <li class="md-nav__item md-nav__item--nested">
+      
+      
+        <input class="md-nav__toggle md-toggle" data-md-toggle="nav-9" type="checkbox" id="nav-9" >
+      
+      <label class="md-nav__link" for="nav-9">
+        23 input and output
+        <span class="md-nav__icon md-icon"></span>
+      </label>
+      <nav class="md-nav" aria-label="23 input and output" data-md-level="1">
+        <label class="md-nav__title" for="nav-9">
+          <span class="md-nav__icon md-icon"></span>
+          23 input and output
+        </label>
+        <ul class="md-nav__list" data-md-scrollfix>
+          
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.1-input-and-output-streams/" class="md-nav__link">
+        18.1 输入输出流
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.2-input-with-istream/" class="md-nav__link">
+        18.2 使用 istream 输入
+      </a>
+    </li>
+  
+
+          
+            
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../23-input-and-output/23.3-output-with-ostream-and-ios/" class="md-nav__link">
+        18.3 使用 ostrea 和 ios 进行输出
+      </a>
+    </li>
+  
+
+          
+        </ul>
+      </nav>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#_1" class="md-nav__link">
+    何时需要进行动态类型转换
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic-cast" class="md-nav__link">
+    动态类型转化 (Dynamic Cast)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic-cast-failure" class="md-nav__link">
+    动态类型转换失败 (Dynamic Cast Failure)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#downcasting-with-static_cast" class="md-nav__link">
+    使用静态类型转换进行向下转化 (Downcasting with static_cast)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic_cast-and-references" class="md-nav__link">
+    动态转化和引用 (dynamic_cast and references)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#dynamic_cast-vs-static_cast" class="md-nav__link">
+    动静态转化的对比 (dynamic_cast vs static_cast)
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#_2" class="md-nav__link">
+    向下转换和虚函数的对比
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#rtti-a-warning-about-dynamic_cast-and-rtti" class="md-nav__link">
+    一个有关动态类型转换和RTTI的警告 (A warning about dynamic_cast and RTTI)
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          <div class="md-content" data-md-component="content">
+            <article class="md-content__inner md-typeset">
+              
+                
+                
+                <h1 id="189">18.9 动态类型转换<a class="headerlink" href="#189" title="Permanent link">&para;</a></h1>
+<p>早在<a href="">第6.16课——显式类型转换（casting）和static_cast</a>中，我们研究了 casting 的概念，以及使用 static_cast 将变量从一种类型转换为另一种类型。</p>
+<p>在本课中，我们将继续研究另一种类型的强制转换：动态类型转换 (Dynamic cast)</p>
+<h2 id="_1">何时需要进行动态类型转换<a class="headerlink" href="#_1" title="Permanent link">&para;</a></h2>
+<p>在处理多态性时，您经常会遇到这样的情况：你有一个指向基类的指针，但你希望访问仅存在于派生类中的某些信息。</p>
+<p>思考下列这个（不太自然的）例子</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+<span class="cp"># include &lt;string&gt;</span>
+
+<span class="k">class</span> <span class="nc">Base</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_value</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Base</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="o">~</span><span class="n">Base</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Derived</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">m_name</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Derived</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">Base</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">m_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">getName</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_name</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="n">Base</span><span class="o">*</span> <span class="nf">getObject</span><span class="p">(</span><span class="kt">bool</span> <span class="n">bReturnDerived</span><span class="p">)</span>
+<span class="p">{</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">bReturnDerived</span><span class="p">)</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="n">Derived</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Apple&quot;</span><span class="p">);</span>
+ <span class="k">else</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="n">Base</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Base</span> <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="n">getObject</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+
+ <span class="c1">// 我们应该如何打印派生类对象的名字？只有基类指针</span>
+
+ <span class="k">delete</span> <span class="n">b</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>在这个程序中，函数 <code>getObject()</code> 总是返回一个基类指针，但是这个指针可能指向一个基类也可能指向一个派生类。在例子中的 <code>Base</code> 指针 <code>b</code> 实际指向的是派生类的对象，我们应该如何调用 <code>Derived::getName()</code> ？</p>
+<p>一个方法会是添加一个虚函数到 <code>Base</code> 类，叫 <code>getName()</code>（这样做我们可以调用它，通过 <code>Base</code>的指针或引用，它都会动态定向到 <code>Derived::getName()</code>）。但是如果你调用的对象是一个 <code>Base</code> 类的指针会引用，指向一个 <code>Base</code> 对象，那将会返回什么？没有任何值真正有价值。此外，我们将会用一些东西污染我们的 <code>Base</code> 类，这些的东西本来应该只在派生类中存在。</p>
+<p>我们都知道，<code>C++</code> 将会隐式的让你转化一个派生类指针为一个基类指正。（事实上，<code>getObjectt()</code> 就做了那样的事情）。这种过程有时候被叫做向上转化。然而，如果有一个方法把 <code>Base</code> 指针转换回 <code>Derived</code> 指针会怎么样？然后我们能够直接通过那个指针来调用 <code>Derived::getName()</code>，这样就根本不用关心虚函数解析。</p>
+<h2 id="dynamic-cast">动态类型转化 (Dynamic Cast)<a class="headerlink" href="#dynamic-cast" title="Permanent link">&para;</a></h2>
+<p><code>C++</code> 提供了一个转换操作符，叫做动态转化，就可以在这个条件下使用。尽管动态转化有很多不同的能力，目前为止我们最常见的使用场景就是为了转化一个基类指针成一个派生类指针。这个过程叫做向下类型转换。</p>
+<p>Using dynamic_cast works just like static_cast. Here’s our example main() from above, using a dynamic_cast to convert our Base pointer back into a Derived pointer:</p>
+<p>动态类型转换就像静态类型转换一样。这是我们上面的 <code>main()</code> 函数的例子，使用动态类型转化，将 <code>Base</code> 指针类型转化成 <code>Derived</code> 指针。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Base</span> <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="n">getObject</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+
+ <span class="n">Derived</span> <span class="o">*</span><span class="n">d</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">b</span><span class="p">);</span> <span class="c1">// use dynamic cast to convert Base pointer into Derived pointer</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The name of the Derived is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">getName</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+
+ <span class="k">delete</span> <span class="n">b</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>这个用例打印出：</p>
+<div class="highlight"><pre><span></span><code>The name of the Derived is: Apple
+</code></pre></div>
+<h2 id="dynamic-cast-failure">动态类型转换失败 (Dynamic Cast Failure)<a class="headerlink" href="#dynamic-cast-failure" title="Permanent link">&para;</a></h2>
+<p>上面的例子能运行因为 <code>b</code> 确实指向了一个 <code>Derived</code> 对象，因此转化 <code>b</code> 成为一个派生指针会成功。</p>
+<p>然而，我们做了一个相当危险的假设：那就是 <code>b</code> 确实是指向了派生类。如果 <code>b</code> 不是指向派生对象的，将会发生什么？这很容易验证，将 <code>getObject()</code> 的参数从 <code>true</code> 改为 <code>false</code>。在那个例子里，<code>getObject()</code> 将会返回一个基类指针指向一个基类对象。当我们尝试使用动态转换<code>dynamic_cast</code> 转化成一个派生对象的时候，将会失败，因为转化不可能成功。</p>
+<p>如果动态转化失败，转化结果会是一个 <code>null</code> 指针。</p>
+<p>因为我们没有检查结果是否是空指针，我们访问 <code>d-&gt;getName()</code>，将会尝试间址一个空指针，将会导致一个未定义的操作，可能会造成崩溃。</p>
+<p>为了让这个程序安全运行，我们需要去确认动态转换确实成功了。</p>
+<div class="highlight"><pre><span></span><code><span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Base</span> <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="n">getObject</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+
+<span class="n">Derived</span> <span class="o">*</span><span class="n">d</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">b</span><span class="p">);</span> <span class="c1">// use dynamic cast to convert Base pointer into Derived pointer</span>
+
+<span class="k">if</span> <span class="p">(</span><span class="n">d</span><span class="p">){</span> <span class="c1">// make sure d is non-null</span>
+    <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The name of the Derived is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">getName</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+<span class="p">}</span>
+ <span class="k">delete</span> <span class="n">b</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p><strong>规则：</strong> 总是通过检查空指针来确保的动态转换成功了。</p>
+<p>注意到因为动态转换在运行时做了一些一致性(consisitency)检查（来确保转换是可行的），使用动态转换会引起一些性能损失(performance penalty).</p>
+<p>也请注意，在这些情况下，使用动态转换 (dynamic_cast) 进行向下转换 (downcasting)时将无法工作：</p>
+<p>1）使用 protected 或者 private 继承的。
+2）没有申明或者继承任何虚函数的（并且因此没有虚表）。
+3）在特定的例子下设计虚基类的转化。（看这页的例子中使用的这些类，和如何 resove 他们）。</p>
+<h2 id="downcasting-with-static_cast">使用静态类型转换进行向下转化 (Downcasting with static_cast)<a class="headerlink" href="#downcasting-with-static_cast" title="Permanent link">&para;</a></h2>
+<p>事实证明，向下转换也可以由静态转换 <code>static_cast</code> 来完成。它们二者的主要的区别就是 <code>static_cast</code>不做运行时类型检查来确保你所做的事有意义。这使得使用 <code>static_cast</code> 更快，但是更危险，如果你尝试转化 <code>Base*</code> 成一个 <code>Derived*</code>，可能会“成功”即使<code>Base</code>指针并没有指向<code>Derived</code> 对象。这会造成未知的行为，当你尝试访问转化结果时。（指针仍然指向 <code>Base</code> 对象）。</p>
+<p>如果你很明确你所使用的指针向下转换将会成功，直接使用 <code>static_cast</code> 是可以接受的。唯一能确保你知道指针指向的类型的方法，就是使用一个虚函数。这里有一个（不是很好，使用了全局变量）的方法来做这件事。</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="cp"># include &lt;string&gt;</span>
+
+<span class="c1">// Class identifier</span>
+<span class="k">enum</span> <span class="nc">ClassID</span>
+<span class="p">{</span>
+ <span class="n">BASE</span><span class="p">,</span>
+ <span class="n">DERIVED</span>
+ <span class="c1">// Others can be added here later</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Base</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_value</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Base</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="o">~</span><span class="n">Base</span><span class="p">()</span> <span class="p">{}</span>
+ <span class="k">virtual</span> <span class="n">ClassID</span> <span class="n">getClassID</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">BASE</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Derived</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">m_name</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Derived</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">Base</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">m_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">getName</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_name</span><span class="p">;</span> <span class="p">}</span>
+ <span class="k">virtual</span> <span class="n">ClassID</span> <span class="n">getClassID</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">DERIVED</span><span class="p">;</span> <span class="p">}</span>
+
+<span class="p">};</span>
+
+<span class="n">Base</span><span class="o">*</span> <span class="nf">getObject</span><span class="p">(</span><span class="kt">bool</span> <span class="n">bReturnDerived</span><span class="p">)</span>
+<span class="p">{</span>
+ <span class="k">if</span> <span class="p">(</span><span class="n">bReturnDerived</span><span class="p">)</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="n">Derived</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Apple&quot;</span><span class="p">);</span>
+ <span class="k">else</span>
+  <span class="k">return</span> <span class="k">new</span> <span class="n">Base</span><span class="p">(</span><span class="mi">2</span><span class="p">);</span>
+<span class="p">}</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Base</span> <span class="o">*</span><span class="n">b</span> <span class="o">=</span> <span class="n">getObject</span><span class="p">(</span><span class="nb">true</span><span class="p">);</span>
+
+ <span class="k">if</span> <span class="p">(</span><span class="n">b</span><span class="o">-&gt;</span><span class="n">getClassID</span><span class="p">()</span> <span class="o">==</span> <span class="n">DERIVED</span><span class="p">)</span>
+ <span class="p">{</span>
+  <span class="c1">// 我们早就证明了 b 是一个指向派生类对象，所以这个总是成功。</span>
+  <span class="n">Derived</span> <span class="o">*</span><span class="n">d</span> <span class="o">=</span> <span class="k">static_cast</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">*&gt;</span><span class="p">(</span><span class="n">b</span><span class="p">);</span>
+  <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The name of the Derived is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">d</span><span class="o">-&gt;</span><span class="n">getName</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span>
+ <span class="p">}</span>
+
+ <span class="k">delete</span> <span class="n">b</span><span class="p">;</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>但是如果你想经历所有麻烦来实现这个（并且花费调用虚函数并且处理结果的精力），我想你还是就用动态转换 (dynamic_cast) 比较好。</p>
+<h2 id="dynamic_cast-and-references">动态转化和引用 (dynamic_cast and references)<a class="headerlink" href="#dynamic_cast-and-references" title="Permanent link">&para;</a></h2>
+<p>尽管所有以上的例子都描述了动态转化指针（这很常用），动态转化也可以被用在引用上。这个的用法和用在指针上差不多。</p>
+<div class="highlight"><pre><span></span><code><span class="cp"># include &lt;iostream&gt;</span>
+
+<span class="cp"># include &lt;string&gt;</span>
+
+<span class="k">class</span> <span class="nc">Base</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+ <span class="kt">int</span> <span class="n">m_value</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Base</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">m_value</span><span class="p">(</span><span class="n">value</span><span class="p">)</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">virtual</span> <span class="o">~</span><span class="n">Base</span><span class="p">()</span> <span class="p">{}</span>
+<span class="p">};</span>
+
+<span class="k">class</span> <span class="nc">Derived</span> <span class="o">:</span> <span class="k">public</span> <span class="n">Base</span>
+<span class="p">{</span>
+<span class="k">protected</span><span class="o">:</span>
+ <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">m_name</span><span class="p">;</span>
+
+<span class="k">public</span><span class="o">:</span>
+ <span class="n">Derived</span><span class="p">(</span><span class="kt">int</span> <span class="n">value</span><span class="p">,</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span> <span class="n">name</span><span class="p">)</span>
+  <span class="o">:</span> <span class="n">Base</span><span class="p">(</span><span class="n">value</span><span class="p">),</span> <span class="n">m_name</span><span class="p">(</span><span class="n">name</span><span class="p">)</span>
+ <span class="p">{</span>
+ <span class="p">}</span>
+
+ <span class="k">const</span> <span class="n">std</span><span class="o">::</span><span class="n">string</span><span class="o">&amp;</span> <span class="n">getName</span><span class="p">()</span> <span class="k">const</span> <span class="p">{</span> <span class="k">return</span> <span class="n">m_name</span><span class="p">;</span> <span class="p">}</span>
+<span class="p">};</span>
+
+<span class="kt">int</span> <span class="nf">main</span><span class="p">()</span>
+<span class="p">{</span>
+ <span class="n">Derived</span> <span class="n">apple</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s">&quot;Apple&quot;</span><span class="p">);</span> <span class="c1">// create an apple</span>
+ <span class="n">Base</span> <span class="o">&amp;</span><span class="n">b</span> <span class="o">=</span> <span class="n">apple</span><span class="p">;</span> <span class="c1">// set base reference to object</span>
+ <span class="n">Derived</span> <span class="o">&amp;</span><span class="n">d</span> <span class="o">=</span> <span class="k">dynamic_cast</span><span class="o">&lt;</span><span class="n">Derived</span><span class="o">&amp;&gt;</span><span class="p">(</span><span class="n">b</span><span class="p">);</span> <span class="c1">// dynamic cast using a reference instead of a pointer</span>
+
+ <span class="n">std</span><span class="o">::</span><span class="n">cout</span> <span class="o">&lt;&lt;</span> <span class="s">&quot;The name of the Derived is: &quot;</span> <span class="o">&lt;&lt;</span> <span class="n">d</span><span class="p">.</span><span class="n">getName</span><span class="p">()</span> <span class="o">&lt;&lt;</span> <span class="sc">&#39;\n&#39;</span><span class="p">;</span> <span class="c1">// we can access Derived::getName through d</span>
+
+ <span class="k">return</span> <span class="mi">0</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div>
+<p>因为 <code>C++</code> 没有“空引用”的说法，动态转化不可能返回一个空引用如果遭遇失败。相反的，如果动态转化一个引用失败了，一个异常<code>std::bad_cast</code>将会抛出。我们会在之后的教程讨论异常。</p>
+<h2 id="dynamic_cast-vs-static_cast">动静态转化的对比 (dynamic_cast vs static_cast)<a class="headerlink" href="#dynamic_cast-vs-static_cast" title="Permanent link">&para;</a></h2>
+<p>新的程序员有时候很迷惑啥时候用动态转换，啥时候用静态转换。答案非常简单：使用 <code>static_cast</code> 除非你正在向下转换，这是使用 <code>dynamic_cast</code> 通常是一个更好的选择。然而，你也尅一考虑避免转换，就是用虚函数。</p>
+<h2 id="_2">向下转换和虚函数的对比<a class="headerlink" href="#_2" title="Permanent link">&para;</a></h2>
+<p>有些开发者相信动态转换是恶魔👿并且是坏的类型设计，这些程序员说永远应该使用虚函数。</p>
+<p>大体上，使用虚函数应该更受欢迎比起向下转换。然而，这些情况下，使用向下转换是一个更好的选择：</p>
+<ul>
+<li>当你不能修改基类来添加一个虚函数时（例如：因为基类是标准库中的一种）</li>
+<li>当你仍然需要访问一些只有派生类独有的东西时（例如：某个访问函数只存在于派生类）</li>
+<li>当添加一个虚函数到你的基类毫无意义时（例如：没有一个合适的值让基类返回）使用纯虚函数也许可以纳入考虑，如果你不要实例化基类。</li>
+</ul>
+<h2 id="rtti-a-warning-about-dynamic_cast-and-rtti">一个有关动态类型转换和RTTI的警告 (A warning about dynamic_cast and RTTI)<a class="headerlink" href="#rtti-a-warning-about-dynamic_cast-and-rtti" title="Permanent link">&para;</a></h2>
+<p>运行时类型信息（RTTI）是一个 <code>C++</code> 的特性，用于在运行时暴露一个对象的数据类型。这这个能力 <code>dynamic_cast</code> 赋予的。因为运行时有相当可观的空间性能成本，一些编译器允许你关闭 RTTI 来做为一个优化，不用说，如果你那么做，动态类型转换将不会正常工作。</p>
+                
+              
+              
+                
+
+
+              
+            </article>
+          </div>
+        </div>
+      </main>
+      
+        
+<footer class="md-footer">
+  
+    <nav class="md-footer__inner md-grid" aria-label="Footer">
+      
+        <a href="../18.8-object-slicing/" class="md-footer__link md-footer__link--prev" rel="prev">
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11h12z"/></svg>
+          </div>
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              18.8 对象切割
+            </div>
+          </div>
+        </a>
+      
+      
+        <a href="../18.x%20chapter-18-comprehensice-quiz/" class="md-footer__link md-footer__link--next" rel="next">
+          <div class="md-footer__title">
+            <div class="md-ellipsis">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              18.x 十二章理解和练习
+            </div>
+          </div>
+          <div class="md-footer__button md-icon">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11H4z"/></svg>
+          </div>
+        </a>
+      
+    </nav>
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-footer-copyright">
+        
+        Made with
+        <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+          Material for MkDocs
+        </a>
+      </div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "translations": {"clipboard.copy": "Copy to clipboard", "clipboard.copied": "Copied to clipboard", "search.config.lang": "en", "search.config.pipeline": "trimmer, stopWordFilter", "search.config.separator": "[\\s\\-]+", "search.placeholder": "Search", "search.result.placeholder": "Type to start searching", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.term.missing": "Missing"}, "search": "../../assets/javascripts/workers/search.217ffd95.min.js", "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.926459b3.min.js"></script>
+      
+    
+  </body>
+</html>
